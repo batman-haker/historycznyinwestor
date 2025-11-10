@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Historyczny Inwestor — Wersja Edukacyjna</title>
+  <style>
+    :root {
+      --bg: #0f1222; --panel:#15182a; --text:#eef3ff; --muted:#cbd5e1;
+      --accent:#8b5cf6; --accent-2:#22d3ee; --border:#2a2e44;
+      --win:#22c55e; --loss:#ef4444; --neutral:#f59e0b; --shadow:rgba(0,0,0,.4);
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin:0; color:var(--text);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial;
+      background:
+        radial-gradient(1200px 800px at 10% 0%, rgba(139,92,246,.15), rgba(0,0,0,0) 60%),
+        radial-gradient(900px 700px at 90% 10%, rgba(34,211,238,.12), rgba(0,0,0,0) 60%),
+        linear-gradient(180deg, #0b0e1a, #0f1222 45%, #0a0c18 100%);
+    }
+    .container { max-width:1200px; margin:0 auto; padding:24px; }
+    .main-menu { text-align:center; padding:48px 16px; }
+    .main-title { font-size: clamp(1.8rem,3.8vw,3rem); margin:0 0 8px; font-weight:800; letter-spacing:-.02em; }
+    .main-title span { background: linear-gradient(90deg, var(--accent), var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .main-subtitle { color:var(--muted); margin:0 0 24px; }
+    .chapter-selection { display:grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap:16px; }
+    .chapter-card { background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0)); border:1px solid var(--border); border-radius:16px; padding:20px; text-align:left; cursor:pointer; transition: transform .25s, box-shadow .25s, border-color .25s; box-shadow:0 10px 30px var(--shadow); }
+    .chapter-card:hover { transform: translateY(-4px); border-color: rgba(139,92,246,.6); box-shadow:0 16px 40px rgba(34,211,238,.16); }
+    .chapter-era { font-weight:800; letter-spacing:.02em; color:var(--accent-2); }
+    .chapter-name { font-size:1.25rem; margin:8px 0; font-weight:700; }
+    .chapter-description { color:var(--muted); font-size:.95rem; line-height:1.45; }
+    .hidden { display:none; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:8px; }
+    .back-btn { background: linear-gradient(90deg, rgba(139,92,246,.3), rgba(34,211,238,.3)); border:1px solid var(--border); color:var(--text); padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:600; }
+    .back-btn:hover { filter:brightness(1.1); transform: translateY(-1px); }
+    .progress-outer { width:100%; height:10px; background:#0d1122; border:1px solid var(--border); border-radius:999px; overflow:hidden; }
+    .progress-inner { height:100%; width:0%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width .4s ease; }
+    .header { display:grid; gap:8px; margin-bottom:16px; }
+    .title { font-size: clamp(1.5rem,2.5vw,2.2rem); margin:0; }
+    .subtitle { color:var(--muted); margin:0; }
+    .stats { display:grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap:10px; }
+    .stat-card { background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:12px 14px; }
+    .stat-label { color:var(--muted); font-size:.8rem; }
+    .stat-value { font-size:1.25rem; font-weight:800; }
+    .layout { display:grid; grid-template-columns:1.08fr .92fr; gap:16px; margin-top:16px; }
+    @media (max-width:900px){ .layout{ grid-template-columns:1fr; } }
+    .panel { background:var(--panel); border:1px solid var(--border); border-radius:16px; padding:18px; box-shadow:0 10px 30px var(--shadow); }
+    .panel-title { margin:0 0 10px; font-size:1.1rem; letter-spacing:.01em; }
+    .scenario-text { color:#e6ebff; opacity:.95; line-height:1.6; margin-bottom:14px; }
+    .choices { display:grid; gap:10px; }
+    .choice-btn { border:1px solid var(--border); background:#1a1d32; color:var(--text); padding:12px 14px; border-radius:12px; text-align:left; cursor:pointer; font-weight:600; transition: transform .18s, border-color .18s, background .18s; }
+    .choice-btn:hover { transform: translateY(-1px); border-color: rgba(34,211,238,.6); background:#1e2140; }
+    .stock-list { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+    .stock-item { display:flex; align-items:center; justify-content:space-between; background:#151935; border:1px solid var(--border); border-radius:10px; padding:10px 12px; }
+    .stock-name { font-weight:700; }
+    .stock-price { color:var(--accent-2); font-variant-numeric: tabular-nums; }
+    .result-panel { grid-column:1/-1; background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0)); border:1px solid var(--border); border-radius:16px; padding:18px; text-align:center; box-shadow:0 10px 30px var(--shadow); }
+    .profit { color:var(--win); font-weight:800; }
+    .loss { color:var(--loss); font-weight:800; }
+    .neutral { color:var(--neutral); font-weight:800; }
+    .restart { display:inline-flex; gap:8px; align-items:center; margin-top:10px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); color:#0a0c18; border:none; padding:12px 16px; border-radius:12px; cursor:pointer; font-weight:800; }
+    .restart:hover { filter:brightness(1.05); }
+    .hint-btn { background:transparent; color:var(--accent-2); border:1px solid var(--border); padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:700; }
+    .hint-btn:hover { background: rgba(34,211,238,.08); border-color: rgba(34,211,238,.5); transform: translateY(-1px); }
+    .hint-box { display:none; margin-top:12px; border-left:3px solid var(--accent-2); padding:12px 14px; color:var(--muted); background: rgba(34,211,238,.08); border-radius:0 10px 10px 0; }
+    .hint-box[aria-hidden="false"] { display:block; }
+    .scenario-graphic { margin:8px 0 12px; background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0)); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+    .photo { margin-top:8px; border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+    .photo img { display:block; width:100%; height:auto; }
+    .error { margin:16px 0; color:#fecaca; background:#7f1d1d; border:1px solid #991b1b; padding:10px 12px; border-radius:10px; display:none; }
+    .hidden { display:none !important; }
+
+    /* NOWE STYLE DLA MENU */
+    .game-cover-logo { width:100%; max-width:400px; margin:0 auto 30px; }
+    .game-cover-logo img { width:100%; height:auto; border-radius:20px; box-shadow:0 20px 60px rgba(0,0,0,0.6); border:3px solid var(--accent-2); transition: transform .3s ease; }
+    .game-cover-logo img:hover { transform: scale(1.02); box-shadow:0 25px 70px rgba(139,92,246,0.4); }
+    .menu-buttons-container { display:flex; flex-direction:column; gap:16px; max-width:500px; margin:24px auto 0; }
+    .menu-main-btn { padding:18px 32px; font-size:1.2rem; font-weight:700; border:none; border-radius:12px; cursor:pointer; transition: all .3s ease; text-align:center; }
+    .menu-main-btn:hover { transform: translateY(-3px); box-shadow:0 12px 30px rgba(0,0,0,.3); }
+    .primary-btn { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color:#0a0c18; }
+    .primary-btn:hover { filter:brightness(1.1); }
+    .secondary-btn { background: linear-gradient(135deg, rgba(139,92,246,.3), rgba(34,211,238,.3)); border:1px solid var(--border); color:var(--text); }
+    .secondary-btn:hover { background: linear-gradient(135deg, rgba(139,92,246,.4), rgba(34,211,238,.4)); border-color: var(--accent-2); }
+    .tertiary-btn { background:transparent; border:1px solid var(--border); color:var(--text); }
+    .tertiary-btn:hover { background: rgba(255,255,255,.05); border-color: var(--accent); }
+
+    /* MODAL */
+    .epoch-modal { position:fixed; top:0; left:0; width:100%; height:100vh; z-index:9999; display:flex; align-items:center; justify-content:center; }
+    .modal-backdrop { position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.85); backdrop-filter:blur(8px); }
+    .modal-box { position:relative; z-index:10000; background:var(--panel); border:1px solid var(--border); border-radius:20px; padding:32px; max-width:1100px; max-height:85vh; overflow-y:auto; box-shadow:0 25px 80px rgba(0,0,0,.8); }
+    .modal-title { font-size:2.2rem; margin:0 0 8px; text-align:center; background: linear-gradient(90deg, var(--accent), var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .modal-subtitle { text-align:center; color:var(--muted); margin:0 0 24px; font-size:1.05rem; }
+    .modal-close { display:block; margin:24px auto 0; padding:12px 32px; background: linear-gradient(135deg, #e74c3c, #c0392b); color:#fff; border:none; border-radius:10px; cursor:pointer; font-weight:700; font-size:1.1rem; transition: all .3s ease; }
+    .modal-close:hover { transform: translateY(-2px); box-shadow:0 8px 20px rgba(231,76,60,.5); }
+    .modal-box::-webkit-scrollbar { width:10px; }
+    .modal-box::-webkit-scrollbar-track { background:rgba(255,255,255,.05); border-radius:10px; }
+    .modal-box::-webkit-scrollbar-thumb { background:var(--accent-2); border-radius:10px; }
+    .modal-box::-webkit-scrollbar-thumb:hover { background:var(--accent); }
+
+    /* ACHIEVEMENT NOTIFICATIONS */
+    .achievement-notification { position:fixed; top:20px; right:-400px; background:linear-gradient(135deg, rgba(139,92,246,.95), rgba(34,211,238,.95)); backdrop-filter:blur(10px); padding:16px 20px; border-radius:12px; box-shadow:0 10px 40px rgba(0,0,0,.5); z-index:10001; transition: right .5s ease; min-width:300px; border:2px solid var(--gold); }
+    .achievement-notification.show { right:20px; }
+    .achievement-content { display:flex; align-items:center; gap:12px; }
+    .achievement-icon { font-size:2.5rem; }
+    .achievement-name { font-weight:800; font-size:1.1rem; color:#fff; }
+    .achievement-desc { font-size:0.9rem; color:#eef; opacity:0.9; }
+
+    /* CAPITAL CHART */
+    .capital-chart { width:100%; height:200px; background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:20px; margin:20px 0; }
+    .chart-line { stroke:var(--accent-2); stroke-width:3; fill:none; }
+    .chart-area { fill:url(#chartGradient); opacity:0.3; }
+    .chart-grid { stroke:rgba(255,255,255,0.1); stroke-width:1; }
+    .chart-label { fill:var(--muted); font-size:12px; }
+
+    /* ACHIEVEMENTS DISPLAY */
+    .achievements-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:10px; margin:16px 0; }
+    .achievement-badge { background:rgba(139,92,246,0.2); border:1px solid var(--border); border-radius:10px; padding:12px; text-align:center; }
+    .achievement-badge-icon { font-size:2rem; display:block; margin-bottom:6px; }
+    .achievement-badge-name { font-size:0.85rem; font-weight:700; color:var(--text); }
+  </style>
+<script type="text/javascript" nonce="fbaf3247a48d4e4a8f9106ab1e1" src="//local.adguard.org?ts=1754656650365&amp;type=content-script&amp;dmn=mail-attachment.googleusercontent.com&amp;url=https%3A%2F%2Fmail-attachment.googleusercontent.com%2Fattachment%2Fu%2F0%2F%3Fui%3D2%26ik%3Df2ae618626%26attid%3D0.1%26permmsgid%3Dmsg-a%3Ar1370544206735525610%26th%3D19889e3900ffb5b5%26view%3Datt%26disp%3Dsafe%26realattid%3Df_me2v9lx50%26zw%26saddbat%3DANGjdJ9tnBx_fnmLD0gV18C3e8AnDwqW-CBoSG5TniDTP7IlJxdF3c7fYm1JqWHOp1e2U9TvLYbN-S64edVSp36JLaz7lgEc4vSYRpervdKBj2MWW2Ntn3HBxZVgr9bHNRnIC2GH-o-aTVqiITTbwjK6m35XDD3sTWXR9z6IIFLWdTv9OMC80sMRwu7aSEIuiCvfHTPm_eiGFWgoLnWc-VZkHCw4JXkL0q5t3iNEwoJVjtwnwRhPB3zRA51A6WN91SU_ZnAsTCRiPXd0Msyv2fRmUcHn2k_sopUnWRhtgY5u_VoQoIX030s-Zcuh0zJo6TKagK77NwE-bfelFjigt7DCc31dXx7WGPV7smw7gaUr9YHpDXAueoQIoLQWRedXTPQRiufiugXAnck0-1NRrGAAqW6p5j4FObQXhuFeE9Mh2j8tSo-HV-wluEhwmBT87d7Xy1OOu_-rSgkdbiOk-yHROdxp3tVK8Iyge5fA6Zc88exedhQbCKYDWlU7j8wGlblf5BWObkyVKv0kUmKz7iLM1nYMdzMFFHjkEQiVWG7tT6XqnDDI-vpY4je5GRtV0qwUPxb2C9NoXTzqoNVbua0ZXTQgzJHq9W6Y6N7dgMxIJE2DuZzrreT27qAi495WlA2N0h2A_zI4Fy1Hv5PPyJ96DmfPAk4j2i1q0CCSybCT3BbeKkMOI0rgyyxRbq8UzouKTlOtpAgzrrhBDUAn-wn82BdpK5DrhOnMFii0TuNUuTPPAsjJSS5klGGZDS3O-pSyP0ag3oJg4nEAnIC52JuNpOYISp4vEefezHjrMPn74LnIR9D5SsIlpkm1ZCf-Tk2YtKz8kaMOlL-1MatxeXXR0wxxXNrKVCbffgEDVQ4xWilbjmLE_MvNdd0WafGDjkvVXEf_pWTOZJhp6HV0N5B7ViNarFcExpGJdq2Ebas0Hp1jI-es8lrVhvlv1eFF5SDbsXbsVf8Vb8fKZ5QKHMtA0fjL7-mrWSHXlr0V0Rt9uNKCqAIJ_4EF3mEEVWs0pHlUZyEG237H9Y-IHB1zAGy1gACIP5KpIx2yqPXf643aBfFM_Teq1mO7VZXxz3L4wYcnniaZ13f-PqnnMixv&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="fbaf3247a48d4e4a8f9106ab1e1" src="//local.adguard.org?ts=1754656650365&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
+<body>
+  <div class="container">
+    <!-- EKRAN POWITALNY Z GUZIKAMI -->
+    <section id="welcomeScreen" class="main-menu" aria-labelledby="welcomeHeading">
+      <div class="game-cover-logo">
+        <img src="kochampatronow_okadka_gry_dla_inwestora_giedowego_z_elementam_1f221263-b989-4da4-8eb4-42536d07774d.png" alt="Historyczny Inwestor - Okładka">
+      </div>
+      <h1 id="welcomeHeading" class="main-title">Historyczny <span>Inwestor</span></h1>
+      <p class="main-subtitle">Przetrwaj największe wstrząsy rynkowe i zrozum, co się wtedy działo — krok po kroku.</p>
+      <div class="menu-buttons-container">
+        <button class="menu-main-btn primary-btn" id="quickStartBtn">🎮 Szybki Start</button>
+        <button class="menu-main-btn secondary-btn" id="chooseEpochBtn">🕰️ Wybierz Epokę</button>
+        <button class="menu-main-btn tertiary-btn" id="aboutBtn">ℹ️ O Grze</button>
+      </div>
+    </section>
+
+    <!-- MODAL WYBORU EPOKI -->
+    <div id="epochModal" class="epoch-modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-backdrop" id="modalBackdrop"></div>
+      <div class="modal-box">
+        <h2 id="modalTitle" class="modal-title">🕰️ Wybierz Epokę Historyczną</h2>
+        <p class="modal-subtitle">Zacznij swoją przygodę od wybranego kryzysu finansowego</p>
+        <div id="errorBox" class="error"></div>
+        <div class="chapter-selection" id="chapterSelection"></div>
+        <button class="modal-close" id="closeModalBtn" aria-label="Zamknij">❌ Zamknij</button>
+      </div>
+    </div>
+
+    <!-- STARE MENU (teraz ukryte, używane tylko przez modal) -->
+    <section id="mainMenu" class="hidden" aria-labelledby="menuHeading">
+      <h1 id="menuHeading" class="main-title">Historyczny <span>Inwestor</span></h1>
+      <p class="main-subtitle">Przetrwaj największe wstrząsy rynkowe i zrozum, co się wtedy działo — krok po kroku.</p>
+    </section>
+
+    <section id="gameArea" class="hidden" aria-live="polite">
+      <div class="topbar">
+        <button class="back-btn" id="backBtn" aria-label="Wróć do menu">← Powrót</button>
+        <div class="progress-outer" aria-hidden="true"><div id="progressBar" class="progress-inner"></div></div>
+      </div>
+
+      <header class="header">
+        <h2 id="chapterTitle" class="title">—</h2>
+        <p id="chapterSubtitle" class="subtitle">—</p>
+        <div class="stats" role="group" aria-label="Statystyki gry">
+          <div class="stat-card"><div class="stat-label">Kapitał</div><div id="capital" class="stat-value">$1,000</div></div>
+          <div class="stat-card"><div class="stat-label">Okres</div><div id="month" class="stat-value">—</div></div>
+          <div class="stat-card"><div id="indexLabel" class="stat-label">Indeks</div><div id="indexValue" class="stat-value">—</div></div>
+          <div class="stat-card"><div class="stat-label">Decyzje</div><div id="decisions" class="stat-value">0</div></div>
+        </div>
+      </header>
+
+      <div class="layout" id="gameContent"></div>
+    </section>
+  </div>
+
+  <script>
+  (function(){
+    const errorBox = document.getElementById('errorBox');
+    function showError(msg){
+      errorBox.textContent = 'Błąd skryptu: ' + msg;
+      errorBox.style.display = 'block';
+    }
+
+    try {
+      // --------- STATE ---------
+      let currentChapterKey = null;
+      let capital = 1000;
+      let currentScenario = 0;
+      let decisions = 0;
+      let capitalHistory = []; // Track capital over time
+      let achievements = []; // Track unlocked achievements
+
+      const dom = {
+        mainMenu: document.getElementById('mainMenu'),
+        gameArea: document.getElementById('gameArea'),
+        chapterTitle: document.getElementById('chapterTitle'),
+        chapterSubtitle: document.getElementById('chapterSubtitle'),
+        indexLabel: document.getElementById('indexLabel'),
+        capital: document.getElementById('capital'),
+        month: document.getElementById('month'),
+        indexValue: document.getElementById('indexValue'),
+        decisions: document.getElementById('decisions'),
+        gameContent: document.getElementById('gameContent'),
+        chapterSelection: document.getElementById('chapterSelection'),
+        backBtn: document.getElementById('backBtn'),
+        progressBar: document.getElementById('progressBar')
+      };
+
+      // --------- MENU SYSTEM ---------
+      const welcomeScreen = document.getElementById('welcomeScreen');
+      const epochModal = document.getElementById('epochModal');
+      const quickStartBtn = document.getElementById('quickStartBtn');
+      const chooseEpochBtn = document.getElementById('chooseEpochBtn');
+      const aboutBtn = document.getElementById('aboutBtn');
+      const closeModalBtn = document.getElementById('closeModalBtn');
+      const modalBackdrop = document.getElementById('modalBackdrop');
+
+      function showWelcomeScreen(){
+        welcomeScreen.classList.remove('hidden');
+        dom.gameArea.classList.add('hidden');
+        epochModal.classList.add('hidden');
+      }
+
+      function hideWelcomeScreen(){
+        welcomeScreen.classList.add('hidden');
+      }
+
+      function showModal(){
+        console.log('🎭 Opening modal...');
+        epochModal.classList.remove('hidden');
+        console.log('📦 chapterSelection element:', dom.chapterSelection);
+        buildMenu(); // Populate modal with chapters
+        console.log('✅ Modal opened');
+      }
+
+      function hideModal(){
+        epochModal.classList.add('hidden');
+      }
+
+      // Initialize menu system AFTER DOM loads
+      function initMenuSystem(){
+        console.log('🎮 Initializing menu system...');
+
+        dom.backBtn.addEventListener('click', () => {
+          console.log('Back button clicked');
+          showWelcomeScreen();
+        });
+
+        quickStartBtn.addEventListener('click', () => {
+          console.log('Quick start clicked');
+          hideWelcomeScreen();
+          startChapter('1930s');
+        });
+
+        chooseEpochBtn.addEventListener('click', () => {
+          console.log('Choose epoch clicked');
+          showModal();
+        });
+
+        aboutBtn.addEventListener('click', () => {
+          console.log('About clicked');
+          alert('📈 HISTORYCZNY INWESTOR - Wersja Edukacyjna\n\nWciel się w rolę inwestora przeżywającego największe kryzysy finansowe ostatnich 100 lat.\n\n🎯 Cel: Zrozum mechanizmy rynkowe i naucz się podejmować mądre decyzje\n📚 5 Epok: Od Wielkiego Kryzysu 1929 do Kryzysu Finansowego 2008\n💡 Ucz się na błędach historii!\n\nWersja: 3.0-complete');
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+          console.log('Close modal clicked');
+          hideModal();
+        });
+
+        modalBackdrop.addEventListener('click', () => {
+          console.log('Backdrop clicked');
+          hideModal();
+        });
+
+        console.log('✅ Menu system initialized');
+      }
+
+      // --------- HINTS (obszerne tła historyczne — ukryte do kliknięcia) ---------
+      const hints = {
+        '1930s': [
+          'Czarny Czwartek/Wtorek (1929) uruchamia lawinę margin-calli. Standard złota ogranicza elastyczność banku centralnego. Brak ubezpieczenia depozytów pogłębia panikę.',
+          'Smoot–Hawley ogranicza handel; popyt słabnie, deflacja zwiększa realny ciężar długów.',
+          '„Odbicia niedźwiedzie” kuszą, ale fundamenty słabną.',
+          'Fale bankructw i bezrobocie. Przewagę mają defensywy i gotówka.',
+          'Lato 1932 – historyczne dno; kupowanie jakości nagradzane, ale ryzyko nadal wysokie.',
+          '1933: Bank holiday, FDIC, programy publiczne i dewaluacja dolara stabilizują system.'
+        ],
+        '1970s': [
+          'Embargo OPEC (1973) winduje ceny ropy; szok podażowy i początek stagflacji.',
+          'Limity cen → niedobory; gotówka i zwykłe obligacje przegrywają z inflacją.',
+          'Watergate i wysokie stopy: przewagę mają dywidendy i metale szlachetne.',
+          'Recesja 1974–75; „jakość po przecenie” bywa nagradzana.',
+          'Wydajność rośnie dzięki oszczędzaniu energii i automatyzacji.',
+          '1979: drugi szok naftowy i wyższa inflacja.'
+        ],
+        '1990s': [
+          'Recesja na starcie dekady, problemy S&L, Gulf War – defensywy w cenie.',
+          '1994–96: „soft landing”; produktywność rośnie dzięki IT i globalizacji.',
+          '1997: kryzys azjatycki – „flight to quality”.',
+          '1998: LTCM, dźwignia i korelacje; „don’t fight the Fed”.',
+          '1999: euforia internetowa – uwaga na rozjazd wycen i zysków.'
+        ],
+        'DotCom': [
+          '2000: kulminacja bąbla; wiele spółek bez zysków, szybkie IPO.',
+          'Płynność wysycha; quality-tech trzyma się lepiej.',
+          '9/11: szok popytowy; polityka pieniężna łagodzi skutki.',
+          '2002: późne dno; zostają liderzy z gotówką i moatami.'
+        ],
+        'GFC2008': [
+          'Bańka mieszkaniowa i sekurytyzacja subprime maskują ryzyko.',
+          'Marzec 2008: Bear Stearns; rynek krucho stabilny.',
+          'Wrzesień 2008: Lehman; zamarza kredyt, ryzyko kontrahenta eksploduje.',
+          'Marzec 2009: QE1; odbicie premiuje jakość i value.'
+        ]
+      };
+
+      // --------- ROZDZIAŁY I DANE ---------
+      const chapters = {
+        '1930s': {
+          era:'Lata 1930', name:'Wielki Kryzys', desc:'Od Czarnych Dni po Nowy Ład. Zrozum mechanikę paniki i odbicia.',
+          title:'Inwestor Wielkiego Kryzysu',
+          subtitle:'Wall Street, jesień 1929. Po latach hossy wielu kupuje akcje na kredyt (marża). Banki nie mają ubezpieczenia depozytów, a gospodarka zaczyna się potykać. W tym rozdziale poznasz margin call, „odbicie niedźwiedzie” i rolę gotówki oraz sektorów defensywnych.',
+          indexLabel:'Dow Jones',
+          scenarios:[
+            { month:'Październik 1929', indexValue:381, title:'Zbliża się Czarny Czwartek', description:'Gazety od miesięcy opisują rekordy. Coraz popularniejsze jest kupowanie akcji na kredyt (marża) — gdy rynek rośnie, zyski są powiększone, ale gdy spada, broker żąda dopłaty albo sprzedaje Twoje akcje. Krążą pogłoski o kłopotach w spółkach i bankach. To moment, w którym drobny błąd może wciągnąć cały system w lawinę. Co robisz: dokładasz paliwa do hossy, czy chronisz kapitał?',
+              choices:[{text:'Kupuj więcej akcji – hossa trwa!',effect:'buy_stocks'},{text:'Sprzedaj wszystko i idź w gotówkę',effect:'sell_all'},{text:'Kup złoto jako zabezpieczenie',effect:'buy_gold'},{text:'Graj na spadki – krach nadchodzi',effect:'short_market'}],
+              image:'https://upload.wikimedia.org/wikipedia/commons/1/19/Crowd_outside_nyse.jpg' },
+            { month:'Listopad 1929', indexValue:230, title:'Krach się rozpoczął', description:'W kilka dni indeksy spadają o kilkadziesiąt procent. Uruchamia się efekt domina: margin-calle wymuszają paniczną sprzedaż, banki bez ubezpieczenia depozytów same wpadają w kłopoty, a klienci ustawiają się w kolejkach po gotówkę. „Kup dołek” kusi, ale niepewność i brak płynności potrafią ciągnąć spadki dłużej, niż się wydaje rozsądne.',
+              choices:[{text:'Kupuj spadki – tanio!',effect:'buy_dip'},{text:'Czekaj na stabilizację',effect:'hold_cash'},{text:'Spółki użyteczności publicznej',effect:'buy_utilities'},{text:'Towary i ziemia rolna',effect:'buy_commodities'}],
+              image:'https://upload.wikimedia.org/wikipedia/commons/5/5e/New_York_stock_exchange_ticker_tape_parade_1919.jpg' },
+            { month:'Czerwiec 1930', indexValue:211, title:'Fałszywy świt', description:'Po ostrych zjazdach pojawia się odbicie — klasyczne „odbicie niedźwiedzie”. Politycy zapewniają, że „najgorsze za nami”, ale podwyższone cła (Smoot–Hawley) uderzają w handel, a firmy tną inwestycje i etaty. Krótkotrwała hossa łatwo wciąga nieostrożnych z powrotem na rynek.',
+              choices:[{text:'Blue-chipy z dywidendą',effect:'buy_dividends'},{text:'Kopalnie złota',effect:'buy_gold_miners'},{text:'Obligacje rządowe',effect:'buy_bonds'},{text:'Załóż firmę',effect:'start_business'}],
+              image:'https://upload.wikimedia.org/wikipedia/commons/2/2a/Construction_New_Deal.jpg' },
+            { month:'Wrzesień 1931', indexValue:130, title:'Depresja się pogłębia', description:'Upadłości banków i firm mnożą się, bezrobocie rośnie. Ludzie wycofują gotówkę, co dodatkowo osłabia banki — spirala się zacieśnia. Inwestorzy szukają bezpieczeństwa: spółek, których produkty kupuje się „zawsze” (żywność, media, użyteczność publiczna) oraz czystej gotówki, która daje możliwość ruchu, gdy pojawi się okazja.',
+              choices:[{text:'Nieruchomości w kryzysie',effect:'buy_real_estate'},{text:'Firmy spożywcze',effect:'buy_staples'},{text:'Gromadź gotówkę',effect:'hoard_cash'},{text:'Więcej złota',effect:'buy_more_gold'}],
+              image:'https://upload.wikimedia.org/wikipedia/commons/9/9c/Breadline.jpg' },
+            { month:'Lipiec 1932', indexValue:41, title:'Samo dno', description:'Indeks traci około 90% od szczytu. Wyceny są najniższe w historii, ale nastroje fatalne. „Kapitulacja” oznacza, że większość sprzedaje ze strachu. Kupowanie na dnie bywa zyskowne — tylko że nikt nie wie, że to dno, dopóki nie minie. Selekcja jakości ma kluczowe znaczenie.',
+              choices:[{text:'All-in w akcje',effect:'buy_bottom'},{text:'Silne spółki (IBM)',effect:'buy_quality'},{text:'Akcje alkoholowe',effect:'buy_alcohol'},{text:'Zostań przy gotówce',effect:'stay_safe'}],
+              image:'https://upload.wikimedia.org/wikipedia/commons/1/14/Newspaper_boy_1930s.jpg' },
+            { month:'Marzec 1933', indexValue:63, title:'Nowy Ład', description:'Prezydent ogłasza „bank holiday” — banki na kilka dni są zamknięte, system zostaje uporządkowany, wchodzi ubezpieczenie depozytów. Programy robót publicznych i dewaluacja dolara wspierają gospodarkę i ceny złota. To pierwszy wiarygodny sygnał, że dno jest już za nami.',
+              choices:[{text:'Infrastruktura',effect:'buy_infrastructure'},{text:'Sprzedaj złoto (ryzyko regulacji)',effect:'sell_gold'},{text:'Rolnictwo',effect:'buy_agriculture'},{text:'Koleje',effect:'buy_railroads'}],
+              image:'https://upload.wikimedia.org/wikipedia/commons/1/1a/CCC-workers.jpg' }
+          ],
+          stockPrices:{ 'General Electric':[396,168,134,85,34,58], 'AT&T':[304,197,178,144,110,136], 'US Steel':[262,150,88,54,22,43], 'Złoto':[20.67,20.67,20.67,20.67,35.00,35.00], 'Coca-Cola':[78,45,56,62,48,67], 'IBM':[211,98,67,45,78,124] }
+        },
+
+        '1970s': {
+          era:'Lata 1970', name:'Kryzys Naftowy i Stagflacja', desc:'Embargo OPEC, inflacja i recesje. Jak chronić realną wartość?',
+          title:'Inwestor Kryzysu Naftowego',
+          subtitle:'Lata 70. to szkoła przetrwania: ceny ropy rosną jak szalone, inflacja wysysa siłę nabywczą, a gospodarka zwalnia. Zobaczysz, kto korzysta na drogim paliwie, a kto cierpi — i jak myśleć o ochronie oszczędności.',
+          indexLabel:'S&P 500',
+          scenarios:[
+            { month:'Październik 1973', indexValue:108, title:'Wojna Yom Kippur', description:'OPEC ogranicza wydobycie i eksport. Cena ropy skacze wielokrotnie; na stacjach ustawiają się kolejki, a koszt transportu i produkcji rośnie niemal wszędzie. To szok podażowy: mniej towaru → wyższe ceny. Firmy paliwowe i właściciele surowców zarabiają, a linie lotnicze i logistyka dostają cios.',
+              choices:[{text:'Kup spółki naftowe',effect:'buy_oil'},{text:'Short na transport',effect:'short_transport'},{text:'Energia alternatywna',effect:'buy_alt_energy'},{text:'Złoto i towary',effect:'buy_commodities_70s'}],
+              image:'https://upload.wikimedia.org/wikipedia/commons/0/0a/Gas_station_line2.jpg' },
+            { month:'Marzec 1974', indexValue:95, title:'Kryzys się pogłębia', description:'Rządy próbują zamrażać ceny, co kończy się niedoborami. Inflacja rośnie, a gospodarka hamuje — to „stagflacja”. Dla inwestora oznacza to, że gotówka traci siłę nabywczą, a zwykłe obligacje też nie ratują. Zyskują biznesy z mocnym „pricing power” i infrastruktura energetyczna.',
+              choices:[{text:'Infrastruktura energetyczna',effect:'buy_energy_infrastructure'},{text:'Towary podstawowe (staples)',effect:'buy_staples_70s'},{text:'Nieruchomości',effect:'buy_real_estate_70s'},{text:'Gotówka',effect:'hold_cash_70s'}],
+              image:'https://upload.wikimedia.org/wikipedia/commons/1/17/Oil_barrel.jpg' },
+            { month:'Sierpień 1974', indexValue:72, title:'Rezygnacja Nixona', description:'Kryzys polityczny zwiększa niepewność, a wysokie stopy procentowe obniżają wyceny spółek wzrostowych. Inwestorzy szukają przystani w dywidendach i metalach szlachetnych. Krótka sprzedaż sektorów zależnych od taniego finansowania może działać, ale wymaga dyscypliny.',
+              choices:[{text:'Dywidendowe defensywy',effect:'buy_dividends_70s'},{text:'Metale szlachetne',effect:'buy_precious_metals'},{text:'Short growth',effect:'short_growth'},{text:'Rynki międzynarodowe',effect:'buy_international'}],
+              image:'https://upload.wikimedia.org/wikipedia/commons/0/0d/Nixon_Resigns.jpg' },
+            { month:'Styczeń 1975', indexValue:68, title:'Mocna recesja', description:'Bezrobocie sięga szczytów. Bank centralny zaczyna luzować politykę, ale inflacja nadal wysoka. „Jakość po przecenie” często wygrywa w kolejnych latach. Realną wartość pomagają chronić aktywa rosnące z inflacją (część towarów, nieruchomości) i obligacje indeksowane inflacją.',
+              choices:[{text:'Jakość po przecenie',effect:'buy_quality_70s'},{text:'Tech efektywnościowy',effect:'buy_efficiency_tech'},{text:'Rolnictwo',effect:'buy_agriculture_70s'},{text:'Inflation-linked',effect:'buy_tips'}],
+              image:'https://upload.wikimedia.org/wikipedia/commons/2/2e/Unemployment_line_1970s.jpg' },
+            { month:'Lipiec 1976', indexValue:104, title:'Dwustulecie', description:'Gospodarka łapie oddech. Firmy inwestują w oszczędność energii i automatyzację; do przemysłu wchodzą mikroprocesory. Innowacje potrafią poprawić produktywność nawet w trudnych czasach kosztowych.',
+              choices:[{text:'Wczesny tech',effect:'buy_tech_70s'},{text:'Oszczędzanie energii',effect:'buy_conservation'},{text:'Dobra konsumpcyjne',effect:'buy_consumer_disc'},{text:'Zostań w towarach',effect:'stay_commodities'}],
+              image:'https://upload.wikimedia.org/wikipedia/commons/5/53/Microprocessor.jpg' },
+            { month:'Grudzień 1978', indexValue:96, title:'Drugi szok naftowy', description:'Napięcia na Bliskim Wschodzie ponownie ograniczają podaż ropy. Inflacja rozkręca się, a rynki zaczynają dyskontować ostrzejszą politykę pieniężną w kolejnych latach. Premiowane są realne aktywa i spółki surowcowe; sektory wrażliwe na stopy dostają po kieszeni.',
+              choices:[{text:'Ponownie: spółki naftowe',effect:'buy_oil_again'},{text:'Mocniej w alternatywę',effect:'buy_alt_energy_late'},{text:'Aktywa antyinflacyjne',effect:'buy_inflation_assets'},{text:'Short sektory wrażliwe na stopy',effect:'short_rates'}],
+              image:'https://upload.wikimedia.org/wikipedia/commons/9/9a/Oil_platform.jpg' }
+          ],
+          stockPrices:{ 'Exxon Mobil':[52,71,84,78,89,96], 'Texaco':[28,42,38,35,47,52], 'Ford':[65,41,38,33,42,39], 'Złoto':[97,154,161,140,125,208], 'IBM':[341,246,238,264,287,354], "McDonald's":[77,52,49,58,71,86] }
+        },
+
+        '1990s': {
+          era:'Lata 1990', name:'Azja, LTCM i euforia', desc:'Od recesji 1990–91 do bąbla internetowego.',
+          title:'Inwestor Lata 90.',
+          subtitle:'Od „flight to quality” po „don’t fight the Fed”: jak rynki reagują na kryzysy i euforie.',
+          indexLabel:'S&P 500',
+          scenarios:[
+            { month:'Listopad 1990', indexValue:324, title:'Recesja po Gulf War buildup', description:'Firmy tną koszty, kredyt jest drogi, nastroje konsumentów słabną. Upadłości instytucji S&L oraz napięcia wokół Zatoki Perskiej zwiększają niepewność. W takiej fazie defensywy i obligacje skarbowe zwykle trzymają się lepiej niż ryzykowne „wzrostówki”.',
+              choices:[{text:'Kup defensywy i dywidendy',effect:'buy_def_90'},{text:'Czekaj z gotówką',effect:'hold_cash_90'},{text:'Kup obligacje skarbowe',effect:'buy_bonds_90'},{text:'Agresywnie tech – PC boom',effect:'buy_pc_90'}],
+              image:'https://upload.wikimedia.org/wikipedia/commons/3/3d/Personal_computers_1990s.jpg' },
+            { month:'Lipiec 1995', indexValue:560, title:'Soft landing', description:'Po podwyżkach stóp w 1994 r. gospodarka „siada” miękko: inflacja pod kontrolą, a firmy dzięki komputerom, internetowi i globalizacji poprawiają produktywność. Tanie fundusze indeksowe zdobywają popularność — wielu inwestorów zamiast wybierać pojedyncze spółki, kupuje cały rynek.',
+              choices:[{text:'Szeroki indeks (passive)',effect:'buy_index_95'},{text:'Small-caps value',effect:'buy_scv_95'},{text:'Spółki telekom',effect:'buy_telco_95'},{text:'Utrzymaj defensywy',effect:'stay_def_95'}],
+              image:'https://upload.wikimedia.org/wikipedia/commons/6/6d/NYSE_trading_floor.jpg' },
+            { month:'Październik 1997', indexValue:950, title:'Kryzys azjatycki', description:'Kilka krajów broni stałych kursów walut, aż system pęka. Firmy zadłużone w dolarze tracą finansowanie, kapitał ucieka do bezpiecznych aktywów. USA też dostają rykoszetem, ale silna gospodarka sprawia, że spadki szybko są odrabiane — klasyczny „flight to quality”.',
+              choices:[{text:'Kup spadki w USA',effect:'buy_dip_97'},{text:'Uciekaj w obligacje',effect:'bonds_97'},{text:'Short EM',effect:'short_em_97'},{text:'Kup złoto',effect:'gold_97'}],
+              image:'https://upload.wikimedia.org/wikipedia/commons/7/7b/Bangkok_skyline_1997.jpg' },
+            { month:'Wrzesień 1998', indexValue:957, title:'LTCM pęka', description:'Słynny fundusz hedgingowy traci płynność na wielkich, lewarowanych pozycjach. Fed koordynuje porozumienie banków, by uniknąć chaosu. Rynek dostaje lekcję o ryzyku dźwigni i korelacji — a potem zaczyna się szybki rajd.',
+              choices:[{text:'Wejdź po interwencji Fed',effect:'buy_after_fed_98'},{text:'Pozostań w gotówce',effect:'hold_98'},{text:'Short lewar/finanse',effect:'short_fin_98'},{text:'Kup tech momentum',effect:'buy_momo_98'}],
+              image:'https://upload.wikimedia.org/wikipedia/commons/4/49/Alan_Greenspan.jpg' },
+            { month:'Grudzień 1999', indexValue:1469, title:'Euforia milenijna', description:'Internet „zmieni wszystko” — tak brzmi narracja. Wyceny wielu młodych spółek opierają się bardziej na obietnicach niż na zyskach. FOMO pcha ceny jeszcze wyżej. Pamiętaj: na dłuższą metę zyski i przepływy muszą dogonić opowieść.',
+              choices:[{text:'All-in w dot-comy',effect:'allin_dotcom_99'},{text:'Rotacja do value',effect:'rot_value_99'},{text:'Rebalans 60/40',effect:'rebal_99'},{text:'Short najdroższe spółki',effect:'short_hyper_99'}],
+              image:'https://upload.wikimedia.org/wikipedia/commons/2/2b/Nasdaq_screen_times_square.jpg' }
+          ],
+          stockPrices:{ 'Microsoft':[0.9,2.4,4.6,5.2,8.9], 'Cisco':[0.4,1.6,3.1,4.2,7.7], 'General Electric':[1.2,1.7,2.2,2.4,2.8], 'Treasuries (10Y)*':[100,103,106,104,98], 'Złoto':[380,385,325,290,290], '* ceny ideowe':['—','—','—','—','—'] }
+        },
+
+        'DotCom': {
+          era:'2000–2002', name:'Bańka Dot-com', desc:'Euforia internetowa i bolesne otrzeźwienie.',
+          title:'Inwestor ery dot-com',
+          subtitle:'Zobacz, jak narracja „nowej ekonomii” zderzyła się z brakiem zysków — i kto przetrwał.',
+          indexLabel:'NASDAQ',
+          scenarios:[
+            { month:'Marzec 2000', indexValue:5048, title:'Szczyt euforii', description:'IPO pojawiają się co tydzień, a wyceny oderwały się od rzeczywistości: wiele spółek nie ma jeszcze zysków ani przepływów pieniężnych. Inwestorzy płacą za obietnice „kiedyś”. Największe ryzyko? Zmiana nastroju i wysychanie finansowania.',
+              choices:[{text:'Kup każdy debiut',effect:'buy_ipos_00'},{text:'Rotacja do quality tech',effect:'rot_quality_00'},{text:'Poważny rebalans do value',effect:'rot_value_00'},{text:'Short ekstremalne wyceny',effect:'short_extreme_00'}],
+              image:'https://upload.wikimedia.org/wikipedia/commons/2/2b/Nasdaq_screen_times_square.jpg' },
+            { month:'Listopad 2000', indexValue:3000, title:'Rysa na narracji', description:'Przychody nie rosną tak szybko, a inwestorzy przestają wierzyć w „zyski kiedyś”. Kapitał ucieka ze spółek bez gotówki, spread między quality-tech a resztą się otwiera.',
+              choices:[{text:'Trzymaj i „przeczekaj”',effect:'hold_bag_00'},{text:'Przesuń do gotówki',effect:'move_cash_00'},{text:'Kup tylko profitable tech',effect:'buy_prof_00'},{text:'Hedge opcjami/short ETF',effect:'hedge_00'}],
+              image:'https://upload.wikimedia.org/wikipedia/commons/9/98/Internet_bubble_chart.png' },
+            { month:'Wrzesień 2001', indexValue:1423, title:'Szok 9/11', description:'Zamachy zwiększają niepewność; popyt na podróże i reklamy spada. Polityka pieniężna łagodzi warunki, ale spekulacyjne nazwy tracą blask.',
+              choices:[{text:'Kup obronę i bezpieczeństwo',effect:'buy_defense_01'},{text:'Short travel/lotnictwo',effect:'short_travel_01'},{text:'Pozostań przy gotówce',effect:'hold_cash_01'},{text:'Doważ tech quality',effect:'buy_quality_01'}],
+              image:'https://upload.wikimedia.org/wikipedia/commons/5/5c/NYC_9-11_WTC.jpg' },
+            { month:'Październik 2002', indexValue:1114, title:'Późne dno', description:'Wiele dot-comów znika z giełdy, zostają liderzy z prawdziwymi przepływami i przewagami konkurencyjnymi. To moment, w którym selekcja jakości znów wygrywa.',
+              choices:[{text:'Kup liderów – MSFT, INTC',effect:'buy_leaders_02'},{text:'Doważ value/cashflow',effect:'buy_value_02'},{text:'Zostań w obligacjach',effect:'stay_bonds_02'},{text:'Spekuluj penny-stocks',effect:'penny_02'}],
+              image:'https://upload.wikimedia.org/wikipedia/commons/6/6b/NASDAQ_MarketSite.jpg' }
+          ],
+          stockPrices:{ 'Cisco':[77,50,15,13], 'Amazon':[75,36,6,15], 'Pets.com':[14,4,0,0], 'Microsoft':[58,34,24,26], 'US 10Y (cena)*':[98,101,108,106], '* gwiazdka':['—','—','—','—'] }
+        },
+
+        'GFC2008': {
+          era:'2008–2009', name:'Wielki Kryzys Finansowy', desc:'Bańka kredytowa, Lehman, QE i dno 2009.',
+          title:'Inwestor 2008',
+          subtitle:'Od „to lokalne” do globalnej paniki: jak działała dźwignia, płynność i interwencje.',
+          indexLabel:'S&P 500',
+          scenarios:[
+            { month:'Sierpień 2007', indexValue:1455, title:'Rysa na rynku kredytu', description:'Rynek kredytów hipotecznych subprime zaczyna pękać. Struktury sekurytyzacyjne maskowały ryzyko, a wyceny MBS stają się niepewne. To wstęp do problemów płynnościowych.',
+              choices:[{text:'Short homebuilders/MBS',effect:'short_mbs_07'},{text:'Przesuń do quality',effect:'move_quality_07'},{text:'Ignoruj – „to lokalne”',effect:'ignore_07'},{text:'Kup złoto',effect:'gold_07'}],
+              image:'https://upload.wikimedia.org/wikipedia/commons/8/8b/Subprime_Mortgage_Crisis_2007.png' },
+            { month:'Marzec 2008', indexValue:1276, title:'Bear Stearns przejęty', description:'Fed pomaga sprzedać Bear Stearns, aby zatrzymać panikę. Rynek łapie krótkie oddechy, ale problemy strukturalne nie znikają.',
+              choices:[{text:'Kup banki – „krew na ulicach”',effect:'buy_banks_08'},{text:'Hedge vega/short finanse',effect:'short_fin_08'},{text:'Uciekaj do gotówki',effect:'cash_08'},{text:'Kup spółki defensywne',effect:'def_08'}],
+              image:'https://upload.wikimedia.org/wikipedia/commons/4/46/Bear_Stearns_Headquarters.jpg' },
+            { month:'Wrzesień 2008', indexValue:1204, title:'Lehman upada', description:'Zamrożenie rynku finansowania hurtowego i eksplozja ryzyka kontrahenta powodują gwałtowną wyprzedaż. Fundusze rynku pieniężnego „łamią dolara”. Schronienia: złoto i obligacje.',
+              choices:[{text:'Kup indeks – ultra ryzyko',effect:'buy_index_09'},{text:'Kup złoto/obligacje',effect:'safe_haven_08'},{text:'Short cykliczne',effect:'short_cyc_08'},{text:'Pozostań w cash',effect:'stay_cash_08'}],
+              image:'https://upload.wikimedia.org/wikipedia/commons/5/5a/Lehman_Brothers_Times_Square_by_David_Shankbone.jpg' },
+            { month:'Marzec 2009', indexValue:676, title:'Dno i QE1', description:'Bank centralny uruchamia QE, a firmy z mocnymi bilansami wracają do łask. To historyczny punkt zwrotny: rynek zaczyna odbijać od dna.',
+              choices:[{text:'All-in quality + indeks',effect:'allin_09'},{text:'Kup value/finanse',effect:'buy_value_09'},{text:'Zostań w obligacjach',effect:'stay_bonds_09'},{text:'Czekaj – „za wcześnie”',effect:'wait_09'}],
+              image:'https://upload.wikimedia.org/wikipedia/commons/5/5c/Federal_Reserve_Building.jpg' }
+          ],
+          stockPrices:{ 'SPY (ETF)':[145,128,120,70], 'Gold':[670,920,890,920], 'JPM':[47,40,25,25], 'Caterpillar':[80,72,35,28], 'US 10Y (cena)*':[99,104,109,108], '* gwiazdka':['—','—','—','—'] }
+        }
+      };
+
+      // --------- MENU ---------
+      function buildMenu(){
+        console.log('📋 Building menu...');
+        const keys = Object.keys(chapters);
+        console.log('📚 Chapters:', keys);
+        const html = keys.map(key => {
+          const c = chapters[key];
+          return `<article class="chapter-card" data-key="${key}" tabindex="0" role="button" aria-label="${c.era}: ${c.name}">
+            <div class="chapter-era">${c.era}</div>
+            <div class="chapter-name">${c.name}</div>
+            <div class="chapter-description">${c.desc}</div>
+          </article>`;
+        }).join('');
+        dom.chapterSelection.innerHTML = html || '<p>Brak rozdziałów.</p>';
+
+        const cards = dom.chapterSelection.querySelectorAll('.chapter-card');
+        console.log('🃏 Found cards:', cards.length);
+
+        cards.forEach(card => {
+          card.addEventListener('click', () => {
+            console.log('🎯 Card clicked:', card.dataset.key);
+            startChapter(card.dataset.key);
+          });
+          card.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+              console.log('⌨️ Enter pressed on:', card.dataset.key);
+              startChapter(card.dataset.key);
+            }
+          });
+        });
+        console.log('✅ Menu built with', cards.length, 'cards');
+      }
+
+      // --------- GAME FLOW ---------
+      function startChapter(key){
+        console.log('🚀 Starting chapter:', key);
+        currentChapterKey = key;
+        capital = 1000;
+        currentScenario = 0;
+        decisions = 0;
+        capitalHistory = [1000]; // Reset and track starting capital
+        achievements = []; // Reset achievements
+        const ch = chapters[key];
+
+        if (!ch) {
+          console.error('❌ Chapter not found:', key);
+          alert('Błąd: Nie znaleziono rozdziału ' + key);
+          return;
+        }
+
+        console.log('📖 Chapter:', ch.title);
+
+        dom.chapterTitle.textContent = ch.title;
+        dom.chapterSubtitle.textContent = ch.subtitle;
+        dom.indexLabel.textContent = ch.indexLabel;
+        dom.decisions.textContent = decisions;
+
+        // Hide all menus
+        console.log('🙈 Hiding menus...');
+        dom.mainMenu.classList.add('hidden');
+        hideWelcomeScreen();
+        hideModal();
+
+        // Show game
+        console.log('👁️ Showing game area...');
+        dom.gameArea.classList.remove('hidden');
+        renderScenario();
+        updateProgress();
+        console.log('✅ Chapter started!');
+      }
+
+      function showMainMenu(){
+        dom.gameArea.classList.add('hidden');
+        showWelcomeScreen(); // Show welcome screen instead of old menu
+      }
+
+      function updateProgress(){ const total = chapters[currentChapterKey].scenarios.length; const pct = Math.min(100, Math.round(((currentScenario)/total)*100)); dom.progressBar.style.width = pct + '%'; }
+
+      function formatPrice(v){ if (typeof v === 'string') return v; if (v >= 10) return '$' + v.toLocaleString(); return '$' + Number(v).toFixed(2); }
+
+      function renderGraphic(chKey){
+        const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+        const accent2 = getComputedStyle(document.documentElement).getPropertyValue('--accent-2').trim();
+        const base = `<svg width="100%" height="90" viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="${accent}"/><stop offset="100%" stop-color="${accent2}"/></linearGradient></defs><rect x="0" y="0" width="400" height="90" fill="none" stroke="rgba(255,255,255,0.06)"/>`;
+        const tail = `</svg>`;
+        const bull = '<path d="M5,70 C60,40 120,60 170,35 C220,20 280,50 330,30 C360,20 380,25 395,20" fill="none" stroke="url(#g)" stroke-width="3" />';
+        const bear = '<path d="M5,20 C60,40 120,25 170,45 C220,60 280,30 330,50 C360,60 380,55 395,62" fill="none" stroke="url(#g)" stroke-width="3" />';
+        const oil = '<path d="M60,80 L80,20 L100,80 Z M140,80 L160,25 L180,80 Z M220,80 L240,22 L260,80 Z" fill="url(#g)" opacity="0.8"/>';
+        const chip = '<rect x="150" y="20" width="100" height="50" rx="6" stroke="url(#g)" fill="none" stroke-width="3"/><g opacity="0.7"><rect x="145" y="12" width="6" height="16"/><rect x="249" y="12" width="6" height="16"/><rect x="145" y="62" width="6" height="16"/><rect x="249" y="62" width="6" height="16"/></g>';
+        const bank = '<rect x="40" y="30" width="320" height="40" rx="4" fill="none" stroke="url(#g)" stroke-width="3"/><path d="M40,30 L200,10 L360,30" stroke="url(#g)" stroke-width="3" fill="none"/>';
+        let body = bull; if (chKey==='1930s') body = bear; else if (chKey==='1970s') body = oil; else if (chKey==='1990s') body = chip; else if (chKey==='DotCom') body = bull; else if (chKey==='GFC2008') body = bank;
+        return base + body + tail;
+      }
+
+      function renderScenario(){
+        const ch = chapters[currentChapterKey];
+        const s = ch.scenarios[currentScenario];
+        dom.capital.textContent = `$${capital.toLocaleString()}`;
+        dom.month.textContent = s.month;
+        dom.indexValue.textContent = s.indexValue;
+        dom.decisions.textContent = decisions;
+
+        const hintText = (hints[currentChapterKey] && hints[currentChapterKey][currentScenario]) || '';
+
+        dom.gameContent.innerHTML = `
+          <section class="panel">
+            <h3 class="panel-title">${s.title}</h3>
+            <div class="scenario-graphic">${renderGraphic(currentChapterKey)}</div>
+            <p class="scenario-text">${s.description}</p>
+            <div class="choices">
+              ${s.choices.map((c,i)=>`<button class="choice-btn" data-idx="${i}">${c.text}</button>`).join('')}
+            </div>
+            <button class="hint-btn" id="hintBtn" aria-expanded="false" aria-controls="hintBox">💡 Wskazówka</button>
+            <div id="hintBox" class="hint-box" aria-hidden="true">${hintText}</div>
+          </section>
+          <aside class="panel" aria-label="Ceny na rynku">
+            <h3 class="panel-title">Ceny na rynku</h3>
+            <div class="stock-list">
+              ${Object.entries(ch.stockPrices).map(([name, arr]) => `
+                <div class="stock-item"><span class="stock-name">${name}</span><span class="stock-price">${formatPrice(arr[currentScenario])}</span></div>
+              `).join('')}
+            </div>
+          </aside>`;
+
+        dom.gameContent.querySelectorAll('.choice-btn').forEach(btn => btn.addEventListener('click', () => {
+          const idx = Number(btn.getAttribute('data-idx'));
+          makeChoice(idx);
+        }));
+
+        const hintBtn = document.getElementById('hintBtn');
+        const hintBox = document.getElementById('hintBox');
+        if (hintBtn && hintBox) {
+          hintBtn.addEventListener('click', () => {
+            const expanded = hintBtn.getAttribute('aria-expanded') === 'true';
+            hintBtn.setAttribute('aria-expanded', String(!expanded));
+            hintBox.setAttribute('aria-hidden', String(expanded));
+          });
+        }
+        updateProgress();
+      }
+
+      function rng(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+
+      function calculateResult(effect){
+        const R=(min,max)=>rng(min,max); let moneyChange=0, message='', type='neutral';
+        const outcomes={
+          // 1930s
+          buy_stocks:[-600,'Kupiłeś tuż przed krachem!','loss'], sell_all:[100,'Uniknąłeś krachu – brawo.','profit'], buy_gold:[50,'Złoto utrzymało wartość.','profit'], short_market:[400,'Doskonały timing na short!','profit'],
+          buy_dip:[-R(250,450),'Spadki jeszcze bolały.','loss'], hold_cash:[R(10,40),'Bezpiecznie, ale nudno.','neutral'], buy_utilities:[R(-40,60),'Użyteczności trzymają się lepiej.','neutral'], buy_commodities:[R(-30,80),'Towary mieszane, zależne od popytu.','neutral'], buy_dividends:[R(-40,90),'Dywidendy amortyzują spadki.','neutral'], buy_gold_miners:[R(-50,120),'Górnicy złota zmienni, ale dają alfę.','neutral'], buy_bonds:[R(20,80),'Obligacje rządowe stabilizują.','profit'], start_business:[R(-120,200),'Ryzyko w recesji ogromne.','neutral'], buy_real_estate:[R(-180,120),'RE w depresji bardzo ryzykowne.','loss'], buy_staples:[R(10,90),'Staples bardziej odporne.','profit'], hoard_cash:[R(0,40),'Gotówka królem w kryzysie.','neutral'], buy_more_gold:[R(20,90),'Złoto trzyma wartość.','profit'], buy_bottom:[R(160,420),'Kupno dna – legenda.','profit'], buy_quality:[R(80,240),'Jakość wychodzi z kryzysu mocniej.','profit'], buy_alcohol:[R(20,120),'„Sin stocks” bywają defensywne.','profit'], stay_safe:[R(-10,30),'Bezpiecznie, ale ominiesz odbicie.','neutral'], buy_infrastructure:[R(40,160),'New Deal pompował inwestycje.','profit'], sell_gold:[R(-60,40),'Niepewność co do regulacji.','neutral'], buy_agriculture:[R(20,90),'Wsparcie programów rolnych.','profit'], buy_railroads:[R(-20,80),'Koleje cykliczne, ale skorzystają na inwestycjach.','neutral'],
+          // 1970s
+          buy_oil:[R(250,380),'Energetyka eksplodowała w górę.','profit'], short_transport:[R(180,340),'Transport oberwał – zysk.','profit'], buy_alt_energy:[R(-50,180),'Wczesna faza — mieszane.','neutral'], buy_commodities_70s:[R(40,140),'Towary hedgują inflację.','profit'], buy_energy_infrastructure:[R(40,150),'Rurociągi/rafinerie zyskują.','profit'], buy_staples_70s:[R(20,100),'Podstawowe dobra trzymają popyt.','profit'], buy_real_estate_70s:[R(20,120),'Nieruchomości jako tarcza.','profit'], hold_cash_70s:[R(-20,20),'Inflacja zjada cash.','loss'], buy_dividends_70s:[R(10,80),'Dywidendy łagodzą ból.','neutral'], buy_precious_metals:[R(60,180),'Złoto/srebro korzystają.','profit'], short_growth:[R(60,160),'Wzrostówki karcone stopami.','profit'], buy_international:[R(-30,120),'Dywersyfikacja bywa pomocna.','neutral'], buy_quality_70s:[R(40,160),'Jakość po przecenie.','profit'], buy_efficiency_tech:[R(20,140),'Efektywność kosztowa mile widziana.','profit'], buy_agriculture_70s:[R(20,120),'Rolnictwo korzysta z cen towarów.','profit'], buy_tips:[R(20,90),'Inflation-linked chronią realny zwrot.','profit'], buy_tech_70s:[R(-20,120),'Wczesny tech zmienny.','neutral'], buy_conservation:[R(10,120),'Oszczędność energii trendem.','profit'], buy_consumer_disc:[R(-40,80),'Dyskrecyjne wrażliwe na realne dochody.','neutral'], stay_commodities:[R(-20,80),'Zależne od cyklu; częściowo działa.','neutral'], buy_oil_again:[R(80,200),'Drugi szok naftowy.','profit'], buy_alt_energy_late:[R(-20,140),'Alternatywa rośnie, ale niestabilna.','neutral'], buy_inflation_assets:[R(40,160),'Aktywa antyinflacyjne w cenie.','profit'], short_rates:[R(40,140),'Wrażliwe sektory cierpią.','profit'],
+          // 1990s
+          buy_def_90:[R(40,120),'Defensywy ochroniły portfel.','profit'], hold_cash_90:[R(-20,20),'Inflacja podgryza gotówkę.','neutral'], buy_bonds_90:[R(30,90),'Spadek stóp pomaga obligacjom.','profit'], buy_pc_90:[R(-60,200),'PC boom nie bez wahań.','neutral'], buy_index_95:[R(60,140),'Rynek byka wynagradza pasywnych.','profit'], buy_scv_95:[R(40,160),'Small-value dają radę.','profit'], buy_telco_95:[R(-40,80),'Telco połowicznie; uwaga na dług.','neutral'], stay_def_95:[R(-20,40),'Za konserwatywnie — mniejszy zysk.','neutral'], buy_dip_97:[R(60,160),'USA odbiły szybko.','profit'], bonds_97:[R(10,70),'Bezpieczny parking kapitału.','neutral'], short_em_97:[R(80,220),'EM cierpiały — short działa.','profit'], gold_97:[R(-30,30),'Złoto bez fajerwerków.','neutral'], buy_after_fed_98:[R(80,200),'Don’t fight the Fed.','profit'], hold_98:[R(-20,30),'Ok, ale przepuściłeś odbicie.','neutral'], short_fin_98:[R(-100,120),'Lewar bywa zdradliwy.','neutral'], buy_momo_98:[R(40,220),'Momentum działa… do czasu.','profit'], allin_dotcom_99:[R(-500,400),'Wysokie ryzyko — może zaboleć.','neutral'], rot_value_99:[R(60,180),'Value gotowe na rotację.','profit'], rebal_99:[R(40,120),'Dyscyplina popłaca.','profit'], short_hyper_99:[R(120,320),'Short bąbla bywa złotem.','profit'],
+          // DotCom
+          buy_ipos_00:[R(-420,220),'IPO często wracają do ceny emisyjnej.','loss'], rot_quality_00:[R(40,160),'Zyskowne techy przetrwały.','profit'], rot_value_00:[R(60,200),'Value wygrywa w bessie tech.','profit'], short_extreme_00:[R(120,360),'Skrajne wyceny pękają.','profit'], hold_bag_00:[R(-280,40),'„Długo-terminowo” zabolało.','loss'], move_cash_00:[R(20,80),'Kapitał zachowany.','neutral'], buy_prof_00:[R(-40,140),'Selekcja działa, ale zmienność duża.','neutral'], hedge_00:[R(40,120),'Hedge amortyzuje spadki.','profit'], buy_defense_01:[R(40,120),'Kontrakty rządowe pomagają.','profit'], short_travel_01:[R(80,200),'Travel pod presją.','profit'], hold_cash_01:[R(-10,40),'Bezpiecznie, ale stracone szanse.','neutral'], buy_quality_01:[R(-40,120),'Selekcja nadal trudna.','neutral'], buy_leaders_02:[R(60,200),'Liderzy wracają pierwsi.','profit'], buy_value_02:[R(60,180),'Cashflow > marzenia.','profit'], stay_bonds_02:[R(10,60),'Stabilnie, ale niższy zwrot.','neutral'], penny_02:[R(-200,200),'Kasyno: księżyc albo zero.','neutral'],
+          // GFC 2008
+          short_mbs_07:[R(180,400),'Krótka MBS/housing — trafione.','profit'], move_quality_07:[R(20,80),'Jakość daje poduszkę.','neutral'], ignore_07:[R(-140,60),'To nie było „lokalne”.','loss'], gold_07:[R(40,120),'Bezpieczna przystań.','profit'], buy_banks_08:[R(-260,180),'Za wcześnie — jeszcze spadło.','neutral'], short_fin_08:[R(120,360),'Finanse pod presją — zysk.','profit'], cash_08:[R(20,60),'Kapitał zachowany.','neutral'], def_08:[R(-40,80),'Defensywy mniej bolą.','neutral'], buy_index_09:[R(160,380),'Kupno dna — nagrodzone.','profit'], safe_haven_08:[R(40,140),'Złoto/obligacje dają ulgę.','profit'], short_cyc_08:[R(80,220),'Cykliczne cierpiały.','profit'], stay_cash_08:[R(-10,40),'Bezpiecznie, ale przegapisz odbicie.','neutral'], allin_09:[R(220,480),'Historyczny trade życia.','profit'], buy_value_09:[R(140,320),'Value/finanse z odbiciem.','profit'], stay_bonds_09:[R(20,80),'Stabilnie, mniejszy zwrot.','neutral'], wait_09:[R(-40,60),'Za długo czekasz — rynek ucieka.','neutral']
+        };
+        if(outcomes[effect]){ [moneyChange,message,type]=outcomes[effect]; }
+        else { moneyChange = R(-100,120); message='Efekt zależy od timingu rynku.'; type = moneyChange>0?'profit':(moneyChange<0?'loss':'neutral'); }
+        return { moneyChange, message, type };
+      }
+
+      function makeChoice(choiceIndex){
+        const ch = chapters[currentChapterKey];
+        const s = ch.scenarios[currentScenario];
+        const choice = s.choices[choiceIndex];
+        const result = calculateResult(choice.effect);
+        decisions++;
+        capital = Math.max(0, Math.round(capital + result.moneyChange));
+        capitalHistory.push(capital); // Track capital after each decision
+        showResult(choice, result);
+        checkAchievements(result); // Check for unlocked achievements
+        setTimeout(()=>{ currentScenario++; if(currentScenario>=ch.scenarios.length) endGame(); else renderScenario(); }, 2200);
+      }
+
+      // --------- ACHIEVEMENTS SYSTEM ---------
+      const achievementDefinitions = {
+        'first_profit': { icon: '💰', name: 'Pierwszy Zysk', desc: 'Zarobił pierwszego dolara' },
+        'big_win': { icon: '🎯', name: 'Wielka Wygrana', desc: 'Zysk +$500 w jednej decyzji' },
+        'survivor': { icon: '💎', name: 'Survival', desc: 'Ukończył epokę z kapitałem powyżej startu' },
+        'millionaire': { icon: '👑', name: 'Milioner', desc: 'Osiągnął $10,000+' },
+        'perfect_timing': { icon: '⏰', name: 'Perfect Timing', desc: '3 zyski z rzędu' },
+        'risk_taker': { icon: '🎲', name: 'Ryzykant', desc: 'Stracił $500+ w jednej decyzji' },
+        'comeback_king': { icon: '🔥', name: 'Comeback King', desc: 'Odrobił straty i wyszedł na plus' }
+      };
+
+      let profitStreak = 0;
+
+      function checkAchievements(result){
+        const unlocked = [];
+
+        // First profit
+        if(result.moneyChange > 0 && !achievements.includes('first_profit')){
+          unlocked.push('first_profit');
+          profitStreak++;
+        } else if(result.moneyChange < 0){
+          profitStreak = 0;
+        } else if(result.moneyChange > 0){
+          profitStreak++;
+        }
+
+        // Big win
+        if(result.moneyChange >= 500 && !achievements.includes('big_win')){
+          unlocked.push('big_win');
+        }
+
+        // Perfect timing (3 profits in a row)
+        if(profitStreak >= 3 && !achievements.includes('perfect_timing')){
+          unlocked.push('perfect_timing');
+        }
+
+        // Risk taker
+        if(result.moneyChange <= -500 && !achievements.includes('risk_taker')){
+          unlocked.push('risk_taker');
+        }
+
+        // Millionaire
+        if(capital >= 10000 && !achievements.includes('millionaire')){
+          unlocked.push('millionaire');
+        }
+
+        // Add to global achievements
+        unlocked.forEach(id => {
+          if(!achievements.includes(id)){
+            achievements.push(id);
+            showAchievementNotification(id);
+          }
+        });
+      }
+
+      function showAchievementNotification(achievementId){
+        const ach = achievementDefinitions[achievementId];
+        if(!ach) return;
+
+        const notification = document.createElement('div');
+        notification.className = 'achievement-notification';
+        notification.innerHTML = `
+          <div class="achievement-content">
+            <span class="achievement-icon">${ach.icon}</span>
+            <div>
+              <div class="achievement-name">🎖️ ${ach.name}</div>
+              <div class="achievement-desc">${ach.desc}</div>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(notification);
+
+        setTimeout(() => notification.classList.add('show'), 100);
+        setTimeout(() => {
+          notification.classList.remove('show');
+          setTimeout(() => notification.remove(), 500);
+        }, 3000);
+      }
+
+      function showResult(choice, result){
+        const panel = document.createElement('div');
+        panel.className = 'result-panel';
+        panel.innerHTML = `
+          <h3 class="panel-title">Wynik decyzji</h3>
+          <p><strong>Wybrałeś:</strong> ${choice.text}</p>
+          <p class="${result.type}"><strong>Rezultat:</strong> ${result.message}</p>
+          <p class="${result.type}"><strong>Zmiana kapitału:</strong> ${result.moneyChange>0?'+':''}${result.moneyChange} $</p>`;
+        dom.gameContent.prepend(panel);
+        dom.capital.textContent = `$${capital.toLocaleString()}`;
+      }
+
+      // --------- CAPITAL CHART ---------
+      function renderCapitalChart(){
+        if(capitalHistory.length < 2) return '<p style="text-align:center;color:var(--muted);">Brak danych do wykresu</p>';
+
+        const width = 600;
+        const height = 180;
+        const padding = 40;
+        const max = Math.max(...capitalHistory);
+        const min = Math.min(...capitalHistory);
+        const range = max - min || 1;
+
+        // Calculate points
+        const points = capitalHistory.map((val, i) => {
+          const x = padding + (i / (capitalHistory.length - 1)) * (width - 2 * padding);
+          const y = height - padding - ((val - min) / range) * (height - 2 * padding);
+          return `${x},${y}`;
+        }).join(' ');
+
+        // Area fill points (add bottom corners)
+        const areaPoints = `${padding},${height - padding} ` + points + ` ${width - padding},${height - padding}`;
+
+        const startCap = capitalHistory[0];
+        const endCap = capitalHistory[capitalHistory.length - 1];
+        const change = endCap - startCap;
+        const changePercent = ((change / startCap) * 100).toFixed(1);
+        const changeColor = change >= 0 ? 'var(--win)' : 'var(--loss)';
+
+        return `
+          <div class="capital-chart">
+            <svg width="100%" height="${height}" viewBox="0 0 ${width} ${height}">
+              <defs>
+                <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" style="stop-color:var(--accent-2);stop-opacity:0.6" />
+                  <stop offset="100%" style="stop-color:var(--accent-2);stop-opacity:0.1" />
+                </linearGradient>
+              </defs>
+
+              <!-- Grid lines -->
+              <line class="chart-grid" x1="${padding}" y1="${padding}" x2="${width - padding}" y2="${padding}" />
+              <line class="chart-grid" x1="${padding}" y1="${height/2}" x2="${width - padding}" y2="${height/2}" />
+              <line class="chart-grid" x1="${padding}" y1="${height - padding}" x2="${width - padding}" y2="${height - padding}" />
+
+              <!-- Area -->
+              <polygon class="chart-area" points="${areaPoints}" />
+
+              <!-- Line -->
+              <polyline class="chart-line" points="${points}" />
+
+              <!-- Labels -->
+              <text class="chart-label" x="${padding}" y="${height - 10}">Start: $${startCap.toLocaleString()}</text>
+              <text class="chart-label" x="${width - padding - 100}" y="${height - 10}">Koniec: $${endCap.toLocaleString()}</text>
+              <text class="chart-label" x="${width/2 - 50}" y="20" fill="${changeColor}" font-weight="bold">${change >= 0 ? '+' : ''}${changePercent}%</text>
+            </svg>
+          </div>
+        `;
+      }
+
+      function endGame(){
+        console.log('🏁 Game ended!');
+        updateProgress();
+
+        // Check final achievement
+        const startCap = capitalHistory[0];
+        if(capital > startCap && !achievements.includes('survivor')){
+          achievements.push('survivor');
+        }
+
+        // Generate achievements HTML
+        const achievementsHTML = achievements.length > 0 ? `
+          <div style="margin:20px 0;">
+            <h3 class="panel-title">🎖️ Osiągnięcia (${achievements.length})</h3>
+            <div class="achievements-grid">
+              ${achievements.map(id => {
+                const ach = achievementDefinitions[id];
+                return ach ? `
+                  <div class="achievement-badge">
+                    <span class="achievement-badge-icon">${ach.icon}</span>
+                    <div class="achievement-badge-name">${ach.name}</div>
+                  </div>
+                ` : '';
+              }).join('')}
+            </div>
+          </div>
+        ` : '';
+
+        dom.gameContent.innerHTML = `
+          <div class="result-panel">
+            <h3 class="panel-title">🏆 Koniec rozdziału</h3>
+            <p>Łączna liczba decyzji: <strong>${decisions}</strong></p>
+            <p>Końcowy kapitał: <strong class="${capital >= startCap ? 'profit' : 'loss'}">$${capital.toLocaleString()}</strong></p>
+
+            <h4 style="margin-top:24px;color:var(--accent-2);">📈 Wykres Kapitału</h4>
+            ${renderCapitalChart()}
+
+            ${achievementsHTML}
+
+            <div style="display:flex;gap:12px;margin-top:24px;justify-content:center;">
+              <button class="restart" id="restartChapter">🔄 Zagraj ponownie</button>
+              <button class="restart" id="backToMenu">🏠 Wróć do menu</button>
+            </div>
+          </div>`;
+
+        // Add event listeners to buttons
+        const restartBtn = document.getElementById('restartChapter');
+        const menuBtn = document.getElementById('backToMenu');
+
+        if (restartBtn) {
+          restartBtn.addEventListener('click', () => {
+            console.log('🔄 Restarting chapter:', currentChapterKey);
+            startChapter(currentChapterKey);
+          });
+        }
+
+        if (menuBtn) {
+          menuBtn.addEventListener('click', () => {
+            console.log('🏠 Going back to menu');
+            showMainMenu();
+          });
+        }
+
+        console.log('✅ End game screen ready');
+      }
+
+      // INIT - Initialize everything after DOM loads
+      document.addEventListener('DOMContentLoaded', () => {
+        console.log('📄 DOM loaded, initializing game...');
+        initMenuSystem();
+        console.log('✅ Game ready!');
+      });
+
+      // Also call immediately in case DOMContentLoaded already fired
+      if (document.readyState === 'loading') {
+        console.log('⏳ Waiting for DOM...');
+      } else {
+        console.log('📄 DOM already loaded, initializing now...');
+        initMenuSystem();
+      }
+
+      // Functions are now used via event listeners, no need to export
+
+    } catch (e) {
+      showError(e.message || String(e));
+      console.error(e);
+    }
+  })();
+  </script>
+</body>
+</html>
