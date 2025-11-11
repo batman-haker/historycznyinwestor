@@ -320,6 +320,12 @@
           'Marzec 2008: Bear Stearns; rynek krucho stabilny.',
           'Wrzesień 2008: Lehman; zamarza kredyt, ryzyko kontrahenta eksploduje.',
           'Marzec 2009: QE1; odbicie premiuje jakość i value.'
+        ],
+        'COVID2020': [
+          'Najszybszy krach w historii – 34% w 23 dni. Ale też najszybsze odbicie.',
+          'Fed drukuje biliony. Stopy przy zerze. QE infinity. Money printer go brrr.',
+          'Praca zdalna na stałe – Zoom, Netflix, Amazon wygrywają. Restauracje cierpią.',
+          'Szczepionki zmieniają narrację – rotacja z techu do reopening trade.'
         ]
       };
 
@@ -466,6 +472,24 @@
               image:'https://upload.wikimedia.org/wikipedia/commons/5/5c/Federal_Reserve_Building.jpg' }
           ],
           stockPrices:{ 'SPY (ETF)':[145,128,120,70], 'Gold':[670,920,890,920], 'JPM':[47,40,25,25], 'Caterpillar':[80,72,35,28], 'US 10Y (cena)*':[99,104,109,108], '* gwiazdka':['—','—','—','—'] }
+        },
+
+        'COVID2020': {
+          era:'2020', name:'Kryzys COVID-19', desc:'Pandemia, lockdowny, QE infinity i najszybsze odbicie w historii.',
+          title:'Inwestor pandemii COVID-19',
+          subtitle:'Od panicznej wyprzedaży po najszybsze odbicie w historii. Technologia kontra turystyka. Praca zdalna zmienia świat.',
+          indexLabel:'S&P 500',
+          scenarios:[
+            { month:'Luty 2020', indexValue:3386, title:'Pierwsze alarmy', description:'Wiadomości z Chin o nowym wirusie. WHO ogłasza pandemię. Rynki ignorują – „to tylko grypa". Włochy wprowadzają lockdown. Pierwsze przypadki w USA. Niepewność rośnie, ale indeksy nadal na szczytach.',
+              choices:[{text:'Ignoruj – przesada mediów',effect:'ignore_covid'},{text:'Short linie lotnicze/hotele',effect:'short_travel_covid'},{text:'Kup tech (Zoom, Netflix)',effect:'buy_tech_covid'},{text:'Rotacja do defensywy',effect:'rotate_def_covid'}]},
+            { month:'Marzec 2020', indexValue:2237, title:'PANIKA i lockdown', description:'Spadek o 34% w 23 dni – najszybszy krach w historii! Lockdowny globalne. Ludzie zamknięci w domach. Restauracje, hotele, linie lotnicze sparaliżowane. VIX eksploduje do 80. Nikt nie wie, co będzie dalej.',
+              choices:[{text:'SPRZEDAJ wszystko – koniec świata',effect:'sell_all_covid'},{text:'Kupuj dno – Fed zadziała',effect:'buy_dip_covid'},{text:'Kup złoto i Bitcoin',effect:'buy_safe_haven_covid'},{text:'All-in tech i e-commerce',effect:'allin_tech_covid'}]},
+            { month:'Czerwiec 2020', indexValue:3100, title:'Odbicie w kształcie V', description:'Fed drukuje biliony. QE infinity. Stopy przy zerze. Ludzie siedzą w domach i handlują na Robinhood. Tech leci w kosmos – Zoom, Tesla, Amazon. „Stonks only go up". FOMO rośnie.',
+              choices:[{text:'Kup meme stocks (Hertz, AMC)',effect:'buy_memes_covid'},{text:'Big Tech (FAANG)',effect:'buy_faang_covid'},{text:'Value – za tanie teraz',effect:'buy_value_covid'},{text:'Weź zyski – to bańka',effect:'take_profits_covid'}]},
+            { month:'Grudzień 2020', indexValue:3756, title:'Szczepionki i nowa era', description:'Szczepionki zatwierdzone. Nadzieja na powrót normalności. Tech nadal mocny. Praca zdalna na stałe. E-commerce przejął świat. „Reopening trade" – rotacja do przebitych sektorów. Co teraz?',
+              choices:[{text:'Reopening (linie, hotele)',effect:'buy_reopening_covid'},{text:'Zostań w techu',effect:'stay_tech_covid'},{text:'Kryptowaluty – nowa era',effect:'buy_crypto_covid'},{text:'Rebalans 60/40',effect:'rebalance_covid'}]}
+          ],
+          stockPrices:{ 'Zoom':[107,160,252,450], 'Tesla':[180,120,255,705], 'Boeing':[328,95,185,215], 'Bitcoin':[10000,5000,9500,28000], 'SPY':[338,223,310,375], 'Gold':[1580,1700,1770,1895] }
         }
       };
 
@@ -627,7 +651,9 @@
           // Black Monday 1987
           stay_bull_87:[R(-150,50),'Kupiłeś szczyt przed krachem.','loss'], buy_puts_87:[R(180,350),'Opcje put – zabezpieczenie zadziałało!','profit'], rotate_bonds_87:[R(40,100),'Obligacje uciekły przed burzą.','profit'], short_fut_87:[R(200,420),'Short futures – trafiłeś!','profit'], sell_friday_87:[R(120,200),'Doskonała decyzja – uciekłeś przed krachem.','profit'], buy_dip_87:[R(-280,80),'Spadki były głębsze niż myślałeś.','loss'], hold_87:[R(-220,40),'To nie była zwykła korekta.','loss'], more_puts_87:[R(280,480),'Podwójne zabezpieczenie – jackpot!','profit'], panic_sell_87:[R(-150,20),'Sprzedałeś w panice po najgorszych cenach.','loss'], buy_crash_87:[R(200,450),'Kupno w dniu krachu – legendarny ruch!','profit'], wait_stable_87:[R(60,140),'Cierpliwość popłaca – kupiłeś niżej.','profit'], short_more_87:[R(-120,180),'Odbicie było szybsze niż się spodziewałeś.','neutral'], buy_quality_87:[R(100,240),'Quality blue chips wróciły mocno.','profit'], buy_tech_87:[R(80,200),'Tech rośnie – Microsoft na fali.','profit'], stay_def_87:[R(20,80),'Bezpiecznie, ale wolniej.','neutral'], keep_cash_87:[R(-20,40),'Przegapiłeś odbicie.','neutral'],
           // GFC 2008
-          short_mbs_07:[R(180,400),'Krótka MBS/housing — trafione.','profit'], move_quality_07:[R(20,80),'Jakość daje poduszkę.','neutral'], ignore_07:[R(-140,60),'To nie było „lokalne”.','loss'], gold_07:[R(40,120),'Bezpieczna przystań.','profit'], buy_banks_08:[R(-260,180),'Za wcześnie — jeszcze spadło.','neutral'], short_fin_08:[R(120,360),'Finanse pod presją — zysk.','profit'], cash_08:[R(20,60),'Kapitał zachowany.','neutral'], def_08:[R(-40,80),'Defensywy mniej bolą.','neutral'], buy_index_09:[R(160,380),'Kupno dna — nagrodzone.','profit'], safe_haven_08:[R(40,140),'Złoto/obligacje dają ulgę.','profit'], short_cyc_08:[R(80,220),'Cykliczne cierpiały.','profit'], stay_cash_08:[R(-10,40),'Bezpiecznie, ale przegapisz odbicie.','neutral'], allin_09:[R(220,480),'Historyczny trade życia.','profit'], buy_value_09:[R(140,320),'Value/finanse z odbiciem.','profit'], stay_bonds_09:[R(20,80),'Stabilnie, mniejszy zwrot.','neutral'], wait_09:[R(-40,60),'Za długo czekasz — rynek ucieka.','neutral']
+          short_mbs_07:[R(180,400),'Krótka MBS/housing — trafione.','profit'], move_quality_07:[R(20,80),'Jakość daje poduszkę.','neutral'], ignore_07:[R(-140,60),'To nie było „lokalne".','loss'], gold_07:[R(40,120),'Bezpieczna przystań.','profit'], buy_banks_08:[R(-260,180),'Za wcześnie — jeszcze spadło.','neutral'], short_fin_08:[R(120,360),'Finanse pod presją — zysk.','profit'], cash_08:[R(20,60),'Kapitał zachowany.','neutral'], def_08:[R(-40,80),'Defensywy mniej bolą.','neutral'], buy_index_09:[R(160,380),'Kupno dna — nagrodzone.','profit'], safe_haven_08:[R(40,140),'Złoto/obligacje dają ulgę.','profit'], short_cyc_08:[R(80,220),'Cykliczne cierpiały.','profit'], stay_cash_08:[R(-10,40),'Bezpiecznie, ale przegapisz odbicie.','neutral'], allin_09:[R(220,480),'Historyczny trade życia.','profit'], buy_value_09:[R(140,320),'Value/finanse z odbiciem.','profit'], stay_bonds_09:[R(20,80),'Stabilnie, mniejszy zwrot.','neutral'], wait_09:[R(-40,60),'Za długo czekasz — rynek ucieka.','neutral'],
+          // COVID 2020
+          ignore_covid:[R(-180,40),'To nie była przesada – lockdowny sparaliżowały świat.','loss'], short_travel_covid:[R(240,480),'Linie lotnicze i hotele w ruinie – idealny short!','profit'], buy_tech_covid:[R(180,420),'Zoom, Netflix – pandemia ich wynagradza!','profit'], rotate_def_covid:[R(40,100),'Defensywa chroni przed najgorszym.','profit'], sell_all_covid:[R(-80,40),'Sprzedałeś dno – najszybsze odbicie w historii.','loss'], buy_dip_covid:[R(300,650),'Fed zadrukowuje biliony – genialne kupno!','profit'], buy_safe_haven_covid:[R(120,280),'Złoto i Bitcoin wystrzeliły.','profit'], allin_tech_covid:[R(280,580),'Tech dominuje – Zoom +600%, Tesla +800%!','profit'], buy_memes_covid:[R(-200,400),'Meme stocks to kasyno – może być wszystko.','neutral'], buy_faang_covid:[R(180,360),'FAANG na szczycie – praca zdalna wygrywa.','profit'], buy_value_covid:[R(40,140),'Value cierpliwie czeka na swoją kolej.','neutral'], take_profits_covid:[R(60,120),'Zdrowy rozsądek – zyski zabezpieczone.','profit'], buy_reopening_covid:[R(140,320),'Szczepionki = rotacja. Linie i hotele odbijają!','profit'], stay_tech_covid:[R(80,200),'Tech nadal mocny, ale momentum słabnie.','profit'], buy_crypto_covid:[R(180,480),'Bitcoin do $60k – krypto eksploduje!','profit'], rebalance_covid:[R(60,140),'Zrównoważony portfel przetrwa każdą burzę.','profit']
         };
         if(outcomes[effect]){ [moneyChange,message,type]=outcomes[effect]; }
         else { moneyChange = R(-100,120); message='Efekt zależy od timingu rynku.'; type = moneyChange>0?'profit':(moneyChange<0?'loss':'neutral'); }
