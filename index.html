@@ -250,17 +250,7 @@
       };
 
       // --------- MENU SYSTEM ---------
-      const welcomeScreen = document.getElementById('welcomeScreen');
-      const epochModal = document.getElementById('epochModal');
-      const glossaryModal = document.getElementById('glossaryModal');
-      const quickStartBtn = document.getElementById('quickStartBtn');
-      const chooseEpochBtn = document.getElementById('chooseEpochBtn');
-      const glossaryBtn = document.getElementById('glossaryBtn');
-      const aboutBtn = document.getElementById('aboutBtn');
-      const closeModalBtn = document.getElementById('closeModalBtn');
-      const closeGlossaryBtn = document.getElementById('closeGlossaryBtn');
-      const modalBackdrop = document.getElementById('modalBackdrop');
-      const glossaryBackdrop = document.getElementById('glossaryBackdrop');
+      let welcomeScreen, epochModal, glossaryModal, quickStartBtn, chooseEpochBtn, glossaryBtn, aboutBtn, closeModalBtn, closeGlossaryBtn, modalBackdrop, glossaryBackdrop;
 
       function showWelcomeScreen(){
         welcomeScreen.classList.remove('hidden');
@@ -296,6 +286,19 @@
       // Initialize menu system AFTER DOM loads
       function initMenuSystem(){
         console.log('🎮 Initializing menu system...');
+
+        // Pobierz elementy TUTAJ, gdy DOM jest gotowy
+        welcomeScreen = document.getElementById('welcomeScreen');
+        epochModal = document.getElementById('epochModal');
+        glossaryModal = document.getElementById('glossaryModal');
+        quickStartBtn = document.getElementById('quickStartBtn');
+        chooseEpochBtn = document.getElementById('chooseEpochBtn');
+        glossaryBtn = document.getElementById('glossaryBtn');
+        aboutBtn = document.getElementById('aboutBtn');
+        closeModalBtn = document.getElementById('closeModalBtn');
+        closeGlossaryBtn = document.getElementById('closeGlossaryBtn');
+        modalBackdrop = document.getElementById('modalBackdrop');
+        glossaryBackdrop = document.getElementById('glossaryBackdrop');
 
         dom.backBtn.addEventListener('click', () => {
           console.log('Back button clicked');
