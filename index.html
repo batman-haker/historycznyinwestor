@@ -332,6 +332,12 @@
           '3AC, Celsius, Voyager – wszyscy pożyczali od siebie. Efekt domina.',
           'FTX używał depozytów klientów jako zabezpieczenia. Alameda Research to hedge fund SBF.',
           'Binance wycofał się z przejęcia. Bank run i bankructwo w 48h.'
+        ],
+        'AIBubble2023': [
+          'ChatGPT osiągnął 100M użytkowników w 2 miesiące – najszybsze przyjęcie w historii.',
+          'Nvidia to picks-and-shovels play – sprzedaje GPU do treningu AI. P/E >100.',
+          'Microsoft zainwestował $13B w OpenAI. Google Bard vs ChatGPT. Wyścig zbrojeń AI.',
+          'Valuacje AI startupów szalone: Character.ai $1B, Anthropic $18B, Inflection $4B.'
         ]
       };
 
@@ -514,6 +520,24 @@
               choices:[{text:'All-in BTC – dno stulecia',effect:'allin_btc_dno'},{text:'DCA małymi kwotami',effect:'dca_btc'},{text:'Czekaj na $10k',effect:'wait_10k'},{text:'Nigdy więcej krypto',effect:'quit_crypto'}]}
           ],
           stockPrices:{ 'Bitcoin':[30000,21000,17000,16500], 'Ethereum':[2000,1200,1100,1200], 'FTT (FTX Token)':[25,2,1,0], 'Luna':[80,0.0001,0.0001,0.0001], 'Coinbase (COIN)':[110,55,40,35], 'Tether (USDT)':[1.00,0.98,0.99,1.00] }
+        },
+
+        'AIBubble2023': {
+          era:'2023-2025', name:'AI Bubble', desc:'ChatGPT, Nvidia, Microsoft. AGI hype czy faktyczny przełom? P/E na orbicie.',
+          title:'Inwestor rewolucji AI',
+          subtitle:'Od ChatGPT do AI agents. Nvidia +600%, startupy po $1B bez revenue, Sam Altman fired i rehired. Bańka czy rewolucja?',
+          indexLabel:'S&P 500',
+          scenarios:[
+            { month:'Listopad 2022', indexValue:3950, title:'ChatGPT launch', description:'OpenAI wypuszcza ChatGPT. 1M użytkowników w 5 dni. 100M w 2 miesiące – najszybsze przyjęcie technologii w historii. Twitter eksploduje. Microsoft negocjuje deal. Wszyscy testują AI. Google w panice – "Code Red". Valuacje AI startupów wystrzeliwują.',
+              choices:[{text:'All-in Nvidia – GPU print money',effect:'buy_nvda'},{text:'Microsoft + OpenAI partnership',effect:'buy_msft_ai'},{text:'Kup wszystkich – Google, Meta, MSFT',effect:'buy_all_ai'},{text:'To hype – czekaj na korektę',effect:'wait_ai_correction'}]},
+            { month:'Maj 2023', indexValue:4200, title:'Nvidia earnings szok', description:'Nvidia ogłasza wyniki – revenue +265% YoY. Datacenter segment eksploduje. Jensen Huang (CEO) mówi "iPhone moment AI". Akcje skaczą +25% po godzinach. P/E ponad 100. Analitycy podnoszą targety. Google, Meta, Amazon – wszyscy kupują H100 GPU za $30k sztuka. Kolejka 6 miesięcy.',
+              choices:[{text:'Buy the breakout – momentum',effect:'buy_nvda_breakout'},{text:'Short – wycena absurdalna',effect:'short_nvda'},{text:'Kup AMD – tańsza alternatywa',effect:'buy_amd_ai'},{text:'Cloud providers – AWS, Azure',effect:'buy_cloud'}]},
+            { month:'Listopad 2023', indexValue:4550, title:'Sam Altman FIRED', description:'Board OpenAI wyrzuca Sam Altman bez wyjaśnienia. 700 pracowników grozi odejściem do Microsoft. Satya Nadella (MSFT CEO) oferuje pracę wszystkim. Drama trwa 5 dni. Altman wraca jako CEO z nowym boardem. Microsoft umacnia kontrolę. Rynek: chaos → ulga → rally.',
+              choices:[{text:'Kup Microsoft – kontrola OpenAI',effect:'buy_msft_drama'},{text:'Sell – governance risk',effect:'sell_openai_drama'},{text:'Kup konkurencję – Anthropic/Google',effect:'buy_anthropic_google'},{text:'All-in OpenAI products (private)',effect:'bet_openai'}]},
+            { month:'Czerwiec 2024', indexValue:5460, title:'Bańka czy przełom?', description:'Nvidia $3T market cap – top 3 na świecie. AI startupy: Character.ai $1B, Anthropic $18B, Perplexity $3B, Inflection $4B – większość bez revenue. UE uchwala AI Act. China restrictions na chipy. Nvidia guidance: +50% growth. Ale P/E >100. Inwestorzy pytają: to DotCom 2.0?',
+              choices:[{text:'Take profits – wyceny szalone',effect:'take_profits_ai'},{text:'HODL – to iPhone moment',effect:'hodl_ai'},{text:'Rotate – AI infrastructure (ASML)',effect:'rotate_infra'},{text:'Short – bańka jak DotCom',effect:'short_ai_bubble'}]}
+          ],
+          stockPrices:{ 'Nvidia (NVDA)':[150,300,480,900], 'Microsoft (MSFT)':[240,340,380,450], 'Google (GOOGL)':[90,120,140,170], 'Meta (META)':[120,280,450,560], 'AMD':[70,110,140,180], 'ARM Holdings':[50,80,120,140] }
         }
       };
 
@@ -679,7 +703,9 @@
           // COVID 2020
           ignore_covid:[R(-180,40),'To nie była przesada – lockdowny sparaliżowały świat.','loss'], short_travel_covid:[R(240,480),'Linie lotnicze i hotele w ruinie – idealny short!','profit'], buy_tech_covid:[R(180,420),'Zoom, Netflix – pandemia ich wynagradza!','profit'], rotate_def_covid:[R(40,100),'Defensywa chroni przed najgorszym.','profit'], sell_all_covid:[R(-80,40),'Sprzedałeś dno – najszybsze odbicie w historii.','loss'], buy_dip_covid:[R(300,650),'Fed zadrukowuje biliony – genialne kupno!','profit'], buy_safe_haven_covid:[R(120,280),'Złoto i Bitcoin wystrzeliły.','profit'], allin_tech_covid:[R(280,580),'Tech dominuje – Zoom +600%, Tesla +800%!','profit'], buy_memes_covid:[R(-200,400),'Meme stocks to kasyno – może być wszystko.','neutral'], buy_faang_covid:[R(180,360),'FAANG na szczycie – praca zdalna wygrywa.','profit'], buy_value_covid:[R(40,140),'Value cierpliwie czeka na swoją kolej.','neutral'], take_profits_covid:[R(60,120),'Zdrowy rozsądek – zyski zabezpieczone.','profit'], buy_reopening_covid:[R(140,320),'Szczepionki = rotacja. Linie i hotele odbijają!','profit'], stay_tech_covid:[R(80,200),'Tech nadal mocny, ale momentum słabnie.','profit'], buy_crypto_covid:[R(180,480),'Bitcoin do $60k – krypto eksploduje!','profit'], rebalance_covid:[R(60,140),'Zrównoważony portfel przetrwa każdą burzę.','profit'],
           // FTX 2022
-          short_luna:[R(300,600),'Idealny short – Luna do zera!','profit'], buy_luna_dip:[R(-450,50),'„Do Kwon oszust" – strata 99.9%.','loss'], sell_alts_luna:[R(100,200),'Uniknąłeś efektu domina.','profit'], hold_majors_luna:[R(-40,80),'BTC/ETH spadły, ale przetrwały.','neutral'], withdraw_cex:[R(120,240),'Uratowałeś kapitał przed FTX!','profit'], short_cex_tokens:[R(200,450),'FTT, CEL do zera – jackpot!','profit'], cash_wait_ftx:[R(40,100),'Bezpiecznie, czekasz na dno.','neutral'], buy_btc_crash:[R(-80,180),'Jeszcze spadnie, ale długoterminowo OK.','neutral'], panic_ftx:[R(-120,40),'Sprzedałeś tuż przed odbiciem.','loss'], self_custody:[R(150,300),'Not your keys, not your coins – ocalony!','profit'], short_all_cex:[R(180,380),'Wszystkie giełdy w ogniu – profit!','profit'], avoid_tether:[R(60,140),'USDT przetrwał, ale ostrożność popłaca.','profit'], allin_btc_dno:[R(250,550),'Bitcoin +300% w rok – legendarne kupno!','profit'], dca_btc:[R(120,280),'Dollar cost averaging działa.','profit'], wait_10k:[R(-40,60),'Czekałeś za długo – Bitcoin odbił.','neutral'], quit_crypto:[R(-80,20),'Odpuściłeś przed największym odbiciem.','loss']
+          short_luna:[R(300,600),'Idealny short – Luna do zera!','profit'], buy_luna_dip:[R(-450,50),'„Do Kwon oszust" – strata 99.9%.','loss'], sell_alts_luna:[R(100,200),'Uniknąłeś efektu domina.','profit'], hold_majors_luna:[R(-40,80),'BTC/ETH spadły, ale przetrwały.','neutral'], withdraw_cex:[R(120,240),'Uratowałeś kapitał przed FTX!','profit'], short_cex_tokens:[R(200,450),'FTT, CEL do zera – jackpot!','profit'], cash_wait_ftx:[R(40,100),'Bezpiecznie, czekasz na dno.','neutral'], buy_btc_crash:[R(-80,180),'Jeszcze spadnie, ale długoterminowo OK.','neutral'], panic_ftx:[R(-120,40),'Sprzedałeś tuż przed odbiciem.','loss'], self_custody:[R(150,300),'Not your keys, not your coins – ocalony!','profit'], short_all_cex:[R(180,380),'Wszystkie giełdy w ogniu – profit!','profit'], avoid_tether:[R(60,140),'USDT przetrwał, ale ostrożność popłaca.','profit'], allin_btc_dno:[R(250,550),'Bitcoin +300% w rok – legendarne kupno!','profit'], dca_btc:[R(120,280),'Dollar cost averaging działa.','profit'], wait_10k:[R(-40,60),'Czekałeś za długo – Bitcoin odbił.','neutral'], quit_crypto:[R(-80,20),'Odpuściłeś przed największym odbiciem.','loss'],
+          // AI Bubble 2023-2025
+          buy_nvda:[R(280,650),'Nvidia +600% – picks and shovels AI!','profit'], buy_msft_ai:[R(180,420),'Microsoft kontroluje OpenAI – solid bet.','profit'], buy_all_ai:[R(220,520),'Magnificent 7 rally – wszyscy wygrywają!','profit'], wait_ai_correction:[R(-80,60),'Korekta nie przyszła – miss out.','loss'], buy_nvda_breakout:[R(320,720),'Momentum niestoppable – Nvidia do $3T!','profit'], short_nvda:[R(-420,80),'Walkowanie shorta – P/E nie ma znaczenia w hype.','loss'], buy_amd_ai:[R(120,280),'AMD rośnie, ale Nvidia dominuje.','profit'], buy_cloud:[R(140,320),'AWS, Azure, GCP korzystają z AI.','profit'], buy_msft_drama:[R(180,380),'Drama rozwiązana – Microsoft wygrywa.','profit'], sell_openai_drama:[R(-120,40),'Sprzedałeś zanim drama rozwiązano.','loss'], buy_anthropic_google:[R(100,260),'Claude i Bard rosną, ale OpenAI liderem.','profit'], bet_openai:[R(-40,180),'Private market illiquid – trudno wycenić.','neutral'], take_profits_ai:[R(80,180),'Mądra decyzja – zabezpiecz zyski.','profit'], hodl_ai:[R(180,480),'Diamond hands – AI rewolucja trwa!','profit'], rotate_infra:[R(140,340),'ASML, TSM – infrastruktura AI kluczowa.','profit'], short_ai_bubble:[R(-280,120),'Za wcześnie – AI momentum trwa.','loss']
         };
         if(outcomes[effect]){ [moneyChange,message,type]=outcomes[effect]; }
         else { moneyChange = R(-100,120); message='Efekt zależy od timingu rynku.'; type = moneyChange>0?'profit':(moneyChange<0?'loss':'neutral'); }
