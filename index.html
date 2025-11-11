@@ -309,6 +309,12 @@
           '9/11: szok popytowy; polityka pieniężna łagodzi skutki.',
           '2002: późne dno; zostają liderzy z gotówką i moatami.'
         ],
+        'BlackMonday': [
+          'Portfolio insurance to automatyczne systemy sprzedaży – gdy rynek spada, automatycznie dosprzedają.',
+          'Fed szybko reaguje – obniża stopy i zapewnia płynność. To zapobiega recesji.',
+          'Krach był bardziej techniczny niż fundamentalny – gospodarka USA mocna.',
+          'Opcje put to zabezpieczenie – gdy rynek spada, rosną w wartości.'
+        ],
         'GFC2008': [
           'Bańka mieszkaniowa i sekurytyzacja subprime maskują ryzyko.',
           'Marzec 2008: Bear Stearns; rynek krucho stabilny.',
@@ -420,6 +426,24 @@
               image:'https://upload.wikimedia.org/wikipedia/commons/6/6b/NASDAQ_MarketSite.jpg' }
           ],
           stockPrices:{ 'Cisco':[77,50,15,13], 'Amazon':[75,36,6,15], 'Pets.com':[14,4,0,0], 'Microsoft':[58,34,24,26], 'US 10Y (cena)*':[98,101,108,106], '* gwiazdka':['—','—','—','—'] }
+        },
+
+        'BlackMonday': {
+          era:'1987', name:'Black Monday', desc:'Największy jednodniowy krach w historii. Dow Jones -22.6% w jeden dzień!',
+          title:'Inwestor Black Monday',
+          subtitle:'19 października 1987 – najczarniejszy poniedziałek w historii Wall Street. Portfolio insurance i panika wywołały lawinę.',
+          indexLabel:'Dow Jones',
+          scenarios:[
+            { month:'Sierpień 1987', indexValue:2722, title:'Szczyt hossy', description:'Rynek byka trwa od 5 lat. Dow Jones zyskał ponad 40% tylko w tym roku. Popularne stają się „portfolio insurance" – automatyczne systemy, które sprzedają, gdy rynek spada. Analitycy ostrzegają przed przegrzaną gospodarką i rosnącymi stopami.',
+              choices:[{text:'Zostań w indeksie – hossa trwa',effect:'stay_bull_87'},{text:'Zabezpiecz opcjami put',effect:'buy_puts_87'},{text:'Rotacja do obligacji',effect:'rotate_bonds_87'},{text:'Short przez futures',effect:'short_fut_87'}]},
+            { month:'16 Październik 1987', indexValue:2246, title:'Piątek przed krachem', description:'Rynek spada mocno w piątek. Portfolio insurance aktywuje się – automatyczne zlecenia sprzedaży zalewają rynek. Przez weekend media rozgrzewają atmosferę. Strach narasta.',
+              choices:[{text:'Sprzedaj wszystko przed weekendem',effect:'sell_friday_87'},{text:'Kup spadki – przesada',effect:'buy_dip_87'},{text:'Zostaw portfel – to korekta',effect:'hold_87'},{text:'Hedge dodatkowymi puts',effect:'more_puts_87'}]},
+            { month:'19 Październik 1987', indexValue:1738, title:'BLACK MONDAY', description:'Dow Jones spada o 22.6% w JEDEN dzień! Portfolio insurance wywołuje spiralę sprzedaży. Systemy komputerowe automatycznie rzucają akcje, co pogłębia panikę. Brokerzy nie nadążają z realizacją zleceń. To chaos.',
+              choices:[{text:'PANIKA – sprzedaj wszystko',effect:'panic_sell_87'},{text:'Kup dno – historyczna okazja',effect:'buy_crash_87'},{text:'Czekaj na stabilizację',effect:'wait_stable_87'},{text:'Short dalej – będzie gorzej',effect:'short_more_87'}]},
+            { month:'Grudzień 1987', indexValue:1938, title:'Odbicie po szoku', description:'Fed obniża stopy, zapewnia płynność. Rynek odbija o 11% od dołka. Gospodarka fundamentalnie mocna – krach był bardziej techniczny niż fundamentalny. Odwaga została nagrodzona.',
+              choices:[{text:'Kup quality blue chips',effect:'buy_quality_87'},{text:'Zwiększ ekspozycję na tech',effect:'buy_tech_87'},{text:'Pozostań w defensywach',effect:'stay_def_87'},{text:'Zachowaj gotówkę',effect:'keep_cash_87'}]}
+          ],
+          stockPrices:{ 'IBM':[157,132,103,120], 'Microsoft':[2.1,1.8,1.4,1.6], 'GE':[52,43,33,39], 'Złoto':[460,465,480,485], 'Bonds':[100,102,108,106] }
         },
 
         'GFC2008': {
@@ -599,7 +623,9 @@
           // 1990s
           buy_def_90:[R(40,120),'Defensywy ochroniły portfel.','profit'], hold_cash_90:[R(-20,20),'Inflacja podgryza gotówkę.','neutral'], buy_bonds_90:[R(30,90),'Spadek stóp pomaga obligacjom.','profit'], buy_pc_90:[R(-60,200),'PC boom nie bez wahań.','neutral'], buy_index_95:[R(60,140),'Rynek byka wynagradza pasywnych.','profit'], buy_scv_95:[R(40,160),'Small-value dają radę.','profit'], buy_telco_95:[R(-40,80),'Telco połowicznie; uwaga na dług.','neutral'], stay_def_95:[R(-20,40),'Za konserwatywnie — mniejszy zysk.','neutral'], buy_dip_97:[R(60,160),'USA odbiły szybko.','profit'], bonds_97:[R(10,70),'Bezpieczny parking kapitału.','neutral'], short_em_97:[R(80,220),'EM cierpiały — short działa.','profit'], gold_97:[R(-30,30),'Złoto bez fajerwerków.','neutral'], buy_after_fed_98:[R(80,200),'Don’t fight the Fed.','profit'], hold_98:[R(-20,30),'Ok, ale przepuściłeś odbicie.','neutral'], short_fin_98:[R(-100,120),'Lewar bywa zdradliwy.','neutral'], buy_momo_98:[R(40,220),'Momentum działa… do czasu.','profit'], allin_dotcom_99:[R(-500,400),'Wysokie ryzyko — może zaboleć.','neutral'], rot_value_99:[R(60,180),'Value gotowe na rotację.','profit'], rebal_99:[R(40,120),'Dyscyplina popłaca.','profit'], short_hyper_99:[R(120,320),'Short bąbla bywa złotem.','profit'],
           // DotCom
-          buy_ipos_00:[R(-420,220),'IPO często wracają do ceny emisyjnej.','loss'], rot_quality_00:[R(40,160),'Zyskowne techy przetrwały.','profit'], rot_value_00:[R(60,200),'Value wygrywa w bessie tech.','profit'], short_extreme_00:[R(120,360),'Skrajne wyceny pękają.','profit'], hold_bag_00:[R(-280,40),'„Długo-terminowo” zabolało.','loss'], move_cash_00:[R(20,80),'Kapitał zachowany.','neutral'], buy_prof_00:[R(-40,140),'Selekcja działa, ale zmienność duża.','neutral'], hedge_00:[R(40,120),'Hedge amortyzuje spadki.','profit'], buy_defense_01:[R(40,120),'Kontrakty rządowe pomagają.','profit'], short_travel_01:[R(80,200),'Travel pod presją.','profit'], hold_cash_01:[R(-10,40),'Bezpiecznie, ale stracone szanse.','neutral'], buy_quality_01:[R(-40,120),'Selekcja nadal trudna.','neutral'], buy_leaders_02:[R(60,200),'Liderzy wracają pierwsi.','profit'], buy_value_02:[R(60,180),'Cashflow > marzenia.','profit'], stay_bonds_02:[R(10,60),'Stabilnie, ale niższy zwrot.','neutral'], penny_02:[R(-200,200),'Kasyno: księżyc albo zero.','neutral'],
+          buy_ipos_00:[R(-420,220),'IPO często wracają do ceny emisyjnej.','loss'], rot_quality_00:[R(40,160),'Zyskowne techy przetrwały.','profit'], rot_value_00:[R(60,200),'Value wygrywa w bessie tech.','profit'], short_extreme_00:[R(120,360),'Skrajne wyceny pękają.','profit'], hold_bag_00:[R(-280,40),'„Długo-terminowo" zabolało.','loss'], move_cash_00:[R(20,80),'Kapitał zachowany.','neutral'], buy_prof_00:[R(-40,140),'Selekcja działa, ale zmienność duża.','neutral'], hedge_00:[R(40,120),'Hedge amortyzuje spadki.','profit'], buy_defense_01:[R(40,120),'Kontrakty rządowe pomagają.','profit'], short_travel_01:[R(80,200),'Travel pod presją.','profit'], hold_cash_01:[R(-10,40),'Bezpiecznie, ale stracone szanse.','neutral'], buy_quality_01:[R(-40,120),'Selekcja nadal trudna.','neutral'], buy_leaders_02:[R(60,200),'Liderzy wracają pierwsi.','profit'], buy_value_02:[R(60,180),'Cashflow > marzenia.','profit'], stay_bonds_02:[R(10,60),'Stabilnie, ale niższy zwrot.','neutral'], penny_02:[R(-200,200),'Kasyno: księżyc albo zero.','neutral'],
+          // Black Monday 1987
+          stay_bull_87:[R(-150,50),'Kupiłeś szczyt przed krachem.','loss'], buy_puts_87:[R(180,350),'Opcje put – zabezpieczenie zadziałało!','profit'], rotate_bonds_87:[R(40,100),'Obligacje uciekły przed burzą.','profit'], short_fut_87:[R(200,420),'Short futures – trafiłeś!','profit'], sell_friday_87:[R(120,200),'Doskonała decyzja – uciekłeś przed krachem.','profit'], buy_dip_87:[R(-280,80),'Spadki były głębsze niż myślałeś.','loss'], hold_87:[R(-220,40),'To nie była zwykła korekta.','loss'], more_puts_87:[R(280,480),'Podwójne zabezpieczenie – jackpot!','profit'], panic_sell_87:[R(-150,20),'Sprzedałeś w panice po najgorszych cenach.','loss'], buy_crash_87:[R(200,450),'Kupno w dniu krachu – legendarny ruch!','profit'], wait_stable_87:[R(60,140),'Cierpliwość popłaca – kupiłeś niżej.','profit'], short_more_87:[R(-120,180),'Odbicie było szybsze niż się spodziewałeś.','neutral'], buy_quality_87:[R(100,240),'Quality blue chips wróciły mocno.','profit'], buy_tech_87:[R(80,200),'Tech rośnie – Microsoft na fali.','profit'], stay_def_87:[R(20,80),'Bezpiecznie, ale wolniej.','neutral'], keep_cash_87:[R(-20,40),'Przegapiłeś odbicie.','neutral'],
           // GFC 2008
           short_mbs_07:[R(180,400),'Krótka MBS/housing — trafione.','profit'], move_quality_07:[R(20,80),'Jakość daje poduszkę.','neutral'], ignore_07:[R(-140,60),'To nie było „lokalne”.','loss'], gold_07:[R(40,120),'Bezpieczna przystań.','profit'], buy_banks_08:[R(-260,180),'Za wcześnie — jeszcze spadło.','neutral'], short_fin_08:[R(120,360),'Finanse pod presją — zysk.','profit'], cash_08:[R(20,60),'Kapitał zachowany.','neutral'], def_08:[R(-40,80),'Defensywy mniej bolą.','neutral'], buy_index_09:[R(160,380),'Kupno dna — nagrodzone.','profit'], safe_haven_08:[R(40,140),'Złoto/obligacje dają ulgę.','profit'], short_cyc_08:[R(80,220),'Cykliczne cierpiały.','profit'], stay_cash_08:[R(-10,40),'Bezpiecznie, ale przegapisz odbicie.','neutral'], allin_09:[R(220,480),'Historyczny trade życia.','profit'], buy_value_09:[R(140,320),'Value/finanse z odbiciem.','profit'], stay_bonds_09:[R(20,80),'Stabilnie, mniejszy zwrot.','neutral'], wait_09:[R(-40,60),'Za długo czekasz — rynek ucieka.','neutral']
         };
