@@ -119,13 +119,6 @@
     .achievement-badge { background:rgba(139,92,246,0.2); border:1px solid var(--border); border-radius:10px; padding:12px; text-align:center; }
     .achievement-badge-icon { font-size:2rem; display:block; margin-bottom:6px; }
     .achievement-badge-name { font-size:0.85rem; font-weight:700; color:var(--text); }
-
-    /* GLOSSARY */
-    .glossary-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px; }
-    .glossary-item { background:rgba(139,92,246,0.1); border:1px solid var(--border); border-radius:12px; padding:16px; transition: transform .2s, border-color .2s; }
-    .glossary-item:hover { transform: translateY(-2px); border-color: var(--accent-2); }
-    .glossary-item strong { display:block; margin-bottom:8px; color:var(--accent-2); font-size:1.05rem; }
-    .glossary-item p { margin:0; color:var(--muted); line-height:1.5; font-size:0.95rem; }
   </style>
 <script type="text/javascript" nonce="fbaf3247a48d4e4a8f9106ab1e1" src="//local.adguard.org?ts=1754656650365&amp;type=content-script&amp;dmn=mail-attachment.googleusercontent.com&amp;url=https%3A%2F%2Fmail-attachment.googleusercontent.com%2Fattachment%2Fu%2F0%2F%3Fui%3D2%26ik%3Df2ae618626%26attid%3D0.1%26permmsgid%3Dmsg-a%3Ar1370544206735525610%26th%3D19889e3900ffb5b5%26view%3Datt%26disp%3Dsafe%26realattid%3Df_me2v9lx50%26zw%26saddbat%3DANGjdJ9tnBx_fnmLD0gV18C3e8AnDwqW-CBoSG5TniDTP7IlJxdF3c7fYm1JqWHOp1e2U9TvLYbN-S64edVSp36JLaz7lgEc4vSYRpervdKBj2MWW2Ntn3HBxZVgr9bHNRnIC2GH-o-aTVqiITTbwjK6m35XDD3sTWXR9z6IIFLWdTv9OMC80sMRwu7aSEIuiCvfHTPm_eiGFWgoLnWc-VZkHCw4JXkL0q5t3iNEwoJVjtwnwRhPB3zRA51A6WN91SU_ZnAsTCRiPXd0Msyv2fRmUcHn2k_sopUnWRhtgY5u_VoQoIX030s-Zcuh0zJo6TKagK77NwE-bfelFjigt7DCc31dXx7WGPV7smw7gaUr9YHpDXAueoQIoLQWRedXTPQRiufiugXAnck0-1NRrGAAqW6p5j4FObQXhuFeE9Mh2j8tSo-HV-wluEhwmBT87d7Xy1OOu_-rSgkdbiOk-yHROdxp3tVK8Iyge5fA6Zc88exedhQbCKYDWlU7j8wGlblf5BWObkyVKv0kUmKz7iLM1nYMdzMFFHjkEQiVWG7tT6XqnDDI-vpY4je5GRtV0qwUPxb2C9NoXTzqoNVbua0ZXTQgzJHq9W6Y6N7dgMxIJE2DuZzrreT27qAi495WlA2N0h2A_zI4Fy1Hv5PPyJ96DmfPAk4j2i1q0CCSybCT3BbeKkMOI0rgyyxRbq8UzouKTlOtpAgzrrhBDUAn-wn82BdpK5DrhOnMFii0TuNUuTPPAsjJSS5klGGZDS3O-pSyP0ag3oJg4nEAnIC52JuNpOYISp4vEefezHjrMPn74LnIR9D5SsIlpkm1ZCf-Tk2YtKz8kaMOlL-1MatxeXXR0wxxXNrKVCbffgEDVQ4xWilbjmLE_MvNdd0WafGDjkvVXEf_pWTOZJhp6HV0N5B7ViNarFcExpGJdq2Ebas0Hp1jI-es8lrVhvlv1eFF5SDbsXbsVf8Vb8fKZ5QKHMtA0fjL7-mrWSHXlr0V0Rt9uNKCqAIJ_4EF3mEEVWs0pHlUZyEG237H9Y-IHB1zAGy1gACIP5KpIx2yqPXf643aBfFM_Teq1mO7VZXxz3L4wYcnniaZ13f-PqnnMixv&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="fbaf3247a48d4e4a8f9106ab1e1" src="//local.adguard.org?ts=1754656650365&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
 <body>
@@ -140,42 +133,9 @@
       <div class="menu-buttons-container">
         <button class="menu-main-btn primary-btn" id="quickStartBtn">🎮 Szybki Start</button>
         <button class="menu-main-btn secondary-btn" id="chooseEpochBtn">🕰️ Wybierz Epokę</button>
-        <button class="menu-main-btn secondary-btn" id="glossaryBtn">📚 Słownik Pojęć</button>
         <button class="menu-main-btn tertiary-btn" id="aboutBtn">ℹ️ O Grze</button>
       </div>
     </section>
-
-    <!-- MODAL SŁOWNIKA -->
-    <div id="glossaryModal" class="epoch-modal hidden" role="dialog" aria-modal="true">
-      <div class="modal-backdrop" id="glossaryBackdrop"></div>
-      <div class="modal-box" style="max-width:900px;">
-        <h2 class="modal-title">📚 Słownik Pojęć Finansowych</h2>
-        <p class="modal-subtitle">Poznaj kluczowe terminy używane w grze</p>
-        <div style="max-height:65vh; overflow-y:auto; padding:10px;">
-          <div class="glossary-grid">
-            <div class="glossary-item"><strong>📉 Short (Krótka sprzedaż)</strong><p>Obstawianie spadku ceny. Pożyczasz akcje, sprzedajesz, a potem odkupujesz taniej.</p></div>
-            <div class="glossary-item"><strong>🛡️ Hedge (Zabezpieczenie)</strong><p>Ochrona portfela przed ryzykiem przez zajęcie przeciwnej pozycji (np. opcje put).</p></div>
-            <div class="glossary-item"><strong>💎 Blue Chips</strong><p>Duże, stabilne firmy o ugruntowanej pozycji (np. IBM, GE, Microsoft).</p></div>
-            <div class="glossary-item"><strong>📊 Margin Call</strong><p>Wezwanie brokera do dopłaty gdy twoja pozycja na kredyt traci wartość.</p></div>
-            <div class="glossary-item"><strong>⚡ Volatility (Zmienność)</strong><p>Miara wahań ceny. Wysoka zmienność = duże ryzyko i duże szanse.</p></div>
-            <div class="glossary-item"><strong>🏦 QE (Quantitative Easing)</strong><p>Drukowanie pieniędzy przez bank centralny - skupowanie obligacji, żeby pompować płynność.</p></div>
-            <div class="glossary-item"><strong>💰 Value Investing</strong><p>Kupowanie tanich spółek względem fundamentów (zyski, aktywa, przepływy).</p></div>
-            <div class="glossary-item"><strong>🚀 Growth Investing</strong><p>Kupowanie spółek wzrostowych, często bez zysków, ale z szybko rosnącymi przychodami.</p></div>
-            <div class="glossary-item"><strong>🎯 Portfolio Insurance</strong><p>Automatyczny system sprzedaży akcji gdy rynek spada. Wywołał Black Monday 1987.</p></div>
-            <div class="glossary-item"><strong>🔻 Bear Market (Bessa)</strong><p>Spadek rynku o 20%+ od szczytu. Pesymizm i strach dominują.</p></div>
-            <div class="glossary-item"><strong>🔺 Bull Market (Hossa)</strong><p>Wzrost rynku o 20%+ od dołka. Optymizm i chciwość dominują.</p></div>
-            <div class="glossary-item"><strong>🛢️ Stagflacja</strong><p>Kombinacja stagnacji gospodarczej i inflacji. Najgorsze z dwóch światów (lata 70.).</p></div>
-            <div class="glossary-item"><strong>💹 IPO</strong><p>Initial Public Offering - pierwsze wprowadzenie akcji na giełdę.</p></div>
-            <div class="glossary-item"><strong>🎲 Meme Stocks</strong><p>Akcje popularne w internecie (Reddit, Twitter), kupowane bardziej z FOMO niż fundamentów.</p></div>
-            <div class="glossary-item"><strong>📈 FAANG</strong><p>Facebook (Meta), Apple, Amazon, Netflix, Google. Big Tech dominujący rynek.</p></div>
-            <div class="glossary-item"><strong>🏠 MBS (Mortgage-Backed Securities)</strong><p>Obligacje zabezpieczone hipotekami. Wywołały kryzys 2008.</p></div>
-            <div class="glossary-item"><strong>⚖️ Rebalancing</strong><p>Przywracanie docelowych proporcji w portfelu (np. 60% akcje, 40% obligacje).</p></div>
-            <div class="glossary-item"><strong>🎰 Leverage (Dźwignia)</strong><p>Inwestowanie pożyczonymi pieniędzmi. Zwiększa zyski i straty.</p></div>
-          </div>
-        </div>
-        <button class="modal-close" id="closeGlossaryBtn">❌ Zamknij</button>
-      </div>
-    </div>
 
     <!-- MODAL WYBORU EPOKI -->
     <div id="epochModal" class="epoch-modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
@@ -250,13 +210,18 @@
       };
 
       // --------- MENU SYSTEM ---------
-      let welcomeScreen, epochModal, glossaryModal, quickStartBtn, chooseEpochBtn, glossaryBtn, aboutBtn, closeModalBtn, closeGlossaryBtn, modalBackdrop, glossaryBackdrop;
+      const welcomeScreen = document.getElementById('welcomeScreen');
+      const epochModal = document.getElementById('epochModal');
+      const quickStartBtn = document.getElementById('quickStartBtn');
+      const chooseEpochBtn = document.getElementById('chooseEpochBtn');
+      const aboutBtn = document.getElementById('aboutBtn');
+      const closeModalBtn = document.getElementById('closeModalBtn');
+      const modalBackdrop = document.getElementById('modalBackdrop');
 
       function showWelcomeScreen(){
         welcomeScreen.classList.remove('hidden');
         dom.gameArea.classList.add('hidden');
         epochModal.classList.add('hidden');
-        glossaryModal.classList.add('hidden');
       }
 
       function hideWelcomeScreen(){
@@ -275,45 +240,9 @@
         epochModal.classList.add('hidden');
       }
 
-      function showGlossary(){
-        glossaryModal.classList.remove('hidden');
-      }
-
-      function hideGlossary(){
-        glossaryModal.classList.add('hidden');
-      }
-
       // Initialize menu system AFTER DOM loads
       function initMenuSystem(){
         console.log('🎮 Initializing menu system...');
-
-        // Pobierz elementy TUTAJ, gdy DOM jest gotowy
-        welcomeScreen = document.getElementById('welcomeScreen');
-        epochModal = document.getElementById('epochModal');
-        glossaryModal = document.getElementById('glossaryModal');
-        quickStartBtn = document.getElementById('quickStartBtn');
-        chooseEpochBtn = document.getElementById('chooseEpochBtn');
-        glossaryBtn = document.getElementById('glossaryBtn');
-        aboutBtn = document.getElementById('aboutBtn');
-        closeModalBtn = document.getElementById('closeModalBtn');
-        closeGlossaryBtn = document.getElementById('closeGlossaryBtn');
-        modalBackdrop = document.getElementById('modalBackdrop');
-        glossaryBackdrop = document.getElementById('glossaryBackdrop');
-
-        console.log('🔍 Sprawdzam elementy:');
-        console.log('welcomeScreen:', welcomeScreen);
-        console.log('quickStartBtn:', quickStartBtn);
-        console.log('chooseEpochBtn:', chooseEpochBtn);
-        console.log('glossaryBtn:', glossaryBtn);
-
-        if (!quickStartBtn) {
-          console.error('❌ quickStartBtn is null!');
-          return;
-        }
-        if (!chooseEpochBtn) {
-          console.error('❌ chooseEpochBtn is null!');
-          return;
-        }
 
         dom.backBtn.addEventListener('click', () => {
           console.log('Back button clicked');
@@ -331,14 +260,9 @@
           showModal();
         });
 
-        glossaryBtn.addEventListener('click', () => {
-          console.log('Glossary clicked');
-          showGlossary();
-        });
-
         aboutBtn.addEventListener('click', () => {
           console.log('About clicked');
-          alert("📈 HISTORYCZNY INWESTOR - Wersja Edukacyjna\n\nWciel się w rolę inwestora przeżywającego największe kryzysy finansowe ostatnich 100 lat.\n\n🎯 Cel: Zrozum mechanizmy rynkowe i naucz się podejmować mądre decyzje\n📚 7 Epok: Od Wielkiego Kryzysu 1929 do Kryzysu COVID 2020\n💡 Ucz się na błędach historii!\n\nWersja: 4.0-enhanced");
+          alert('📈 HISTORYCZNY INWESTOR - Wersja Edukacyjna\n\nWciel się w rolę inwestora przeżywającego największe kryzysy finansowe ostatnich 100 lat.\n\n🎯 Cel: Zrozum mechanizmy rynkowe i naucz się podejmować mądre decyzje\n📚 5 Epok: Od Wielkiego Kryzysu 1929 do Kryzysu Finansowego 2008\n💡 Ucz się na błędach historii!\n\nWersja: 3.0-complete');
         });
 
         closeModalBtn.addEventListener('click', () => {
@@ -346,19 +270,9 @@
           hideModal();
         });
 
-        closeGlossaryBtn.addEventListener('click', () => {
-          console.log('Close glossary clicked');
-          hideGlossary();
-        });
-
         modalBackdrop.addEventListener('click', () => {
           console.log('Backdrop clicked');
           hideModal();
-        });
-
-        glossaryBackdrop.addEventListener('click', () => {
-          console.log('Glossary backdrop clicked');
-          hideGlossary();
         });
 
         console.log('✅ Menu system initialized');
@@ -369,7 +283,7 @@
         '1930s': [
           'Czarny Czwartek/Wtorek (1929) uruchamia lawinę margin-calli. Standard złota ogranicza elastyczność banku centralnego. Brak ubezpieczenia depozytów pogłębia panikę.',
           'Smoot–Hawley ogranicza handel; popyt słabnie, deflacja zwiększa realny ciężar długów.',
-          '„Odbicia niedźwiedzie" kuszą, ale fundamenty słabną.',
+          '„Odbicia niedźwiedzie” kuszą, ale fundamenty słabną.',
           'Fale bankructw i bezrobocie. Przewagę mają defensywy i gotówka.',
           'Lato 1932 – historyczne dno; kupowanie jakości nagradzane, ale ryzyko nadal wysokie.',
           '1933: Bank holiday, FDIC, programy publiczne i dewaluacja dolara stabilizują system.'
@@ -378,15 +292,15 @@
           'Embargo OPEC (1973) winduje ceny ropy; szok podażowy i początek stagflacji.',
           'Limity cen → niedobory; gotówka i zwykłe obligacje przegrywają z inflacją.',
           'Watergate i wysokie stopy: przewagę mają dywidendy i metale szlachetne.',
-          'Recesja 1974–75; „jakość po przecenie" bywa nagradzana.',
+          'Recesja 1974–75; „jakość po przecenie” bywa nagradzana.',
           'Wydajność rośnie dzięki oszczędzaniu energii i automatyzacji.',
           '1979: drugi szok naftowy i wyższa inflacja.'
         ],
         '1990s': [
           'Recesja na starcie dekady, problemy S&L, Gulf War – defensywy w cenie.',
-          '1994–96: „soft landing"; produktywność rośnie dzięki IT i globalizacji.',
-          '1997: kryzys azjatycki – „flight to quality".',
-          '1998: LTCM, dźwignia i korelacje; „don't fight the Fed".',
+          '1994–96: „soft landing”; produktywność rośnie dzięki IT i globalizacji.',
+          '1997: kryzys azjatycki – „flight to quality”.',
+          '1998: LTCM, dźwignia i korelacje; „don’t fight the Fed”.',
           '1999: euforia internetowa – uwaga na rozjazd wycen i zysków.'
         ],
         'DotCom': [
@@ -395,23 +309,11 @@
           '9/11: szok popytowy; polityka pieniężna łagodzi skutki.',
           '2002: późne dno; zostają liderzy z gotówką i moatami.'
         ],
-        'BlackMonday': [
-          'Portfolio insurance to automatyczne systemy sprzedaży – gdy rynek spada, automatycznie dosprzedają, co pogłębia spadki.',
-          'Fed szybko reaguje – obniża stopy i zapewnia płynność. To zapobiega recesji.',
-          'Krach był bardziej techniczny niż fundamentalny – gospodarka USA mocna.',
-          'Opcje put to zabezpieczenie – gdy rynek spada, rosną w wartości.'
-        ],
         'GFC2008': [
           'Bańka mieszkaniowa i sekurytyzacja subprime maskują ryzyko.',
           'Marzec 2008: Bear Stearns; rynek krucho stabilny.',
           'Wrzesień 2008: Lehman; zamarza kredyt, ryzyko kontrahenta eksploduje.',
           'Marzec 2009: QE1; odbicie premiuje jakość i value.'
-        ],
-        'COVID2020': [
-          'Najszybszy krach w historii – 34% w 23 dni. Ale też najszybsze odbicie.',
-          'Fed drukuje biliony. Stopy przy zerze. QE infinity. "Money printer go brrr".',
-          'Praca zdalna na stałe – Zoom, Netflix, Amazon wygrywają. Restauracje i hotele cierpią.',
-          'Szczepionki zmieniają narrację – rotacja z techu do "reopening trade".'
         ]
       };
 
@@ -520,62 +422,26 @@
           stockPrices:{ 'Cisco':[77,50,15,13], 'Amazon':[75,36,6,15], 'Pets.com':[14,4,0,0], 'Microsoft':[58,34,24,26], 'US 10Y (cena)*':[98,101,108,106], '* gwiazdka':['—','—','—','—'] }
         },
 
-        'BlackMonday': {
-          era:'1987', name:'Black Monday', desc:'Największy jednodniowy krach w historii. Dow Jones spadł o 22.6% w jeden dzień.',
-          title:'Inwestor Black Monday',
-          subtitle:'19 października 1987 – najczarniejszy poniedziałek w historii Wall Street. Zobacz, jak automatyczne systemy handlowe i panika wywołały lawinę.',
-          indexLabel:'Dow Jones',
-          scenarios:[
-            { month:'Sierpień 1987', indexValue:2722, title:'Szczyt hossy', description:'Rynek byka trwa od 5 lat. Dow Jones zyskał ponad 40% tylko w tym roku. Popularne stają się „portfolio insurance" – automatyczne systemy, które sprzedają, gdy rynek spada. Analitycy ostrzegają przed przegraną gospodarką i rosnącymi stopami. Co robisz przed burzą?',
-              choices:[{text:'Zostań w indeksie – hossa trwa',effect:'stay_bull_87'},{text:'Zabezpiecz opcjami put',effect:'buy_puts_87'},{text:'Rotacja do obligacji',effect:'rotate_bonds_87'},{text:'Short przez futures',effect:'short_fut_87'}]},
-            { month:'16 Październik 1987', indexValue:2246, title:'Piątek przed krachem', description:'Rynek spada mocno w piątek. Portfolio insurance aktywuje się – automatyczne zlecenia sprzedaży zalewają rynek. Przez weekend media rozgrzewają atmosferę. Strach narasta.',
-              choices:[{text:'Sprzedaj wszystko przed weekendem',effect:'sell_friday_87'},{text:'Kup spadki – przesada',effect:'buy_dip_87'},{text:'Zostaw portfel – to korekta',effect:'hold_87'},{text:'Hedge dodatkowymi puts',effect:'more_puts_87'}]},
-            { month:'19 Październik 1987', indexValue:1738, title:'BLACK MONDAY', description:'Dow Jones spada o 22.6% w JEDEN dzień! Portfolio insurance wywołuje spiralę sprzedaży. Systemy komputerowe automatycznierzucają akcje, co pogłębia panikę. Brokerzy nie nadążają z realizacją zleceń. To chaos.',
-              choices:[{text:'PANIKA – sprzedaj wszystko',effect:'panic_sell_87'},{text:'Kup dno – historyczna okazja',effect:'buy_crash_87'},{text:'Czekaj na stabilizację',effect:'wait_stable_87'},{text:'Short dalej – będzie gorzej',effect:'short_more_87'}]},
-            { month:'Grudzień 1987', indexValue:1938, title:'Odbicie po szoku', description:'Fed obniża stopy, zapewnia płynność. Rynek odbija o 11% od dołka. Gospodarka fundamentalnie mocna – krach był bardziej techniczny niż fundamentalny. Odwaga została nagrodzona.',
-              choices:[{text:'Kup quality blue chips',effect:'buy_quality_87'},{text:'Zwiększ ekspozycję na tech',effect:'buy_tech_87'},{text:'Pozostań w defensywach',effect:'stay_def_87'},{text:'Zachowaj gotówkę',effect:'keep_cash_87'}]}
-          ],
-          stockPrices:{ 'IBM':[157,132,103,120], 'Microsoft':[2.1,1.8,1.4,1.6], 'General Electric':[52,43,33,39], 'Złoto':[460,465,480,485], 'US Bonds':[100,102,108,106], 'S&P 500 Futures':[322,265,207,229] }
-        },
-
         'GFC2008': {
           era:'2008–2009', name:'Wielki Kryzys Finansowy', desc:'Bańka kredytowa, Lehman, QE i dno 2009.',
           title:'Inwestor 2008',
-          subtitle:'Od „to lokalne" do globalnej paniki: jak działała dźwignia, płynność i interwencje.',
+          subtitle:'Od „to lokalne” do globalnej paniki: jak działała dźwignia, płynność i interwencje.',
           indexLabel:'S&P 500',
           scenarios:[
             { month:'Sierpień 2007', indexValue:1455, title:'Rysa na rynku kredytu', description:'Rynek kredytów hipotecznych subprime zaczyna pękać. Struktury sekurytyzacyjne maskowały ryzyko, a wyceny MBS stają się niepewne. To wstęp do problemów płynnościowych.',
-              choices:[{text:'Short homebuilders/MBS',effect:'short_mbs_07'},{text:'Przesuń do quality',effect:'move_quality_07'},{text:'Ignoruj – „to lokalne"',effect:'ignore_07'},{text:'Kup złoto',effect:'gold_07'}],
+              choices:[{text:'Short homebuilders/MBS',effect:'short_mbs_07'},{text:'Przesuń do quality',effect:'move_quality_07'},{text:'Ignoruj – „to lokalne”',effect:'ignore_07'},{text:'Kup złoto',effect:'gold_07'}],
               image:'https://upload.wikimedia.org/wikipedia/commons/8/8b/Subprime_Mortgage_Crisis_2007.png' },
             { month:'Marzec 2008', indexValue:1276, title:'Bear Stearns przejęty', description:'Fed pomaga sprzedać Bear Stearns, aby zatrzymać panikę. Rynek łapie krótkie oddechy, ale problemy strukturalne nie znikają.',
-              choices:[{text:'Kup banki – „krew na ulicach"',effect:'buy_banks_08'},{text:'Hedge vega/short finanse',effect:'short_fin_08'},{text:'Uciekaj do gotówki',effect:'cash_08'},{text:'Kup spółki defensywne',effect:'def_08'}],
+              choices:[{text:'Kup banki – „krew na ulicach”',effect:'buy_banks_08'},{text:'Hedge vega/short finanse',effect:'short_fin_08'},{text:'Uciekaj do gotówki',effect:'cash_08'},{text:'Kup spółki defensywne',effect:'def_08'}],
               image:'https://upload.wikimedia.org/wikipedia/commons/4/46/Bear_Stearns_Headquarters.jpg' },
-            { month:'Wrzesień 2008', indexValue:1204, title:'Lehman upada', description:'Zamrożenie rynku finansowania hurtowego i eksplozja ryzyka kontrahenta powodują gwałtowną wyprzedaż. Fundusze rynku pieniężnego „łamią dolara". Schronienia: złoto i obligacje.',
+            { month:'Wrzesień 2008', indexValue:1204, title:'Lehman upada', description:'Zamrożenie rynku finansowania hurtowego i eksplozja ryzyka kontrahenta powodują gwałtowną wyprzedaż. Fundusze rynku pieniężnego „łamią dolara”. Schronienia: złoto i obligacje.',
               choices:[{text:'Kup indeks – ultra ryzyko',effect:'buy_index_09'},{text:'Kup złoto/obligacje',effect:'safe_haven_08'},{text:'Short cykliczne',effect:'short_cyc_08'},{text:'Pozostań w cash',effect:'stay_cash_08'}],
               image:'https://upload.wikimedia.org/wikipedia/commons/5/5a/Lehman_Brothers_Times_Square_by_David_Shankbone.jpg' },
             { month:'Marzec 2009', indexValue:676, title:'Dno i QE1', description:'Bank centralny uruchamia QE, a firmy z mocnymi bilansami wracają do łask. To historyczny punkt zwrotny: rynek zaczyna odbijać od dna.',
-              choices:[{text:'All-in quality + indeks',effect:'allin_09'},{text:'Kup value/finanse',effect:'buy_value_09'},{text:'Zostań w obligacjach',effect:'stay_bonds_09'},{text:'Czekaj – „za wcześnie"',effect:'wait_09'}],
+              choices:[{text:'All-in quality + indeks',effect:'allin_09'},{text:'Kup value/finanse',effect:'buy_value_09'},{text:'Zostań w obligacjach',effect:'stay_bonds_09'},{text:'Czekaj – „za wcześnie”',effect:'wait_09'}],
               image:'https://upload.wikimedia.org/wikipedia/commons/5/5c/Federal_Reserve_Building.jpg' }
           ],
           stockPrices:{ 'SPY (ETF)':[145,128,120,70], 'Gold':[670,920,890,920], 'JPM':[47,40,25,25], 'Caterpillar':[80,72,35,28], 'US 10Y (cena)*':[99,104,109,108], '* gwiazdka':['—','—','—','—'] }
-        },
-
-        'COVID2020': {
-          era:'2020', name:'Kryzys COVID-19', desc:'Pandemia, lockdowny, QE infinity i najszybsze odbicie w historii.',
-          title:'Inwestor pandemii COVID-19',
-          subtitle:'Od panicznej wyprzedaży po najszybsze odbicie w historii. Technologia kontra turystyka. Praca zdalna zmienia świat.',
-          indexLabel:'S&P 500',
-          scenarios:[
-            { month:'Luty 2020', indexValue:3386, title:'Pierwsze alarmy', description:'Wiadomości z Chin o nowym wirusie. WHO ogłasza pandemię. Rynki ignorują – „to tylko grypa". Włochy wprowadzają lockdown. Pierwsze przypadki w USA. Niepewność rośnie, ale indeksy nadal na szczytach.',
-              choices:[{text:'Ignoruj – przesada mediów',effect:'ignore_covid'},{text:'Short linie lotnicze/hotele',effect:'short_travel_covid'},{text:'Kup technologie (Zoom, Netflix)',effect:'buy_tech_covid'},{text:'Rotacja do defensywy',effect:'rotate_def_covid'}]},
-            { month:'Marzec 2020', indexValue:2237, title:'PANIKA i lockdown', description:'Spadek o 34% w 23 dni – najszybszy krach w historii! Lockdowny globalne. Ludzie zamknięci w domach. Restauracje, hotele, linie lotnicze sparaliżowane. VIX eksploduje do 80. Nikt nie wie, co będzie dalej.',
-              choices:[{text:'SPRZEDAJ wszystko – koniec świata',effect:'sell_all_covid'},{text:'Kupuj dno – Fed zadziała',effect:'buy_dip_covid'},{text:'Kup złoto i Bitcoin',effect:'buy_safe_haven_covid'},{text:'All-in tech i e-commerce',effect:'allin_tech_covid'}]},
-            { month:'Czerwiec 2020', indexValue:3100, title:'Odbicie w kształcie V', description:'Fed drukuje biliony. QE infinity. Stopy przy zerze. Ludzie siedzą w domach i handlują na Robinhood. Tech leci w kosmos – Zoom, Tesla, Amazon. „Stonks only go up". FOMO rośnie.',
-              choices:[{text:'Kup meme stocks (Hertz, AMC)',effect:'buy_memes_covid'},{text:'Big Tech (FAANG)',effect:'buy_faang_covid'},{text:'Value – za tanie teraz',effect:'buy_value_covid'},{text:'Weź zyski – to bańka',effect:'take_profits_covid'}]},
-            { month:'Grudzień 2020', indexValue:3756, title:'Szczepionki i nowa era', description:'Szczepionki zatwierdzone. Nadzieja na powrót normalności. Tech nadal mocny. Praca zdalna na stałe. E-commerce przejął świat. „Reopening trade" – rotacja do przebitych sektorów. Co teraz?',
-              choices:[{text:'Reopening (linie, hotele)',effect:'buy_reopening_covid'},{text:'Zostań w techu',effect:'stay_tech_covid'},{text:'Kryptowaluty – nowa era',effect:'buy_crypto_covid'},{text:'Rebalans 60/40',effect:'rebalance_covid'}]}
-          ],
-          stockPrices:{ 'Zoom':[107,160,252,450], 'Tesla':[180,120,255,705], 'Boeing':[328,95,185,215], 'Bitcoin':[10000,5000,9500,28000], 'SPY (ETF)':[338,223,310,375], 'Gold':[1580,1700,1770,1895] }
         }
       };
 
@@ -734,18 +600,8 @@
           buy_def_90:[R(40,120),'Defensywy ochroniły portfel.','profit'], hold_cash_90:[R(-20,20),'Inflacja podgryza gotówkę.','neutral'], buy_bonds_90:[R(30,90),'Spadek stóp pomaga obligacjom.','profit'], buy_pc_90:[R(-60,200),'PC boom nie bez wahań.','neutral'], buy_index_95:[R(60,140),'Rynek byka wynagradza pasywnych.','profit'], buy_scv_95:[R(40,160),'Small-value dają radę.','profit'], buy_telco_95:[R(-40,80),'Telco połowicznie; uwaga na dług.','neutral'], stay_def_95:[R(-20,40),'Za konserwatywnie — mniejszy zysk.','neutral'], buy_dip_97:[R(60,160),'USA odbiły szybko.','profit'], bonds_97:[R(10,70),'Bezpieczny parking kapitału.','neutral'], short_em_97:[R(80,220),'EM cierpiały — short działa.','profit'], gold_97:[R(-30,30),'Złoto bez fajerwerków.','neutral'], buy_after_fed_98:[R(80,200),'Don’t fight the Fed.','profit'], hold_98:[R(-20,30),'Ok, ale przepuściłeś odbicie.','neutral'], short_fin_98:[R(-100,120),'Lewar bywa zdradliwy.','neutral'], buy_momo_98:[R(40,220),'Momentum działa… do czasu.','profit'], allin_dotcom_99:[R(-500,400),'Wysokie ryzyko — może zaboleć.','neutral'], rot_value_99:[R(60,180),'Value gotowe na rotację.','profit'], rebal_99:[R(40,120),'Dyscyplina popłaca.','profit'], short_hyper_99:[R(120,320),'Short bąbla bywa złotem.','profit'],
           // DotCom
           buy_ipos_00:[R(-420,220),'IPO często wracają do ceny emisyjnej.','loss'], rot_quality_00:[R(40,160),'Zyskowne techy przetrwały.','profit'], rot_value_00:[R(60,200),'Value wygrywa w bessie tech.','profit'], short_extreme_00:[R(120,360),'Skrajne wyceny pękają.','profit'], hold_bag_00:[R(-280,40),'„Długo-terminowo” zabolało.','loss'], move_cash_00:[R(20,80),'Kapitał zachowany.','neutral'], buy_prof_00:[R(-40,140),'Selekcja działa, ale zmienność duża.','neutral'], hedge_00:[R(40,120),'Hedge amortyzuje spadki.','profit'], buy_defense_01:[R(40,120),'Kontrakty rządowe pomagają.','profit'], short_travel_01:[R(80,200),'Travel pod presją.','profit'], hold_cash_01:[R(-10,40),'Bezpiecznie, ale stracone szanse.','neutral'], buy_quality_01:[R(-40,120),'Selekcja nadal trudna.','neutral'], buy_leaders_02:[R(60,200),'Liderzy wracają pierwsi.','profit'], buy_value_02:[R(60,180),'Cashflow > marzenia.','profit'], stay_bonds_02:[R(10,60),'Stabilnie, ale niższy zwrot.','neutral'], penny_02:[R(-200,200),'Kasyno: księżyc albo zero.','neutral'],
-          // Black Monday 1987
-          stay_bull_87:[R(-150,50),'Kupiłeś szczyt przed krachem.','loss'], buy_puts_87:[R(180,350),'Opcje put – zabezpieczenie zadziałało!','profit'], rotate_bonds_87:[R(40,100),'Obligacje uciekły przed burzą.','profit'], short_fut_87:[R(200,420),'Short futures – trafiłeś w samo centrum!','profit'],
-          sell_friday_87:[R(120,200),'Doskonała decyzja – uciekłeś przed krachem.','profit'], buy_dip_87:[R(-280,80),'Spadki były głębsze niż myślałeś.','loss'], hold_87:[R(-220,40),'To nie była zwykła korekta.','loss'], more_puts_87:[R(280,480),'Podwójne zabezpieczenie – jackpot!','profit'],
-          panic_sell_87:[R(-150,20),'Sprzedałeś w panice po najgorszych cenach.','loss'], buy_crash_87:[R(200,450),'Kupno w dniu krachu – legendarny ruch!','profit'], wait_stable_87:[R(60,140),'Cierpliwość popłaca – kupiłeś niżej.','profit'], short_more_87:[R(-120,180),'Odbicie było szybsze niż się spodziewałeś.','neutral'],
-          buy_quality_87:[R(100,240),'Quality blue chips wróciły mocno.','profit'], buy_tech_87:[R(80,200),'Tech rośnie – Microsoft na fali.','profit'], stay_def_87:[R(20,80),'Bezpiecznie, ale wolniej.','neutral'], keep_cash_87:[R(-20,40),'Przegapiłeś odbicie.','neutral'],
           // GFC 2008
-          short_mbs_07:[R(180,400),'Krótka MBS/housing — trafione.','profit'], move_quality_07:[R(20,80),'Jakość daje poduszkę.','neutral'], ignore_07:[R(-140,60),'To nie było „lokalne".','loss'], gold_07:[R(40,120),'Bezpieczna przystań.','profit'], buy_banks_08:[R(-260,180),'Za wcześnie — jeszcze spadło.','neutral'], short_fin_08:[R(120,360),'Finanse pod presją — zysk.','profit'], cash_08:[R(20,60),'Kapitał zachowany.','neutral'], def_08:[R(-40,80),'Defensywy mniej bolą.','neutral'], buy_index_09:[R(160,380),'Kupno dna — nagrodzone.','profit'], safe_haven_08:[R(40,140),'Złoto/obligacje dają ulgę.','profit'], short_cyc_08:[R(80,220),'Cykliczne cierpiały.','profit'], stay_cash_08:[R(-10,40),'Bezpiecznie, ale przegapisz odbicie.','neutral'], allin_09:[R(220,480),'Historyczny trade życia.','profit'], buy_value_09:[R(140,320),'Value/finanse z odbiciem.','profit'], stay_bonds_09:[R(20,80),'Stabilnie, mniejszy zwrot.','neutral'], wait_09:[R(-40,60),'Za długo czekasz — rynek ucieka.','neutral'],
-          // COVID 2020
-          ignore_covid:[R(-180,40),'To nie była przesada – lockdowny sparaliżowały świat.','loss'], short_travel_covid:[R(240,480),'Linie lotnicze i hotele w ruinie – idealny short!','profit'], buy_tech_covid:[R(180,420),'Zoom, Netflix – pandemia ich wynagrodzi!','profit'], rotate_def_covid:[R(40,100),'Defensywa chroni przed najgorszym.','profit'],
-          sell_all_covid:[R(-80,40),'Sprzedałeś dno – najszybsze odbicie w historii.','loss'], buy_dip_covid:[R(300,650),'Fed zadrukowuje biliony – genialne kupno!','profit'], buy_safe_haven_covid:[R(120,280),'Złoto i Bitcoin wystrzeliły.','profit'], allin_tech_covid:[R(280,580),'Tech dominuje – Zoom +600%, Tesla +800%!','profit'],
-          buy_memes_covid:[R(-200,400),'Meme stocks to kasyno – może być wszystko.','neutral'], buy_faang_covid:[R(180,360),'FAANG na szczycie – praca zdalna wygrywa.','profit'], buy_value_covid:[R(40,140),'Value cierpliwie czeka na swoją kolej.','neutral'], take_profits_covid:[R(60,120),'Zdrowy rozsądek – zyski zabezpieczone.','profit'],
-          buy_reopening_covid:[R(140,320),'Szczepionki = rotacja. Linie i hotele odbijają!','profit'], stay_tech_covid:[R(80,200),'Tech nadal mocny, ale momentum słabnie.','profit'], buy_crypto_covid:[R(180,480),'Bitcoin do $60k – krypto eksploduje!','profit'], rebalance_covid:[R(60,140),'Zrównoważony portfel przetrwa każdą burzę.','profit']
+          short_mbs_07:[R(180,400),'Krótka MBS/housing — trafione.','profit'], move_quality_07:[R(20,80),'Jakość daje poduszkę.','neutral'], ignore_07:[R(-140,60),'To nie było „lokalne”.','loss'], gold_07:[R(40,120),'Bezpieczna przystań.','profit'], buy_banks_08:[R(-260,180),'Za wcześnie — jeszcze spadło.','neutral'], short_fin_08:[R(120,360),'Finanse pod presją — zysk.','profit'], cash_08:[R(20,60),'Kapitał zachowany.','neutral'], def_08:[R(-40,80),'Defensywy mniej bolą.','neutral'], buy_index_09:[R(160,380),'Kupno dna — nagrodzone.','profit'], safe_haven_08:[R(40,140),'Złoto/obligacje dają ulgę.','profit'], short_cyc_08:[R(80,220),'Cykliczne cierpiały.','profit'], stay_cash_08:[R(-10,40),'Bezpiecznie, ale przegapisz odbicie.','neutral'], allin_09:[R(220,480),'Historyczny trade życia.','profit'], buy_value_09:[R(140,320),'Value/finanse z odbiciem.','profit'], stay_bonds_09:[R(20,80),'Stabilnie, mniejszy zwrot.','neutral'], wait_09:[R(-40,60),'Za długo czekasz — rynek ucieka.','neutral']
         };
         if(outcomes[effect]){ [moneyChange,message,type]=outcomes[effect]; }
         else { moneyChange = R(-100,120); message='Efekt zależy od timingu rynku.'; type = moneyChange>0?'profit':(moneyChange<0?'loss':'neutral'); }
