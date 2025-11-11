@@ -326,6 +326,12 @@
           'Fed drukuje biliony. Stopy przy zerze. QE infinity. Money printer go brrr.',
           'Praca zdalna na stałe – Zoom, Netflix, Amazon wygrywają. Restauracje cierpią.',
           'Szczepionki zmieniają narrację – rotacja z techu do reopening trade.'
+        ],
+        'FTX2022': [
+          'Luna/UST to algorytmiczny stablecoin – kolapsnął w 72h z $40B do $0.',
+          '3AC, Celsius, Voyager – wszyscy pożyczali od siebie. Efekt domina.',
+          'FTX używał depozytów klientów jako zabezpieczenia. Alameda Research to hedge fund SBF.',
+          'Binance wycofał się z przejęcia. Bank run i bankructwo w 48h.'
         ]
       };
 
@@ -490,6 +496,24 @@
               choices:[{text:'Reopening (linie, hotele)',effect:'buy_reopening_covid'},{text:'Zostań w techu',effect:'stay_tech_covid'},{text:'Kryptowaluty – nowa era',effect:'buy_crypto_covid'},{text:'Rebalans 60/40',effect:'rebalance_covid'}]}
           ],
           stockPrices:{ 'Zoom':[107,160,252,450], 'Tesla':[180,120,255,705], 'Boeing':[328,95,185,215], 'Bitcoin':[10000,5000,9500,28000], 'SPY':[338,223,310,375], 'Gold':[1580,1700,1770,1895] }
+        },
+
+        'FTX2022': {
+          era:'2022', name:'FTX Crypto Crash', desc:'Upadek Terra Luna, 3AC, Celsius i FTX. Krypto zima. Bitcoin -77%.',
+          title:'Inwestor krachu krypto 2022',
+          subtitle:'Od $69k do $16k. Algorytmiczne stablecoiny, dźwignia, efekt domina i Sam Bankman-Fried w areszcie.',
+          indexLabel:'Bitcoin',
+          scenarios:[
+            { month:'Maj 2022', indexValue:30000, title:'Luna/Terra imploduje', description:'UST to algorytmiczny stablecoin – miał trzymać $1 przez arbitraż z Luna. Wieloryb sprzedaje $350M UST. Peg się łamie. Luna drukuje biliony monet. Spirala śmierci. $40B wyparowuje w 72h. Do Kwon znika.',
+              choices:[{text:'Short Luna – oczywisty scam',effect:'short_luna'},{text:'Kup dip – „to tylko FUD"',effect:'buy_luna_dip'},{text:'Sprzedaj wszystkie alts',effect:'sell_alts_luna'},{text:'Trzymaj BTC/ETH only',effect:'hold_majors_luna'}]},
+            { month:'Lipiec 2022', indexValue:21000, title:'3AC i Celsius bankrutują', description:'Three Arrows Capital (3AC) – mega hedge fund – bankrutuje. Pożyczył miliardy, grał z dźwignią. Celsius zamraża wypłaty. Voyager bankrutuje. Wszyscy pożyczali od siebie. Efekt domina. Nikt nie wie kto jest następny.',
+              choices:[{text:'Wypłać wszystko z CEX',effect:'withdraw_cex'},{text:'Short exchange tokens',effect:'short_cex_tokens'},{text:'All-in gotówka i czekaj',effect:'cash_wait_ftx'},{text:'Kup Bitcoin – tanio',effect:'buy_btc_crash'}]},
+            { month:'Listopad 2022', indexValue:17000, title:'FTX IMPLODUJE', description:'CZ (Binance) tweetuje że sprzedaje FTT. Sam Bankman-Fried (SBF) mówi „jesteśmy OK". Bank run. Binance ogłasza przejęcie, potem się wycofuje. Okazuje się: FTX użył $10B depozytów klientów na spekulacje Alamedy. Bankructwo w 48h. SBF aresztowany.',
+              choices:[{text:'PANIKA – sprzedaj wszystko',effect:'panic_ftx'},{text:'Self-custody – not your keys',effect:'self_custody'},{text:'Short wszystkie CEX',effect:'short_all_cex'},{text:'Tether risk – avoid USDT',effect:'avoid_tether'}]},
+            { month:'Grudzień 2022', indexValue:16500, title:'Kapitulacja i dno', description:'Bitcoin -77% od ATH. Altcoiny -90%. Miners sprzedają. Magazyny krypto zamykają. SBF w areszcie. Do Kwon w ukryciu. Regulatorzy atakują. Wszyscy mówią „krypto umarło". Genesis bankrutuje. Ale... fundamenty on-chain mocne.',
+              choices:[{text:'All-in BTC – dno stulecia',effect:'allin_btc_dno'},{text:'DCA małymi kwotami',effect:'dca_btc'},{text:'Czekaj na $10k',effect:'wait_10k'},{text:'Nigdy więcej krypto',effect:'quit_crypto'}]}
+          ],
+          stockPrices:{ 'Bitcoin':[30000,21000,17000,16500], 'Ethereum':[2000,1200,1100,1200], 'FTT (FTX Token)':[25,2,1,0], 'Luna':[80,0.0001,0.0001,0.0001], 'Coinbase (COIN)':[110,55,40,35], 'Tether (USDT)':[1.00,0.98,0.99,1.00] }
         }
       };
 
@@ -653,7 +677,9 @@
           // GFC 2008
           short_mbs_07:[R(180,400),'Krótka MBS/housing — trafione.','profit'], move_quality_07:[R(20,80),'Jakość daje poduszkę.','neutral'], ignore_07:[R(-140,60),'To nie było „lokalne".','loss'], gold_07:[R(40,120),'Bezpieczna przystań.','profit'], buy_banks_08:[R(-260,180),'Za wcześnie — jeszcze spadło.','neutral'], short_fin_08:[R(120,360),'Finanse pod presją — zysk.','profit'], cash_08:[R(20,60),'Kapitał zachowany.','neutral'], def_08:[R(-40,80),'Defensywy mniej bolą.','neutral'], buy_index_09:[R(160,380),'Kupno dna — nagrodzone.','profit'], safe_haven_08:[R(40,140),'Złoto/obligacje dają ulgę.','profit'], short_cyc_08:[R(80,220),'Cykliczne cierpiały.','profit'], stay_cash_08:[R(-10,40),'Bezpiecznie, ale przegapisz odbicie.','neutral'], allin_09:[R(220,480),'Historyczny trade życia.','profit'], buy_value_09:[R(140,320),'Value/finanse z odbiciem.','profit'], stay_bonds_09:[R(20,80),'Stabilnie, mniejszy zwrot.','neutral'], wait_09:[R(-40,60),'Za długo czekasz — rynek ucieka.','neutral'],
           // COVID 2020
-          ignore_covid:[R(-180,40),'To nie była przesada – lockdowny sparaliżowały świat.','loss'], short_travel_covid:[R(240,480),'Linie lotnicze i hotele w ruinie – idealny short!','profit'], buy_tech_covid:[R(180,420),'Zoom, Netflix – pandemia ich wynagradza!','profit'], rotate_def_covid:[R(40,100),'Defensywa chroni przed najgorszym.','profit'], sell_all_covid:[R(-80,40),'Sprzedałeś dno – najszybsze odbicie w historii.','loss'], buy_dip_covid:[R(300,650),'Fed zadrukowuje biliony – genialne kupno!','profit'], buy_safe_haven_covid:[R(120,280),'Złoto i Bitcoin wystrzeliły.','profit'], allin_tech_covid:[R(280,580),'Tech dominuje – Zoom +600%, Tesla +800%!','profit'], buy_memes_covid:[R(-200,400),'Meme stocks to kasyno – może być wszystko.','neutral'], buy_faang_covid:[R(180,360),'FAANG na szczycie – praca zdalna wygrywa.','profit'], buy_value_covid:[R(40,140),'Value cierpliwie czeka na swoją kolej.','neutral'], take_profits_covid:[R(60,120),'Zdrowy rozsądek – zyski zabezpieczone.','profit'], buy_reopening_covid:[R(140,320),'Szczepionki = rotacja. Linie i hotele odbijają!','profit'], stay_tech_covid:[R(80,200),'Tech nadal mocny, ale momentum słabnie.','profit'], buy_crypto_covid:[R(180,480),'Bitcoin do $60k – krypto eksploduje!','profit'], rebalance_covid:[R(60,140),'Zrównoważony portfel przetrwa każdą burzę.','profit']
+          ignore_covid:[R(-180,40),'To nie była przesada – lockdowny sparaliżowały świat.','loss'], short_travel_covid:[R(240,480),'Linie lotnicze i hotele w ruinie – idealny short!','profit'], buy_tech_covid:[R(180,420),'Zoom, Netflix – pandemia ich wynagradza!','profit'], rotate_def_covid:[R(40,100),'Defensywa chroni przed najgorszym.','profit'], sell_all_covid:[R(-80,40),'Sprzedałeś dno – najszybsze odbicie w historii.','loss'], buy_dip_covid:[R(300,650),'Fed zadrukowuje biliony – genialne kupno!','profit'], buy_safe_haven_covid:[R(120,280),'Złoto i Bitcoin wystrzeliły.','profit'], allin_tech_covid:[R(280,580),'Tech dominuje – Zoom +600%, Tesla +800%!','profit'], buy_memes_covid:[R(-200,400),'Meme stocks to kasyno – może być wszystko.','neutral'], buy_faang_covid:[R(180,360),'FAANG na szczycie – praca zdalna wygrywa.','profit'], buy_value_covid:[R(40,140),'Value cierpliwie czeka na swoją kolej.','neutral'], take_profits_covid:[R(60,120),'Zdrowy rozsądek – zyski zabezpieczone.','profit'], buy_reopening_covid:[R(140,320),'Szczepionki = rotacja. Linie i hotele odbijają!','profit'], stay_tech_covid:[R(80,200),'Tech nadal mocny, ale momentum słabnie.','profit'], buy_crypto_covid:[R(180,480),'Bitcoin do $60k – krypto eksploduje!','profit'], rebalance_covid:[R(60,140),'Zrównoważony portfel przetrwa każdą burzę.','profit'],
+          // FTX 2022
+          short_luna:[R(300,600),'Idealny short – Luna do zera!','profit'], buy_luna_dip:[R(-450,50),'„Do Kwon oszust" – strata 99.9%.','loss'], sell_alts_luna:[R(100,200),'Uniknąłeś efektu domina.','profit'], hold_majors_luna:[R(-40,80),'BTC/ETH spadły, ale przetrwały.','neutral'], withdraw_cex:[R(120,240),'Uratowałeś kapitał przed FTX!','profit'], short_cex_tokens:[R(200,450),'FTT, CEL do zera – jackpot!','profit'], cash_wait_ftx:[R(40,100),'Bezpiecznie, czekasz na dno.','neutral'], buy_btc_crash:[R(-80,180),'Jeszcze spadnie, ale długoterminowo OK.','neutral'], panic_ftx:[R(-120,40),'Sprzedałeś tuż przed odbiciem.','loss'], self_custody:[R(150,300),'Not your keys, not your coins – ocalony!','profit'], short_all_cex:[R(180,380),'Wszystkie giełdy w ogniu – profit!','profit'], avoid_tether:[R(60,140),'USDT przetrwał, ale ostrożność popłaca.','profit'], allin_btc_dno:[R(250,550),'Bitcoin +300% w rok – legendarne kupno!','profit'], dca_btc:[R(120,280),'Dollar cost averaging działa.','profit'], wait_10k:[R(-40,60),'Czekałeś za długo – Bitcoin odbił.','neutral'], quit_crypto:[R(-80,20),'Odpuściłeś przed największym odbiciem.','loss']
         };
         if(outcomes[effect]){ [moneyChange,message,type]=outcomes[effect]; }
         else { moneyChange = R(-100,120); message='Efekt zależy od timingu rynku.'; type = moneyChange>0?'profit':(moneyChange<0?'loss':'neutral'); }
