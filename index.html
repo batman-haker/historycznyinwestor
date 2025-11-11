@@ -300,6 +300,21 @@
         modalBackdrop = document.getElementById('modalBackdrop');
         glossaryBackdrop = document.getElementById('glossaryBackdrop');
 
+        console.log('🔍 Sprawdzam elementy:');
+        console.log('welcomeScreen:', welcomeScreen);
+        console.log('quickStartBtn:', quickStartBtn);
+        console.log('chooseEpochBtn:', chooseEpochBtn);
+        console.log('glossaryBtn:', glossaryBtn);
+
+        if (!quickStartBtn) {
+          console.error('❌ quickStartBtn is null!');
+          return;
+        }
+        if (!chooseEpochBtn) {
+          console.error('❌ chooseEpochBtn is null!');
+          return;
+        }
+
         dom.backBtn.addEventListener('click', () => {
           console.log('Back button clicked');
           showWelcomeScreen();
