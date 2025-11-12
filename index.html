@@ -316,10 +316,16 @@
           'Opcje put to zabezpieczenie – gdy rynek spada, rosną w wartości.'
         ],
         'GFC2008': [
-          'Bańka mieszkaniowa i sekurytyzacja subprime maskują ryzyko.',
-          'Marzec 2008: Bear Stearns; rynek krucho stabilny.',
-          'Wrzesień 2008: Lehman; zamarza kredyt, ryzyko kontrahenta eksploduje.',
-          'Marzec 2009: QE1; odbicie premiuje jakość i value.'
+          '9 sierpnia 2007 – BNP Paribas freeze. CDOs toksyczne. LIBOR spike. „To lokalne".',
+          'Citi, Merrill write-downs $15-18B. Monoline insurers lose AAA. Recession starts.',
+          '16 marca 2008 – Bear Stearns $2/share (było $170). Leverage 35:1. Moral hazard.',
+          'Fannie/Freddie $5T exposure. IndyMac bankrut. Oil $147. Stagflacja?',
+          '15 września – LEHMAN BANKRUTUJE. $600B. AIG bailout $85B. Money markets break buck.',
+          '3 października – TARP $700B passed. Iceland banks fail. VIX 80. Great Depression 2.0?',
+          '16 grudnia – Fed 0% ZIRP. Citi $45B bailout. Madoff $65B Ponzi. Auto bailout.',
+          '17 lutego 2009 – Obama $787B stimulus. Bank stress tests. Citi <$1. Nationalization fear.',
+          '9 marca – S&P 666 dno. QE1 $1.75T announced. Mark-to-market relaxed. 11-year bull begins.',
+          'Counterparty risk fatal. Cash is king. Quality survives. Buy the fear = legendary.'
         ],
         'COVID2020': [
           '23 stycznia – Wuhan lockdown 11M ludzi. Rynki ignorują. „To Chiny".',
@@ -484,23 +490,33 @@
         'GFC2008': {
           era:'2008–2009', name:'Wielki Kryzys Finansowy', desc:'Bańka kredytowa, Lehman, QE i dno 2009.',
           title:'Inwestor 2008',
-          subtitle:'Od „to lokalne” do globalnej paniki: jak działała dźwignia, płynność i interwencje.',
+          subtitle:'Od „to lokalne" do globalnej paniki: jak działała dźwignia, płynność i interwencje.',
           indexLabel:'S&P 500',
           scenarios:[
-            { month:'Sierpień 2007', indexValue:1455, title:'Rysa na rynku kredytu', description:'Rynek kredytów hipotecznych subprime zaczyna pękać. Struktury sekurytyzacyjne maskowały ryzyko, a wyceny MBS stają się niepewne. To wstęp do problemów płynnościowych.',
-              choices:[{text:'Short homebuilders/MBS',effect:'short_mbs_07'},{text:'Przesuń do quality',effect:'move_quality_07'},{text:'Ignoruj – „to lokalne”',effect:'ignore_07'},{text:'Kup złoto',effect:'gold_07'}],
+            { month:'Sierpień 2007', indexValue:1455, title:'BNP Paribas freeze – subprime pęka', description:'9 sierpnia – BNP Paribas zamraża 3 fundusze z ekspozycją na subprime. Pierwszy sygnał że CDOs i MBS są toksyczne. LIBOR spike. Homebuilders w ruinie (Countrywide, New Century bankrutują). Fed obniża stopy. Większość inwestorów: „to lokalne, housing bubble deflating". Ale... CDO exposure wszędzie.',
+              choices:[{text:'Short homebuilders/financials',effect:'short_mbs_07'},{text:'Rotate to quality stocks',effect:'move_quality_07'},{text:'Ignoruj – „lokalne, contained"',effect:'ignore_07'},{text:'Buy gold – safe haven',effect:'gold_07'}],
               image:'https://upload.wikimedia.org/wikipedia/commons/8/8b/Subprime_Mortgage_Crisis_2007.png' },
-            { month:'Marzec 2008', indexValue:1276, title:'Bear Stearns przejęty', description:'Fed pomaga sprzedać Bear Stearns, aby zatrzymać panikę. Rynek łapie krótkie oddechy, ale problemy strukturalne nie znikają.',
-              choices:[{text:'Kup banki – „krew na ulicach”',effect:'buy_banks_08'},{text:'Hedge vega/short finanse',effect:'short_fin_08'},{text:'Uciekaj do gotówki',effect:'cash_08'},{text:'Kup spółki defensywne',effect:'def_08'}],
+            { month:'Styczeń 2008', indexValue:1378, title:'Recesja zaczyna się', description:'Unemployment rośnie. Consumer spending słabnie. Banks piszą write-downs na MBS (Citi $18B, Merrill $15B). Monoline insurers (MBIA, Ambac) – którzy ubezpieczali CDO – tracą AAA rating. Fed emergency cut -0.75%. Stimulus checks ($600). Bear Stearns hedge funds implodują. Market volatility spike.',
+              choices:[{text:'Sell everything – recession coming',effect:'sell_recession_08'},{text:'Buy the dip – Fed cuts helping',effect:'buy_dip_recession'},{text:'Defensive rotation – staples, utilities',effect:'rotate_defensive_08'},{text:'International diversification',effect:'diversify_international_08'}]},
+            { month:'Marzec 2008', indexValue:1276, title:'Bear Stearns IMPLODUJE', description:'14 marca – Bear Stearns run. Leverage 35:1. Counterparty risk. 16 marca – Fed organizuje emergency sale do JPMorgan za $2/share (było $170 rok temu). Fed otwiera discount window dla investment banks. „Moral hazard" debate. Pytanie: kto następny? Lehman? Merrill?',
+              choices:[{text:'Buy banks – „blood in streets"',effect:'buy_banks_08'},{text:'Short investment banks',effect:'short_fin_08'},{text:'Cash is king – flight to safety',effect:'cash_08'},{text:'Defensywa – healthcare, staples',effect:'def_08'}],
               image:'https://upload.wikimedia.org/wikipedia/commons/4/46/Bear_Stearns_Headquarters.jpg' },
-            { month:'Wrzesień 2008', indexValue:1204, title:'Lehman upada', description:'Zamrożenie rynku finansowania hurtowego i eksplozja ryzyka kontrahenta powodują gwałtowną wyprzedaż. Fundusze rynku pieniężnego „łamią dolara”. Schronienia: złoto i obligacje.',
-              choices:[{text:'Kup indeks – ultra ryzyko',effect:'buy_index_09'},{text:'Kup złoto/obligacje',effect:'safe_haven_08'},{text:'Short cykliczne',effect:'short_cyc_08'},{text:'Pozostań w cash',effect:'stay_cash_08'}],
+            { month:'Lipiec 2008', indexValue:1267, title:'Fannie i Freddie – quasi-bankrut', description:'Fannie Mae i Freddie Mac – GSEs z $5T mortgage exposure – tracą 90% wartości. Treasury musi je ratować. IndyMac Bank (9th largest thrift) bankrutuje – biggest bank failure since S&L crisis. Oil $147 (rekord). Inflation + recession = stagflacja? Bear market rally już się skończył.',
+              choices:[{text:'Short regional banks',effect:'short_regional_banks'},{text:'Energy play – oil $150+ coming?',effect:'buy_energy_08'},{text:'Treasury bonds – ultimate safety',effect:'treasuries_08'},{text:'Emerging markets – decoupling myth',effect:'buy_em_08'}]},
+            { month:'Wrzesień 2008', indexValue:1204, title:'LEHMAN BANKRUTUJE – blackout', description:'15 września – Lehman Brothers bankrutuje. $600B assets. Counterparty chains rozpadają się. Money market funds „break the buck". Commercial paper market zamrożony. Credit default swaps explode. Merrill sprzedany do BofA. AIG bliski upadku (CDS exposure $500B) – Fed bailout $85B. Washington Mutual bankrutuje. CHAOS.',
+              choices:[{text:'PANIKA sell – koniec systemu',effect:'panic_sell_gfc'},{text:'Buy gold/treasuries – flight to quality',effect:'safe_haven_08'},{text:'Short cyclicals/financials',effect:'short_cyc_08'},{text:'Cash + wait for government action',effect:'stay_cash_08'}],
               image:'https://upload.wikimedia.org/wikipedia/commons/5/5a/Lehman_Brothers_Times_Square_by_David_Shankbone.jpg' },
-            { month:'Marzec 2009', indexValue:676, title:'Dno i QE1', description:'Bank centralny uruchamia QE, a firmy z mocnymi bilansami wracają do łask. To historyczny punkt zwrotny: rynek zaczyna odbijać od dna.',
-              choices:[{text:'All-in quality + indeks',effect:'allin_09'},{text:'Kup value/finanse',effect:'buy_value_09'},{text:'Zostań w obligacjach',effect:'stay_bonds_09'},{text:'Czekaj – „za wcześnie”',effect:'wait_09'}],
+            { month:'Październik 2008', indexValue:968, title:'TARP i globalna panika', description:'3 października – Congress passes TARP ($700B bailout). Ale rynek dalej spada – trust zniknął. Iceland banks bankrutują. European banks (Fortis, Dexia) bailouts. VIX 80. S&P -40% YTD. Madoff scandal. GM/Chrysler/Ford błagają o bailout. „Great Depression 2.0" w nagłówkach. Unemployment 6.5% i rośnie.',
+              choices:[{text:'Capitulation – sprzedaj wszystko',effect:'capitulate_oct08'},{text:'Buy index – max pessimism = dno?',effect:'buy_index_oct08'},{text:'Gold + commodities collapse hedge',effect:'gold_commodities_08'},{text:'Wait for clarity',effect:'wait_clarity_08'}]},
+            { month:'Grudzień 2008', indexValue:903, title:'Fed stopy 0% – Citi bailout', description:'16 grudnia – Fed obniża stopy do 0-0.25% (ZIRP). Pierwsza QE zapowiedziana. Citigroup dostaje $45B bailout + $300B gwarancji. Auto bailout – GM i Chrysler dostaną $17B. Bernie Madoff aresztowany ($65B Ponzi). S&P 500 najgorszy rok od 1931. Wszyscy czekają na Obamę (inauguracja stycznia).',
+              choices:[{text:'Buy the fear – max capitulation',effect:'buy_fear_dec08'},{text:'Quality dividend stocks',effect:'quality_dividend_08'},{text:'Bonds – deflation risk real',effect:'bonds_deflation_08'},{text:'International – US toxic',effect:'international_dec08'}]},
+            { month:'Luty 2009', indexValue:735, title:'Obama stimulus – ale dno jeszcze nie', description:'17 lutego – Obama podpisuje $787B stimulus (ARRA). Biggest since New Deal. Bank stress tests announced. Citi trading <$1. Nationalization fears. Housing prices still falling. Unemployment 8.3%. Market testing new lows. Geithner (Treasury) plan unclear. Fear peak.',
+              choices:[{text:'This is the bottom – all-in',effect:'allin_feb09'},{text:'Wait for stress test results',effect:'wait_stress_tests'},{text:'Dividend aristocrats',effect:'dividend_aristocrats_09'},{text:'Stay defensive',effect:'stay_defensive_09'}]},
+            { month:'Marzec 2009', indexValue:676, title:'DNO – QE1 i turn', description:'9 marca – S&P 500 dno 666 (-57% od szczytu). Bank stress tests show banks need capital but survivable. 18 marca – Fed announces QE1 ($1.75T). Citigroup profitable in Q1. Mark-to-market accounting relaxed. Technical turn. Contrarian buyers nagrodzeni. Quality + financials skaczą. Begin of 11-year bull market.',
+              choices:[{text:'All-in – legendary bottom',effect:'allin_09'},{text:'Buy financials + value',effect:'buy_value_09'},{text:'Stay in bonds – rally fake',effect:'stay_bonds_09'},{text:'Wait for confirmation',effect:'wait_09'}],
               image:'https://upload.wikimedia.org/wikipedia/commons/5/5c/Federal_Reserve_Building.jpg' }
           ],
-          stockPrices:{ 'SPY (ETF)':[145,128,120,70], 'Gold':[670,920,890,920], 'JPM':[47,40,25,25], 'Caterpillar':[80,72,35,28], 'US 10Y (cena)*':[99,104,109,108], '* gwiazdka':['—','—','—','—'] }
+          stockPrices:{ 'S&P 500 (SPY)':[145,138,128,127,120,97,90,73,70], 'Goldman Sachs (GS)':[220,195,125,180,115,65,55,60,85], 'Citigroup (C)':[47,30,22,18,15,7,4,2,3], 'JPMorgan (JPM)':[47,42,40,38,35,30,22,18,25], 'Caterpillar (CAT)':[80,75,72,65,55,40,32,28,35], 'Gold':[670,750,920,950,890,820,850,920,950], 'US 10Y Treasury':[99,102,104,103,105,109,110,112,108], 'Ford (F)':[8,6,4,5,3,2,1.5,1.8,3], 'Home Depot (HD)':[38,32,28,26,23,18,16,18,24] }
         },
 
         'COVID2020': {
@@ -746,7 +762,24 @@
           // Black Monday 1987
           stay_bull_87:[R(-150,50),'Kupiłeś szczyt przed krachem.','loss'], buy_puts_87:[R(180,350),'Opcje put – zabezpieczenie zadziałało!','profit'], rotate_bonds_87:[R(40,100),'Obligacje uciekły przed burzą.','profit'], short_fut_87:[R(200,420),'Short futures – trafiłeś!','profit'], sell_friday_87:[R(120,200),'Doskonała decyzja – uciekłeś przed krachem.','profit'], buy_dip_87:[R(-280,80),'Spadki były głębsze niż myślałeś.','loss'], hold_87:[R(-220,40),'To nie była zwykła korekta.','loss'], more_puts_87:[R(280,480),'Podwójne zabezpieczenie – jackpot!','profit'], panic_sell_87:[R(-150,20),'Sprzedałeś w panice po najgorszych cenach.','loss'], buy_crash_87:[R(200,450),'Kupno w dniu krachu – legendarny ruch!','profit'], wait_stable_87:[R(60,140),'Cierpliwość popłaca – kupiłeś niżej.','profit'], short_more_87:[R(-120,180),'Odbicie było szybsze niż się spodziewałeś.','neutral'], buy_quality_87:[R(100,240),'Quality blue chips wróciły mocno.','profit'], buy_tech_87:[R(80,200),'Tech rośnie – Microsoft na fali.','profit'], stay_def_87:[R(20,80),'Bezpiecznie, ale wolniej.','neutral'], keep_cash_87:[R(-20,40),'Przegapiłeś odbicie.','neutral'],
           // GFC 2008
-          short_mbs_07:[R(180,400),'Krótka MBS/housing — trafione.','profit'], move_quality_07:[R(20,80),'Jakość daje poduszkę.','neutral'], ignore_07:[R(-140,60),'To nie było „lokalne".','loss'], gold_07:[R(40,120),'Bezpieczna przystań.','profit'], buy_banks_08:[R(-260,180),'Za wcześnie — jeszcze spadło.','neutral'], short_fin_08:[R(120,360),'Finanse pod presją — zysk.','profit'], cash_08:[R(20,60),'Kapitał zachowany.','neutral'], def_08:[R(-40,80),'Defensywy mniej bolą.','neutral'], buy_index_09:[R(160,380),'Kupno dna — nagrodzone.','profit'], safe_haven_08:[R(40,140),'Złoto/obligacje dają ulgę.','profit'], short_cyc_08:[R(80,220),'Cykliczne cierpiały.','profit'], stay_cash_08:[R(-10,40),'Bezpiecznie, ale przegapisz odbicie.','neutral'], allin_09:[R(220,480),'Historyczny trade życia.','profit'], buy_value_09:[R(140,320),'Value/finanse z odbiciem.','profit'], stay_bonds_09:[R(20,80),'Stabilnie, mniejszy zwrot.','neutral'], wait_09:[R(-40,60),'Za długo czekasz — rynek ucieka.','neutral'],
+          // Sierpień 2007 - BNP Paribas
+          short_mbs_07:[R(180,400),'Housing/MBS collapse – perfekcyjny short!','profit'], move_quality_07:[R(20,80),'Jakość daje poduszkę, ale nie chroni.','neutral'], ignore_07:[R(-140,60),'To nie było „lokalne" – global contagion.','loss'], gold_07:[R(40,120),'Złoto do $1900 – bezpieczna przystań.','profit'],
+          // Styczeń 2008 - Recesja
+          sell_recession_08:[R(120,280),'Uniknąłeś najgorszego – mądra decyzja.','profit'], buy_dip_recession:[R(-180,80),'To nie był dip – początek bessy.','loss'], rotate_defensive_08:[R(60,180),'Defensywa pomogła, ale też spadła.','profit'], diversify_international_08:[R(-100,60),'International też upadł – globalne.','loss'],
+          // Marzec 2008 - Bear Stearns
+          buy_banks_08:[R(-260,180),'Za wcześnie – Lehman jeszcze upadnie.','neutral'], short_fin_08:[R(120,360),'Investment banks collapse – świetny short!','profit'], cash_08:[R(20,60),'Kapitał zachowany – cash is king.','neutral'], def_08:[R(-40,80),'Defensywy mniej bolą, ale też spadają.','neutral'],
+          // Lipiec 2008 - Fannie/Freddie
+          short_regional_banks:[R(180,420),'Regional banks massacre – trafiony short!','profit'], buy_energy_08:[R(-140,80),'Oil crash z $147 do $40 – źle wyczułeś.','loss'], treasuries_08:[R(80,200),'Treasuries ultimate safe haven – solid.','profit'], buy_em_08:[R(-220,40),'Emerging markets crashed harder – decoupling myth.','loss'],
+          // Wrzesień 2008 - Lehman
+          panic_sell_gfc:[R(-120,60),'Sprzedałeś blisko dna – źle.','loss'], safe_haven_08:[R(40,140),'Złoto/Treasuries jedyne schronienie.','profit'], short_cyc_08:[R(80,220),'Cyclicals decimated – short zadziałał!','profit'], stay_cash_08:[R(-10,40),'Bezpiecznie, ale przegapisz odbicie.','neutral'],
+          // Październik 2008 - TARP
+          capitulate_oct08:[R(-80,40),'Capitulation przy dnie – najgorszy timing.','loss'], buy_index_oct08:[R(180,420),'Blisko dna – odważna decyzja nagrodzona!','profit'], gold_commodities_08:[R(60,180),'Gold OK, commodities crashed – mieszane.','profit'], wait_clarity_08:[R(20,80),'Czekanie bezpieczne, ale miss dna.','neutral'],
+          // Grudzień 2008 - Citi bailout, ZIRP
+          buy_fear_dec08:[R(140,340),'Max fear blisko dna – solid kupno!','profit'], quality_dividend_08:[R(100,280),'Dividend aristocrats przetrwali – mądre.','profit'], bonds_deflation_08:[R(40,120),'Deflation risk przeszacowany, ale bezpiecznie.','profit'], international_dec08:[R(-60,100),'International też w bessie, ale diversyfikacja.','neutral'],
+          // Luty 2009 - Obama stimulus
+          allin_feb09:[R(180,460),'Tuż przed dnem – brave call!','profit'], wait_stress_tests:[R(60,180),'Stress tests dały clarity – kupno po nich OK.','profit'], dividend_aristocrats_09:[R(120,300),'Quality dividends wygrywa długoterminowo.','profit'], stay_defensive_09:[R(40,120),'Defensywa miss rally – za ostrożnie.','neutral'],
+          // Marzec 2009 - DNO QE1
+          allin_09:[R(220,480),'Legendarny bottom – trade dekady!','profit'], buy_value_09:[R(140,320),'Value/financials eksplozja – świetnie!','profit'], stay_bonds_09:[R(20,80),'Rally był prawdziwy – przegapiłeś.','neutral'], wait_09:[R(-40,60),'Czekanie za długie – market uciekł.','neutral'],
           // COVID 2020
           // Styczeń 2020 - Wuhan lockdown
           ignore_wuhan:[R(-140,80),'Nie było lokalnym problemem – globalna pandemia.','loss'], buy_vix_hedge_covid:[R(280,620),'VIX do 80 – perfect hedge!','profit'], short_cruises_early:[R(320,680),'Cruise lines -90% – legendarny short!','profit'], rotate_tech_jan:[R(180,420),'Stay home = tech boom early!','profit'],
