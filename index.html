@@ -304,10 +304,16 @@
           '1999: euforia internetowa – uwaga na rozjazd wycen i zysków.'
         ],
         'DotCom': [
-          '2000: kulminacja bąbla; wiele spółek bez zysków, szybkie IPO.',
-          'Płynność wysycha; quality-tech trzyma się lepiej.',
-          '9/11: szok popytowy; polityka pieniężna łagodzi skutki.',
-          '2002: późne dno; zostają liderzy z gotówką i moatami.'
+          '1998: Netscape IPO model. Amazon, Yahoo, eBay public. "Eyeballs" > revenue. VC flood.',
+          'Y2K 1999: IPO co tydzień. Pets.com, eToys bez zysków, wyceny miliardowe. Day trading boom.',
+          '10 marca 2000: Nasdaq 5048 ATH. P/E 100+. Add ".com" = +50%. Greenspan stopy 6.5%.',
+          '14 kwietnia 2000: Nasdaq -9% w dzień. Fed tightening działa. IPO window zamyka się.',
+          'Listopad 2000: -40% od szczytu. VC funding freeze. Pets.com liquidates 9 miesięcy po IPO.',
+          '2001: 200+ dot-coms bankrupt. eToys, Webvan gone. Tylko profitable survive.',
+          '11 września: WTC zamachy. Markets closed 4 dni. Travel/ad spending collapse.',
+          '2002: WorldCom $104B bankrupt. Enron fraud. Sarbanes-Oxley. Trust destroyed.',
+          'Październik 2002: Nasdaq 1114 (-78%). 5000 dot-coms dead. Survivors: AMZN, EBAY, GOOG.',
+          'Quality + cashflow wins. Valuations matter long term. "This time is different" = lie.'
         ],
         'BlackMonday': [
           'Portfolio insurance to automatyczne systemy sprzedaży – gdy rynek spada, automatycznie dosprzedają.',
@@ -450,23 +456,33 @@
         'DotCom': {
           era:'2000–2002', name:'Bańka Dot-com', desc:'Euforia internetowa i bolesne otrzeźwienie.',
           title:'Inwestor ery dot-com',
-          subtitle:'Zobacz, jak narracja „nowej ekonomii” zderzyła się z brakiem zysków — i kto przetrwał.',
+          subtitle:'Zobacz, jak narracja „nowej ekonomii" zderzyła się z brakiem zysków — i kto przetrwał.',
           indexLabel:'NASDAQ',
           scenarios:[
-            { month:'Marzec 2000', indexValue:5048, title:'Szczyt euforii', description:'IPO pojawiają się co tydzień, a wyceny oderwały się od rzeczywistości: wiele spółek nie ma jeszcze zysków ani przepływów pieniężnych. Inwestorzy płacą za obietnice „kiedyś”. Największe ryzyko? Zmiana nastroju i wysychanie finansowania.',
-              choices:[{text:'Kup każdy debiut',effect:'buy_ipos_00'},{text:'Rotacja do quality tech',effect:'rot_quality_00'},{text:'Poważny rebalans do value',effect:'rot_value_00'},{text:'Short ekstremalne wyceny',effect:'short_extreme_00'}],
+            { month:'Sierpień 1998', indexValue:1499, title:'Netscape i początek manii', description:'Netscape IPO (1995) pokazało że internet = pieniądze. Amazon, Yahoo, eBay już publiczne. AOL ma 14M subscribers. "Eyeballs" ważniejsze niż revenue. Venture capital leje się do każdego startupu z ".com" w nazwie. Fed obniża stopy po LTCM. Greenspan: "irrational exuberance"... ale rynek ignoruje.',
+              choices:[{text:'All-in internet stocks',effect:'allin_dotcom_98'},{text:'Blue chips tech - MSFT, Intel, Cisco',effect:'buy_bluechip_tech_98'},{text:'Value stocks - za tanie teraz',effect:'buy_value_98'},{text:'Bonds - bańka się kończy',effect:'bonds_caution_98'}]},
+            { month:'Styczeń 1999', indexValue:2506, title:'Y2K paranoia i IPO mania', description:'Y2K bug fear – firmy wydają miliardy na IT upgrade. IPO co tydzień: każdy internet startup wychodzi na giełdę po 6 miesięcach. Pets.com, eToys, Webvan – wyceny miliardowe bez zysków. Day trading boom. CNBC non-stop. "This time is different" – nowa ekonomia, internet zmieni wszystko.',
+              choices:[{text:'Flip IPOs - kupuj i sprzedaj w dzień',effect:'flip_ipos_99'},{text:'Quality growth - Amazon, eBay',effect:'quality_growth_99'},{text:'Old economy - Walmart, GE',effect:'old_economy_99'},{text:'Cash out - to szaleństwo',effect:'cash_out_99'}]},
+            { month:'Marzec 2000', indexValue:5048, title:'SZCZYT - peak euphoria', description:'10 marca - Nasdaq 5048 ATH. P/E ratios 100+. Pets.com Super Bowl ad $2M. Companies add ".com" to name = instant +50%. "Burn rate" acceptable - growth at all costs. Greenspan podnosi stopy (6.5%). Microsoft antitrust case. Ale... FOMO maximum. "Get in or miss out forever".',
+              choices:[{text:'FOMO - kup każdy IPO teraz',effect:'buy_ipos_00'},{text:'Rotate to quality - MSFT profitable',effect:'rot_quality_00'},{text:'Massive rebalance to value',effect:'rot_value_00'},{text:'Short crazy valuations',effect:'short_extreme_00'}],
               image:'https://upload.wikimedia.org/wikipedia/commons/2/2b/Nasdaq_screen_times_square.jpg' },
-            { month:'Listopad 2000', indexValue:3000, title:'Rysa na narracji', description:'Przychody nie rosną tak szybko, a inwestorzy przestają wierzyć w „zyski kiedyś”. Kapitał ucieka ze spółek bez gotówki, spread między quality-tech a resztą się otwiera.',
-              choices:[{text:'Trzymaj i „przeczekaj”',effect:'hold_bag_00'},{text:'Przesuń do gotówki',effect:'move_cash_00'},{text:'Kup tylko profitable tech',effect:'buy_prof_00'},{text:'Hedge opcjami/short ETF',effect:'hedge_00'}],
+            { month:'Kwiecień 2000', indexValue:3860, title:'Pierwsze pęknięcie', description:'14 kwietnia - Nasdaq -9% w jeden dzień. Fed aggressive tightening działa. Tech spending cycle turns. Profit warnings od Intel, Cisco. Margin calls. IPO window zamyka się. Pets.com withdraw IPO. Ale większość myśli "just correction, buy the dip". Reality: bańka pęka.',
+              choices:[{text:'Buy the dip - to korekta',effect:'buy_dip_dotcom_00'},{text:'Sell unprofitable - keep winners',effect:'sell_unprofitable_00'},{text:'Rotate defensywa',effect:'rotate_defensive_00'},{text:'Short index - to dopiero początek',effect:'short_nasdaq_00'}]},
+            { month:'Listopad 2000', indexValue:3000, title:'Kapitulacja - funding dries up', description:'Nasdaq -40% od szczytu. Większość dot-comów bez cash runway. VC funding zamrożone. Layoffs start. Amazon -80%, Yahoo -70%. Tylko profitable survive. "Eyeballs" nie płacą rachunków. Pets.com liquidates (9 miesięcy od IPO). Reality check brutal.',
+              choices:[{text:'Hold and pray - „long term"',effect:'hold_bag_00'},{text:'Cash - kapitał zachowaj',effect:'move_cash_00'},{text:'Only profitable - MSFT, eBay',effect:'buy_prof_00'},{text:'Hedge/short junk',effect:'hedge_00'}],
               image:'https://upload.wikimedia.org/wikipedia/commons/9/98/Internet_bubble_chart.png' },
-            { month:'Wrzesień 2001', indexValue:1423, title:'Szok 9/11', description:'Zamachy zwiększają niepewność; popyt na podróże i reklamy spada. Polityka pieniężna łagodzi warunki, ale spekulacyjne nazwy tracą blask.',
-              choices:[{text:'Kup obronę i bezpieczeństwo',effect:'buy_defense_01'},{text:'Short travel/lotnictwo',effect:'short_travel_01'},{text:'Pozostań przy gotówce',effect:'hold_cash_01'},{text:'Doważ tech quality',effect:'buy_quality_01'}],
+            { month:'Czerwiec 2001', indexValue:2160, title:'Bankrupty wave', description:'Dot-coms bankrutują masowo: eToys, Webvan, Boo.com. 200+ internet companies gone. Nasdaq -60% od ATH. Telecom bubble też pęka - WorldCom, Global Crossing w kłopotach. Unemployment rośnie. Fed obniża stopy agresywnie (z 6.5% do 3.5%). Ale bear market trwa.',
+              choices:[{text:'Tech bounce play - oversold?',effect:'tech_bounce_01'},{text:'Telecom value - infrastructure',effect:'telecom_value_01'},{text:'Safe haven - bonds, gold',effect:'safe_haven_01'},{text:'International diversification',effect:'international_01'}]},
+            { month:'Wrzesień 2001', indexValue:1423, title:'9/11 SZOK', description:'11 września - zamachy na WTC. Markets closed 4 dni (longest since 1933). Reopening: -7% w dzień. Travel/airlines decimated. Ad spending collapse. Recession official. Fed emergency cuts (3% → 1.75%). Patriot Act. War on Terror. Tech advertising dies. Dark times.',
+              choices:[{text:'Defense stocks - Lockheed, Raytheon',effect:'buy_defense_01'},{text:'Short airlines/travel',effect:'short_travel_01'},{text:'Cash - uncertainty max',effect:'hold_cash_01'},{text:'Quality tech survivors',effect:'buy_quality_01'}],
               image:'https://upload.wikimedia.org/wikipedia/commons/5/5c/NYC_9-11_WTC.jpg' },
-            { month:'Październik 2002', indexValue:1114, title:'Późne dno', description:'Wiele dot-comów znika z giełdy, zostają liderzy z prawdziwymi przepływami i przewagami konkurencyjnymi. To moment, w którym selekcja jakości znów wygrywa.',
-              choices:[{text:'Kup liderów – MSFT, INTC',effect:'buy_leaders_02'},{text:'Doważ value/cashflow',effect:'buy_value_02'},{text:'Zostań w obligacjach',effect:'stay_bonds_02'},{text:'Spekuluj penny-stocks',effect:'penny_02'}],
+            { month:'Lipiec 2002', indexValue:1328, title:'WorldCom i Enron skandale', description:'WorldCom bankrutuje ($104B - biggest ever). Enron scandal (cooking books). Arthur Andersen dissolves. Tyco, Adelphia frauds exposed. Sarbanes-Oxley Act passed. Trust w corporate America destroyed. Nasdaq -78% od ATH. "Stocks for long run?" questioned.',
+              choices:[{text:'Capitulation sell - koniec systemu',effect:'capitulate_02'},{text:'Quality blue chips only',effect:'bluechips_only_02'},{text:'Value/cashflow focus',effect:'value_cashflow_02'},{text:'Bonds - equity risk premium gone',effect:'bonds_only_02'}]},
+            { month:'Październik 2002', indexValue:1114, title:'DNO - survivors emerge', description:'9 października - Nasdaq 1114 dno (-78% od ATH). 5000+ dot-coms bankrutowały. Zostali winners: Amazon, eBay, Google (private jeszcze), Salesforce. P/E ratios normalne. Valuations reasonable. Fed 1.25% stopy. Contrarian buyers nagrodzeni. Quality + cashflow wins long term.',
+              choices:[{text:'All-in survivors - AMZN, EBAY, MSFT',effect:'buy_leaders_02'},{text:'Value rotation - cashflow matters',effect:'buy_value_02'},{text:'Bonds - rally was fake head',effect:'stay_bonds_02'},{text:'Penny stocks gambling',effect:'penny_02'}],
               image:'https://upload.wikimedia.org/wikipedia/commons/6/6b/NASDAQ_MarketSite.jpg' }
           ],
-          stockPrices:{ 'Cisco':[77,50,15,13], 'Amazon':[75,36,6,15], 'Pets.com':[14,4,0,0], 'Microsoft':[58,34,24,26], 'US 10Y (cena)*':[98,101,108,106], '* gwiazdka':['—','—','—','—'] }
+          stockPrices:{ 'NASDAQ':[1499,2506,5048,3860,3000,2160,1423,1328,1114], 'Cisco':[20,50,77,60,50,18,15,12,13], 'Amazon':[52,75,75,55,36,15,6,8,15], 'Pets.com':[11,14,14,4,0,0,0,0,0], 'Microsoft':[42,58,58,52,34,28,24,22,26], 'Intel':[28,45,74,58,36,28,24,18,16], 'Yahoo':[108,475,475,120,36,15,10,8,12], 'eToys':[78,78,78,8,0,0,0,0,0], 'WorldCom':[64,64,64,40,18,12,8,0.1,0], 'US 10Y Treasury':[98,99,98,100,101,106,108,108,106] }
         },
 
         'BlackMonday': {
@@ -758,7 +774,24 @@
           // 1990s
           buy_def_90:[R(40,120),'Defensywy ochroniły portfel.','profit'], hold_cash_90:[R(-20,20),'Inflacja podgryza gotówkę.','neutral'], buy_bonds_90:[R(30,90),'Spadek stóp pomaga obligacjom.','profit'], buy_pc_90:[R(-60,200),'PC boom nie bez wahań.','neutral'], buy_index_95:[R(60,140),'Rynek byka wynagradza pasywnych.','profit'], buy_scv_95:[R(40,160),'Small-value dają radę.','profit'], buy_telco_95:[R(-40,80),'Telco połowicznie; uwaga na dług.','neutral'], stay_def_95:[R(-20,40),'Za konserwatywnie — mniejszy zysk.','neutral'], buy_dip_97:[R(60,160),'USA odbiły szybko.','profit'], bonds_97:[R(10,70),'Bezpieczny parking kapitału.','neutral'], short_em_97:[R(80,220),'EM cierpiały — short działa.','profit'], gold_97:[R(-30,30),'Złoto bez fajerwerków.','neutral'], buy_after_fed_98:[R(80,200),'Don’t fight the Fed.','profit'], hold_98:[R(-20,30),'Ok, ale przepuściłeś odbicie.','neutral'], short_fin_98:[R(-100,120),'Lewar bywa zdradliwy.','neutral'], buy_momo_98:[R(40,220),'Momentum działa… do czasu.','profit'], allin_dotcom_99:[R(-500,400),'Wysokie ryzyko — może zaboleć.','neutral'], rot_value_99:[R(60,180),'Value gotowe na rotację.','profit'], rebal_99:[R(40,120),'Dyscyplina popłaca.','profit'], short_hyper_99:[R(120,320),'Short bąbla bywa złotem.','profit'],
           // DotCom
-          buy_ipos_00:[R(-420,220),'IPO często wracają do ceny emisyjnej.','loss'], rot_quality_00:[R(40,160),'Zyskowne techy przetrwały.','profit'], rot_value_00:[R(60,200),'Value wygrywa w bessie tech.','profit'], short_extreme_00:[R(120,360),'Skrajne wyceny pękają.','profit'], hold_bag_00:[R(-280,40),'„Długo-terminowo" zabolało.','loss'], move_cash_00:[R(20,80),'Kapitał zachowany.','neutral'], buy_prof_00:[R(-40,140),'Selekcja działa, ale zmienność duża.','neutral'], hedge_00:[R(40,120),'Hedge amortyzuje spadki.','profit'], buy_defense_01:[R(40,120),'Kontrakty rządowe pomagają.','profit'], short_travel_01:[R(80,200),'Travel pod presją.','profit'], hold_cash_01:[R(-10,40),'Bezpiecznie, ale stracone szanse.','neutral'], buy_quality_01:[R(-40,120),'Selekcja nadal trudna.','neutral'], buy_leaders_02:[R(60,200),'Liderzy wracają pierwsi.','profit'], buy_value_02:[R(60,180),'Cashflow > marzenia.','profit'], stay_bonds_02:[R(10,60),'Stabilnie, ale niższy zwrot.','neutral'], penny_02:[R(-200,200),'Kasyno: księżyc albo zero.','neutral'],
+          // Sierpień 1998 - Początek manii
+          allin_dotcom_98:[R(180,580),'Early in = massive gains... aż do 2000.','profit'], buy_bluechip_tech_98:[R(220,480),'MSFT, Intel, Cisco solid winners!','profit'], buy_value_98:[R(-80,120),'Value underperforms w bańce – frustrujące.','neutral'], bonds_caution_98:[R(-60,40),'Za wcześnie – przegapiłeś 3 lata boomu.','loss'],
+          // Styczeń 1999 - IPO mania
+          flip_ipos_99:[R(280,680),'Flipping IPOs = jackpot w 1999!','profit'], quality_growth_99:[R(180,420),'Amazon -90% later, ale długoterminowo wygrywa.','profit'], old_economy_99:[R(-100,80),'Old economy ignored – miss rally.','loss'], cash_out_99:[R(-140,60),'Rok za wcześnie – Nasdaq +85% w 1999.','loss'],
+          // Marzec 2000 - SZCZYT
+          buy_ipos_00:[R(-420,220),'IPO często wracają do $0 – massacre.','loss'], rot_quality_00:[R(40,160),'Quality profitable przetrwało.','profit'], rot_value_00:[R(60,200),'Value wygrywa w bessie tech – świetnie!','profit'], short_extreme_00:[R(120,360),'Crazy valuations collapse – trafiony short!','profit'],
+          // Kwiecień 2000 - Pierwsze pęknięcie
+          buy_dip_dotcom_00:[R(-320,80),'To nie był dip – dopiero początek.','loss'], sell_unprofitable_00:[R(180,380),'Unprofitable do zera – mądra selekcja!','profit'], rotate_defensive_00:[R(80,200),'Defensywa chroni w bessie.','profit'], short_nasdaq_00:[R(220,520),'Perfect timing – Nasdaq -78%!','profit'],
+          // Listopad 2000 - Kapitulacja funding
+          hold_bag_00:[R(-280,40),'Hold & pray = bag holder. Bolesne.','loss'], move_cash_00:[R(20,80),'Kapitał zachowany – mądra decyzja.','neutral'], buy_prof_00:[R(-40,140),'Profitable też spadają, ale mniej.','neutral'], hedge_00:[R(40,120),'Hedge/short amortyzuje ból.','profit'],
+          // Czerwiec 2001 - Bankruptcy wave
+          tech_bounce_01:[R(-120,160),'Dead cat bounce – dalej spada.','neutral'], telecom_value_01:[R(-280,40),'Telecom fraud – WorldCom bankrut.','loss'], safe_haven_01:[R(80,180),'Bonds/gold safe w kryzysie.','profit'], international_01:[R(-80,100),'International też w bessie, ale diversyfikacja.','neutral'],
+          // Wrzesień 2001 - 9/11
+          buy_defense_01:[R(40,120),'Defense contractors boom po 9/11.','profit'], short_travel_01:[R(80,200),'Airlines/travel decimated – solid short.','profit'], hold_cash_01:[R(-10,40),'Cash OK, ale przegapisz odbicie.','neutral'], buy_quality_01:[R(-40,120),'Quality nadal spada, ale mniej.','neutral'],
+          // Lipiec 2002 - WorldCom/Enron
+          capitulate_02:[R(-80,60),'Kapitulacja blisko dna – źle.','loss'], bluechips_only_02:[R(100,260),'Blue chips survive – MSFT, Intel solid.','profit'], value_cashflow_02:[R(120,300),'Cashflow matters – value wygrywa!','profit'], bonds_only_02:[R(40,100),'Bonds bezpieczne, ale miss rally.','neutral'],
+          // Październik 2002 - DNO
+          buy_leaders_02:[R(60,200),'Survivors = winners. Amazon +10,000% later!','profit'], buy_value_02:[R(60,180),'Value rotation – cashflow > hype.','profit'], stay_bonds_02:[R(10,60),'Rally był prawdziwy – miss out.','neutral'], penny_02:[R(-200,200),'Penny stocks = gambling. Może wszystko.','neutral'],
           // Black Monday 1987
           stay_bull_87:[R(-150,50),'Kupiłeś szczyt przed krachem.','loss'], buy_puts_87:[R(180,350),'Opcje put – zabezpieczenie zadziałało!','profit'], rotate_bonds_87:[R(40,100),'Obligacje uciekły przed burzą.','profit'], short_fut_87:[R(200,420),'Short futures – trafiłeś!','profit'], sell_friday_87:[R(120,200),'Doskonała decyzja – uciekłeś przed krachem.','profit'], buy_dip_87:[R(-280,80),'Spadki były głębsze niż myślałeś.','loss'], hold_87:[R(-220,40),'To nie była zwykła korekta.','loss'], more_puts_87:[R(280,480),'Podwójne zabezpieczenie – jackpot!','profit'], panic_sell_87:[R(-150,20),'Sprzedałeś w panice po najgorszych cenach.','loss'], buy_crash_87:[R(200,450),'Kupno w dniu krachu – legendarny ruch!','profit'], wait_stable_87:[R(60,140),'Cierpliwość popłaca – kupiłeś niżej.','profit'], short_more_87:[R(-120,180),'Odbicie było szybsze niż się spodziewałeś.','neutral'], buy_quality_87:[R(100,240),'Quality blue chips wróciły mocno.','profit'], buy_tech_87:[R(80,200),'Tech rośnie – Microsoft na fali.','profit'], stay_def_87:[R(20,80),'Bezpiecznie, ale wolniej.','neutral'], keep_cash_87:[R(-20,40),'Przegapiłeś odbicie.','neutral'],
           // GFC 2008
