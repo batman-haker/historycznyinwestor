@@ -297,11 +297,16 @@
           '1979: drugi szok naftowy i wyższa inflacja.'
         ],
         '1990s': [
-          'Recesja na starcie dekady, problemy S&L, Gulf War – defensywy w cenie.',
-          '1994–96: „soft landing”; produktywność rośnie dzięki IT i globalizacji.',
-          '1997: kryzys azjatycki – „flight to quality”.',
-          '1998: LTCM, dźwignia i korelacje; „don’t fight the Fed”.',
-          '1999: euforia internetowa – uwaga na rozjazd wycen i zysków.'
+          'Listopad 1990: S&L crisis 700+ banków. $160B bailout. Gulf War buildup. Recesja.',
+          'Marzec 1991: Desert Storm victory 100h. Oil crash. PC boom (Windows 3.0). Recovery!',
+          'Luty 1994: Fed 3% → 6% w rok. Bond massacre. Orange County bankrut. Tequila crisis.',
+          'Lipiec 1995: Goldilocks economy. Netscape IPO. Passive investing boom. S&P +30%.',
+          'Grudzień 1996: Greenspan "irrational exuberance" – ale rynek ignoruje. Dow 6000+.',
+          'Październik 1997: Thailand baht collapse. Asian crisis. Dow -7% w dzień. USA decouples.',
+          'Sierpień 1998: Russia default. LTCM leverage 25:1 implodes. Fed bailout. 3 rate cuts.',
+          'Maj 1999: Dow 10,000. Nasdaq +40% YTD. Day trading boom. "Eyeballs" metrics. FOMO.',
+          'Grudzień 1999: Y2K peak. Nasdaq 4000 (+86% YTD). Best decade ever. Bubble bursts soon.',
+          'Don't fight Fed. Goldilocks = gold. Tech boom legit until bubble. Decoupling works.'
         ],
         'DotCom': [
           '1998: Netscape IPO model. Amazon, Yahoo, eBay public. "Eyeballs" > revenue. VC flood.',
@@ -431,26 +436,34 @@
         '1990s': {
           era:'Lata 1990', name:'Azja, LTCM i euforia', desc:'Od recesji 1990–91 do bąbla internetowego.',
           title:'Inwestor Lata 90.',
-          subtitle:'Od „flight to quality” po „don’t fight the Fed”: jak rynki reagują na kryzysy i euforie.',
+          subtitle:'Od „flight to quality" po „don't fight the Fed": jak rynki reagują na kryzysy i euforie.',
           indexLabel:'S&P 500',
           scenarios:[
-            { month:'Listopad 1990', indexValue:324, title:'Recesja po Gulf War buildup', description:'Firmy tną koszty, kredyt jest drogi, nastroje konsumentów słabną. Upadłości instytucji S&L oraz napięcia wokół Zatoki Perskiej zwiększają niepewność. W takiej fazie defensywy i obligacje skarbowe zwykle trzymają się lepiej niż ryzykowne „wzrostówki”.',
-              choices:[{text:'Kup defensywy i dywidendy',effect:'buy_def_90'},{text:'Czekaj z gotówką',effect:'hold_cash_90'},{text:'Kup obligacje skarbowe',effect:'buy_bonds_90'},{text:'Agresywnie tech – PC boom',effect:'buy_pc_90'}],
+            { month:'Listopad 1990', indexValue:324, title:'Recesja - S&L crisis i Gulf War', description:'Savings & Loan crisis - 700+ banków upadło. $160B bailout. Recesja oficjalna. Fed obniża stopy z 8% do 6%. Napięcia Gulf War - Saddam Hussein okupuje Kuwejt. Oil spike. Consumer confidence crash. Bush: "read my lips, no new taxes" - ale podnosi podatki. Defensywa i obligacje bezpieczne.',
+              choices:[{text:'Defensywa + dywidendy',effect:'buy_def_90'},{text:'Cash - czekaj na clarity',effect:'hold_cash_90'},{text:'Treasuries - safe haven',effect:'buy_bonds_90'},{text:'Tech - PC boom nadchodzi',effect:'buy_pc_90'}],
               image:'https://upload.wikimedia.org/wikipedia/commons/3/3d/Personal_computers_1990s.jpg' },
-            { month:'Lipiec 1995', indexValue:560, title:'Soft landing', description:'Po podwyżkach stóp w 1994 r. gospodarka „siada” miękko: inflacja pod kontrolą, a firmy dzięki komputerom, internetowi i globalizacji poprawiają produktywność. Tanie fundusze indeksowe zdobywają popularność — wielu inwestorów zamiast wybierać pojedyncze spółki, kupuje cały rynek.',
-              choices:[{text:'Szeroki indeks (passive)',effect:'buy_index_95'},{text:'Small-caps value',effect:'buy_scv_95'},{text:'Spółki telekom',effect:'buy_telco_95'},{text:'Utrzymaj defensywy',effect:'stay_def_95'}],
+            { month:'Marzec 1991', indexValue:375, title:'Gulf War victory - odbicie', description:'17 stycznia - Operation Desert Storm. 100 godzin ground war, zwycięstwo USA. Oil ceny spadają. Recesja kończy się (officially marzec 1991). Fed stopy 6% → 5.5%. "Peace dividend" - defense spending może spaść. PC sales boom - Windows 3.0. Soft landing begins. Bear market over.',
+              choices:[{text:'Buy cyclicals - recovery play',effect:'buy_cyclicals_91'},{text:'Tech momentum - MSFT, Intel',effect:'buy_tech_91'},{text:'Stay defensive - too early',effect:'stay_defensive_91'},{text:'International - Europe growth',effect:'buy_international_91'}]},
+            { month:'Luty 1994', indexValue:470, title:'Fed tightening - bond massacre', description:'4 lutego - Fed podnosi stopy pierwszy raz od 1989. 3% → 6% w rok. "Bond massacre" - obligacje -10% w miesiące. Orange County bankrut ($1.6B na derivatives). Mexico peso crisis (Tequila crisis). Greenspan aggressive. Growth stocks hit. Value outperforms. Reality check po 3 latach hossy.',
+              choices:[{text:'Rotate to value - growth hit',effect:'rotate_value_94'},{text:'Short bonds - więcej podwyżek',effect:'short_bonds_94'},{text:'Emerging markets - cheap',effect:'buy_em_94'},{text:'Hold tech - long term story',effect:'hold_tech_94'}]},
+            { month:'Lipiec 1995', indexValue:560, title:'Soft landing - Goldilocks economy', description:'Fed kończy cycle - stopy 6%, potem cuts. Inflacja pod kontrolą 2-3%. Productivity boom - internet, PC, globalizacja. Netscape IPO (sierpień) - internet hype starts. Passive investing boom - Vanguard index funds. Clinton balanced budget. "New economy" narracja. S&P +30% YTD. Perfect setup.',
+              choices:[{text:'Passive index - Goldilocks',effect:'buy_index_95'},{text:'Small-cap value - cheap',effect:'buy_scv_95'},{text:'Telecom infrastructure',effect:'buy_telco_95'},{text:'Stay defensive - overheated?',effect:'stay_def_95'}],
               image:'https://upload.wikimedia.org/wikipedia/commons/6/6d/NYSE_trading_floor.jpg' },
-            { month:'Październik 1997', indexValue:950, title:'Kryzys azjatycki', description:'Kilka krajów broni stałych kursów walut, aż system pęka. Firmy zadłużone w dolarze tracą finansowanie, kapitał ucieka do bezpiecznych aktywów. USA też dostają rykoszetem, ale silna gospodarka sprawia, że spadki szybko są odrabiane — klasyczny „flight to quality”.',
-              choices:[{text:'Kup spadki w USA',effect:'buy_dip_97'},{text:'Uciekaj w obligacje',effect:'bonds_97'},{text:'Short EM',effect:'short_em_97'},{text:'Kup złoto',effect:'gold_97'}],
+            { month:'Lipiec 1996', indexValue:670, title:'Greenspan "irrational exuberance"', description:'5 grudnia 1996 - Greenspan speech: "irrational exuberance?" - ale rynek ignoruje. Dow 6000+ pierwszy raz. Tech boom accelerates. AOL, Yahoo, Amazon IPOs. Capital gains tax cut 28% → 20%. Inflation low. Unemployment 5.4%. Microsoft $85B market cap. Bull market in full swing.',
+              choices:[{text:'All-in tech - new economy real',effect:'allin_tech_96'},{text:'Heed Greenspan - take profits',effect:'heed_greenspan_96'},{text:'Balanced approach - rebalance',effect:'balanced_96'},{text:'International diversification',effect:'international_96'}]},
+            { month:'Październik 1997', indexValue:950, title:'Asian Financial Crisis', description:'2 lipca - Thailand baht collapse. Contagion spreads: Indonesia, Korea, Malaysia. "Asian Tigers" crash. Hong Kong stocks -40%. 27 października - Dow -554 (-7.2%) w dzień. IMF bailouts. Russia/Brazil next? Flight to quality. But USA strong - "decoupling". Fed cuts 0.25%. Crisis = buying opportunity.',
+              choices:[{text:'Buy USA dip - decoupling',effect:'buy_dip_97'},{text:'Flight to Treasuries',effect:'bonds_97'},{text:'Short emerging markets',effect:'short_em_97'},{text:'Gold safe haven',effect:'gold_97'}],
               image:'https://upload.wikimedia.org/wikipedia/commons/7/7b/Bangkok_skyline_1997.jpg' },
-            { month:'Wrzesień 1998', indexValue:957, title:'LTCM pęka', description:'Słynny fundusz hedgingowy traci płynność na wielkich, lewarowanych pozycjach. Fed koordynuje porozumienie banków, by uniknąć chaosu. Rynek dostaje lekcję o ryzyku dźwigni i korelacji — a potem zaczyna się szybki rajd.',
-              choices:[{text:'Wejdź po interwencji Fed',effect:'buy_after_fed_98'},{text:'Pozostań w gotówce',effect:'hold_98'},{text:'Short lewar/finanse',effect:'short_fin_98'},{text:'Kup tech momentum',effect:'buy_momo_98'}],
+            { month:'Sierpień 1998', indexValue:1085, title:'Russia default + LTCM implodes', description:'17 sierpnia - Russia defaults on debt. Ruble collapses. Long-Term Capital Management (LTCM) - leverage 25:1 - loses $4.6B. Nobel Prize winners on board. Fed organizes $3.6B bailout (14 banks). Contagion fear. Brazil wobbles. Flight to quality. Greenspan cuts stopy 3x. "Don\'t fight the Fed" lesson.',
+              choices:[{text:'Buy after Fed rescue',effect:'buy_after_fed_98'},{text:'Cash - more shoes to drop',effect:'hold_98'},{text:'Short leverage/hedge funds',effect:'short_fin_98'},{text:'Tech momentum - survivors',effect:'buy_momo_98'}],
               image:'https://upload.wikimedia.org/wikipedia/commons/4/49/Alan_Greenspan.jpg' },
-            { month:'Grudzień 1999', indexValue:1469, title:'Euforia milenijna', description:'Internet „zmieni wszystko” — tak brzmi narracja. Wyceny wielu młodych spółek opierają się bardziej na obietnicach niż na zyskach. FOMO pcha ceny jeszcze wyżej. Pamiętaj: na dłuższą metę zyski i przepływy muszą dogonić opowieść.',
-              choices:[{text:'All-in w dot-comy',effect:'allin_dotcom_99'},{text:'Rotacja do value',effect:'rot_value_99'},{text:'Rebalans 60/40',effect:'rebal_99'},{text:'Short najdroższe spółki',effect:'short_hyper_99'}],
+            { month:'Maj 1999', indexValue:1340, title:'Tech mania acceleration', description:'Dow 10,000+ pierwszy raz (29 marca). Nasdaq +40% YTD. Internet IPOs co tydzień. Day trading boom. AOL buys Netscape $4.2B. "Eyeballs" metrics. P/E ratios irrelevant. Y2K spending boom. Fed stopy 4.75%. Greenspan concerned ale nie chce burst bubble. FOMO maximum. Top blisko.',
+              choices:[{text:'Join mania - FOMO trade',effect:'join_mania_99'},{text:'Quality tech only - MSFT, CSCO',effect:'quality_tech_99'},{text:'Rotate out - bubble obvious',effect:'rotate_out_99'},{text:'Hedge with puts',effect:'hedge_puts_99'}]},
+            { month:'Grudzień 1999', indexValue:1469, title:'Y2K peak - millennium euphoria', description:'31 grudnia - Y2K bug fears (turned out nothing). Nasdaq 4000+ (+86% YTD!). S&P 500 +21%. Best decade ever. Internet "changes everything". Pets.com, eToys public. Valuations absurd. Fed stopy 5.5%. Greenspan podwyżki coming. Clinton impeachment over. Dotcom bubble peak ahead (marzec 2000). Party ending soon.',
+              choices:[{text:'All-in dotcoms - ride it',effect:'allin_dotcom_99'},{text:'Rotate to value - bubble',effect:'rot_value_99'},{text:'Rebalance 60/40 discipline',effect:'rebal_99'},{text:'Short crazy valuations',effect:'short_hyper_99'}],
               image:'https://upload.wikimedia.org/wikipedia/commons/2/2b/Nasdaq_screen_times_square.jpg' }
           ],
-          stockPrices:{ 'Microsoft':[0.9,2.4,4.6,5.2,8.9], 'Cisco':[0.4,1.6,3.1,4.2,7.7], 'General Electric':[1.2,1.7,2.2,2.4,2.8], 'Treasuries (10Y)*':[100,103,106,104,98], 'Złoto':[380,385,325,290,290], '* ceny ideowe':['—','—','—','—','—'] }
+          stockPrices:{ 'S&P 500':[324,375,470,560,670,950,1085,1340,1469], 'Microsoft':[0.9,1.2,1.8,2.4,3.5,4.6,5.2,7.0,8.9], 'Cisco':[0.4,0.6,1.0,1.6,2.2,3.1,4.2,6.0,7.7], 'General Electric':[1.2,1.3,1.5,1.7,1.9,2.2,2.4,2.6,2.8], 'Intel':[1.8,2.2,2.8,3.8,5.2,7.0,8.5,11.0,14.5], 'Amazon':[0,0,0,1.7,3.0,10.0,52.0,75.0,75.0], 'Yahoo':[0,0,0,0,0,18.0,108.0,300.0,475.0], 'AOL':[2.5,3.0,4.5,6.0,12.0,24.0,38.0,68.0,95.0], 'US 10Y Treasury':[100,99,98,103,105,106,104,101,98], 'Gold':[380,360,385,385,390,325,290,290,290] }
         },
 
         'DotCom': {
@@ -772,7 +785,24 @@
           // 1970s
           buy_oil:[R(250,380),'Energetyka eksplodowała w górę.','profit'], short_transport:[R(180,340),'Transport oberwał – zysk.','profit'], buy_alt_energy:[R(-50,180),'Wczesna faza — mieszane.','neutral'], buy_commodities_70s:[R(40,140),'Towary hedgują inflację.','profit'], buy_energy_infrastructure:[R(40,150),'Rurociągi/rafinerie zyskują.','profit'], buy_staples_70s:[R(20,100),'Podstawowe dobra trzymają popyt.','profit'], buy_real_estate_70s:[R(20,120),'Nieruchomości jako tarcza.','profit'], hold_cash_70s:[R(-20,20),'Inflacja zjada cash.','loss'], buy_dividends_70s:[R(10,80),'Dywidendy łagodzą ból.','neutral'], buy_precious_metals:[R(60,180),'Złoto/srebro korzystają.','profit'], short_growth:[R(60,160),'Wzrostówki karcone stopami.','profit'], buy_international:[R(-30,120),'Dywersyfikacja bywa pomocna.','neutral'], buy_quality_70s:[R(40,160),'Jakość po przecenie.','profit'], buy_efficiency_tech:[R(20,140),'Efektywność kosztowa mile widziana.','profit'], buy_agriculture_70s:[R(20,120),'Rolnictwo korzysta z cen towarów.','profit'], buy_tips:[R(20,90),'Inflation-linked chronią realny zwrot.','profit'], buy_tech_70s:[R(-20,120),'Wczesny tech zmienny.','neutral'], buy_conservation:[R(10,120),'Oszczędność energii trendem.','profit'], buy_consumer_disc:[R(-40,80),'Dyskrecyjne wrażliwe na realne dochody.','neutral'], stay_commodities:[R(-20,80),'Zależne od cyklu; częściowo działa.','neutral'], buy_oil_again:[R(80,200),'Drugi szok naftowy.','profit'], buy_alt_energy_late:[R(-20,140),'Alternatywa rośnie, ale niestabilna.','neutral'], buy_inflation_assets:[R(40,160),'Aktywa antyinflacyjne w cenie.','profit'], short_rates:[R(40,140),'Wrażliwe sektory cierpią.','profit'],
           // 1990s
-          buy_def_90:[R(40,120),'Defensywy ochroniły portfel.','profit'], hold_cash_90:[R(-20,20),'Inflacja podgryza gotówkę.','neutral'], buy_bonds_90:[R(30,90),'Spadek stóp pomaga obligacjom.','profit'], buy_pc_90:[R(-60,200),'PC boom nie bez wahań.','neutral'], buy_index_95:[R(60,140),'Rynek byka wynagradza pasywnych.','profit'], buy_scv_95:[R(40,160),'Small-value dają radę.','profit'], buy_telco_95:[R(-40,80),'Telco połowicznie; uwaga na dług.','neutral'], stay_def_95:[R(-20,40),'Za konserwatywnie — mniejszy zysk.','neutral'], buy_dip_97:[R(60,160),'USA odbiły szybko.','profit'], bonds_97:[R(10,70),'Bezpieczny parking kapitału.','neutral'], short_em_97:[R(80,220),'EM cierpiały — short działa.','profit'], gold_97:[R(-30,30),'Złoto bez fajerwerków.','neutral'], buy_after_fed_98:[R(80,200),'Don’t fight the Fed.','profit'], hold_98:[R(-20,30),'Ok, ale przepuściłeś odbicie.','neutral'], short_fin_98:[R(-100,120),'Lewar bywa zdradliwy.','neutral'], buy_momo_98:[R(40,220),'Momentum działa… do czasu.','profit'], allin_dotcom_99:[R(-500,400),'Wysokie ryzyko — może zaboleć.','neutral'], rot_value_99:[R(60,180),'Value gotowe na rotację.','profit'], rebal_99:[R(40,120),'Dyscyplina popłaca.','profit'], short_hyper_99:[R(120,320),'Short bąbla bywa złotem.','profit'],
+          // Listopad 1990 - Recesja S&L
+          buy_def_90:[R(40,120),'Defensywa chroni w recesji.','profit'], hold_cash_90:[R(-20,20),'Bezpiecznie, ale miss recovery.','neutral'], buy_bonds_90:[R(30,90),'Fed cuts = bond rally.','profit'], buy_pc_90:[R(-60,200),'PC boom dopiero zaczyna - volatile.','neutral'],
+          // Marzec 1991 - Gulf War victory
+          buy_cyclicals_91:[R(140,320),'Recovery play – cyclicals odbijają!','profit'], buy_tech_91:[R(180,420),'MSFT, Intel start of decade boom!','profit'], stay_defensive_91:[R(-40,80),'Za ostrożnie – miss rally.','neutral'], buy_international_91:[R(60,180),'Europe benefit from peace dividend.','profit'],
+          // Luty 1994 - Fed tightening
+          rotate_value_94:[R(100,260),'Value outperforms w tightening.','profit'], short_bonds_94:[R(120,300),'Bond massacre – świetny short!','profit'], buy_em_94:[R(-180,120),'EM hit by Fed + Tequila crisis.','loss'], hold_tech_94:[R(60,200),'Tech correction short, long term OK.','profit'],
+          // Lipiec 1995 - Goldilocks
+          buy_index_95:[R(60,140),'Passive investing boom – solid.','profit'], buy_scv_95:[R(40,160),'Small-cap value silne.','profit'], buy_telco_95:[R(-40,80),'Telco debt concerns – mieszane.','neutral'], stay_def_95:[R(-20,40),'Za konserwatywnie – miss tech boom.','neutral'],
+          // Lipiec 1996 - Irrational exuberance
+          allin_tech_96:[R(220,580),'New economy real – mega gains!','profit'], heed_greenspan_96:[R(-140,80),'Za wcześnie – 4 lata boomu ahead.','loss'], balanced_96:[R(80,220),'Balance approach działa.','profit'], international_96:[R(40,140),'Diversyfikacja OK, ale USA best.','profit'],
+          // Październik 1997 - Asian crisis
+          buy_dip_97:[R(60,160),'USA decoupling – quick recovery.','profit'], bonds_97:[R(10,70),'Safe haven – płytki zysk.','neutral'], short_em_97:[R(80,220),'EM massacre – solid short!','profit'], gold_97:[R(-30,30),'Gold flat – nie czas.','neutral'],
+          // Sierpień 1998 - LTCM
+          buy_after_fed_98:[R(80,200),'Don't fight the Fed – classic!','profit'], hold_98:[R(-20,30),'Bezpiecznie, ale miss rally.','neutral'], short_fin_98:[R(-100,120),'Lewar complex – trudny trade.','neutral'], buy_momo_98:[R(40,220),'Tech momentum do 2000 – działa!','profit'],
+          // Maj 1999 - Mania acceleration
+          join_mania_99:[R(180,480),'FOMO justified – jeszcze rok boomu!','profit'], quality_tech_99:[R(140,360),'MSFT, Cisco survive crash – mądre.','profit'], rotate_out_99:[R(-120,60),'Rok za wcześnie – miss final surge.','loss'], hedge_puts_99:[R(80,220),'Puts cheap insurance – smart.','profit'],
+          // Grudzień 1999 - Y2K peak
+          allin_dotcom_99:[R(-500,400),'3 miesiące przed crashem – bolesne.','neutral'], rot_value_99:[R(60,180),'Perfect timing – value wygra 2000+.','profit'], rebal_99:[R(40,120),'Dyscyplina saves – rebalance działa.','profit'], short_hyper_99:[R(120,320),'Bubble burst ahead – świetny short!','profit'],
           // DotCom
           // Sierpień 1998 - Początek manii
           allin_dotcom_98:[R(180,580),'Early in = massive gains... aż do 2000.','profit'], buy_bluechip_tech_98:[R(220,480),'MSFT, Intel, Cisco solid winners!','profit'], buy_value_98:[R(-80,120),'Value underperforms w bańce – frustrujące.','neutral'], bonds_caution_98:[R(-60,40),'Za wcześnie – przegapiłeś 3 lata boomu.','loss'],
