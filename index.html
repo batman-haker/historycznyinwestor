@@ -138,6 +138,28 @@
     .campaign-epoch-desc { color:var(--muted); font-size:0.9rem; line-height:1.4; }
     .campaign-epoch-status { position:absolute; top:12px; right:12px; font-size:1.5rem; }
     .campaign-buttons { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:20px; }
+
+    /* LEADERBOARD */
+    .leaderboard-modal { max-width:800px; }
+    .leaderboard-tabs { display:flex; gap:8px; margin:20px 0; justify-content:center; }
+    .leaderboard-tab { padding:10px 20px; background:rgba(255,255,255,0.05); border:2px solid var(--border); border-radius:8px; color:var(--text); font-weight:600; cursor:pointer; transition:all .3s ease; }
+    .leaderboard-tab:hover { border-color:var(--accent); background:rgba(139,92,246,0.1); }
+    .leaderboard-tab.active { background:var(--accent); border-color:var(--accent); color:#fff; }
+    .leaderboard-content { margin:20px 0; }
+    .leaderboard-table { width:100%; border-collapse:collapse; background:rgba(255,255,255,0.02); border-radius:8px; overflow:hidden; }
+    .leaderboard-table thead { background:linear-gradient(135deg, rgba(139,92,246,0.2), rgba(34,211,238,0.1)); }
+    .leaderboard-table th { padding:12px; text-align:left; font-weight:700; color:var(--accent); border-bottom:2px solid var(--border); }
+    .leaderboard-table td { padding:12px; border-bottom:1px solid rgba(255,255,255,0.05); color:var(--text); }
+    .leaderboard-table tbody tr:hover { background:rgba(139,92,246,0.05); }
+    .leaderboard-table tbody tr:first-child { background:linear-gradient(90deg, rgba(255,215,0,0.1), rgba(255,215,0,0.05)); }
+    .leaderboard-table tbody tr:first-child td:first-child::before { content:'🥇 '; }
+    .leaderboard-table tbody tr:nth-child(2) td:first-child::before { content:'🥈 '; }
+    .leaderboard-table tbody tr:nth-child(3) td:first-child::before { content:'🥉 '; }
+    .leaderboard-rank { font-weight:700; color:var(--accent); }
+    .leaderboard-profit { color:#2ed573; font-weight:600; }
+    .leaderboard-loss { color:#ff4757; font-weight:600; }
+    .leaderboard-empty { text-align:center; padding:40px; color:var(--muted); font-style:italic; }
+    .leaderboard-actions { display:flex; gap:12px; justify-content:center; margin-top:20px; }
   </style>
 <script type="text/javascript" nonce="fbaf3247a48d4e4a8f9106ab1e1" src="//local.adguard.org?ts=1754656650365&amp;type=content-script&amp;dmn=mail-attachment.googleusercontent.com&amp;url=https%3A%2F%2Fmail-attachment.googleusercontent.com%2Fattachment%2Fu%2F0%2F%3Fui%3D2%26ik%3Df2ae618626%26attid%3D0.1%26permmsgid%3Dmsg-a%3Ar1370544206735525610%26th%3D19889e3900ffb5b5%26view%3Datt%26disp%3Dsafe%26realattid%3Df_me2v9lx50%26zw%26saddbat%3DANGjdJ9tnBx_fnmLD0gV18C3e8AnDwqW-CBoSG5TniDTP7IlJxdF3c7fYm1JqWHOp1e2U9TvLYbN-S64edVSp36JLaz7lgEc4vSYRpervdKBj2MWW2Ntn3HBxZVgr9bHNRnIC2GH-o-aTVqiITTbwjK6m35XDD3sTWXR9z6IIFLWdTv9OMC80sMRwu7aSEIuiCvfHTPm_eiGFWgoLnWc-VZkHCw4JXkL0q5t3iNEwoJVjtwnwRhPB3zRA51A6WN91SU_ZnAsTCRiPXd0Msyv2fRmUcHn2k_sopUnWRhtgY5u_VoQoIX030s-Zcuh0zJo6TKagK77NwE-bfelFjigt7DCc31dXx7WGPV7smw7gaUr9YHpDXAueoQIoLQWRedXTPQRiufiugXAnck0-1NRrGAAqW6p5j4FObQXhuFeE9Mh2j8tSo-HV-wluEhwmBT87d7Xy1OOu_-rSgkdbiOk-yHROdxp3tVK8Iyge5fA6Zc88exedhQbCKYDWlU7j8wGlblf5BWObkyVKv0kUmKz7iLM1nYMdzMFFHjkEQiVWG7tT6XqnDDI-vpY4je5GRtV0qwUPxb2C9NoXTzqoNVbua0ZXTQgzJHq9W6Y6N7dgMxIJE2DuZzrreT27qAi495WlA2N0h2A_zI4Fy1Hv5PPyJ96DmfPAk4j2i1q0CCSybCT3BbeKkMOI0rgyyxRbq8UzouKTlOtpAgzrrhBDUAn-wn82BdpK5DrhOnMFii0TuNUuTPPAsjJSS5klGGZDS3O-pSyP0ag3oJg4nEAnIC52JuNpOYISp4vEefezHjrMPn74LnIR9D5SsIlpkm1ZCf-Tk2YtKz8kaMOlL-1MatxeXXR0wxxXNrKVCbffgEDVQ4xWilbjmLE_MvNdd0WafGDjkvVXEf_pWTOZJhp6HV0N5B7ViNarFcExpGJdq2Ebas0Hp1jI-es8lrVhvlv1eFF5SDbsXbsVf8Vb8fKZ5QKHMtA0fjL7-mrWSHXlr0V0Rt9uNKCqAIJ_4EF3mEEVWs0pHlUZyEG237H9Y-IHB1zAGy1gACIP5KpIx2yqPXf643aBfFM_Teq1mO7VZXxz3L4wYcnniaZ13f-PqnnMixv&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="fbaf3247a48d4e4a8f9106ab1e1" src="//local.adguard.org?ts=1754656650365&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
 <body>
@@ -152,6 +174,7 @@
       <div class="menu-buttons-container">
         <button class="menu-main-btn primary-btn" id="campaignModeBtn">🏆 Tryb Kampanii</button>
         <button class="menu-main-btn secondary-btn" id="chooseEpochBtn">🎮 Pojedyncza Epoka</button>
+        <button class="menu-main-btn secondary-btn" id="leaderboardBtn">🏅 Ranking</button>
         <button class="menu-main-btn tertiary-btn" id="aboutBtn">ℹ️ O Grze</button>
       </div>
     </section>
@@ -199,6 +222,60 @@
         </div>
 
         <button class="modal-close" id="closeCampaignBtn" aria-label="Zamknij">❌ Zamknij</button>
+      </div>
+    </div>
+
+    <!-- MODAL LEADERBOARD -->
+    <div id="leaderboardModal" class="epoch-modal hidden" role="dialog" aria-modal="true">
+      <div class="modal-backdrop" id="leaderboardBackdrop"></div>
+      <div class="modal-box leaderboard-modal">
+        <h2 class="modal-title">🏅 Ranking Najlepszych</h2>
+        <p class="modal-subtitle">Twoje TOP 10 wyników lokalnych</p>
+
+        <div class="leaderboard-tabs">
+          <button class="leaderboard-tab active" id="campaignLeaderboardTab">🏆 Kampania</button>
+          <button class="leaderboard-tab" id="singleLeaderboardTab">🎮 Pojedyncze Epoki</button>
+        </div>
+
+        <div id="campaignLeaderboard" class="leaderboard-content">
+          <table class="leaderboard-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nick</th>
+                <th>Kapitał Końcowy</th>
+                <th>Zysk %</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody id="campaignLeaderboardBody">
+              <!-- Filled by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+
+        <div id="singleLeaderboard" class="leaderboard-content hidden">
+          <table class="leaderboard-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nick</th>
+                <th>Epoka</th>
+                <th>Kapitał</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody id="singleLeaderboardBody">
+              <!-- Filled by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="leaderboard-actions">
+          <button class="menu-main-btn tertiary-btn" id="clearLeaderboardBtn">🗑️ Wyczyść Ranking</button>
+        </div>
+
+        <button class="modal-close" id="closeLeaderboardBtn" aria-label="Zamknij">❌ Zamknij</button>
       </div>
     </div>
 
@@ -303,11 +380,25 @@
       const campaignCapital = document.getElementById('campaignCapital');
       const campaignCompleted = document.getElementById('campaignCompleted');
 
+      // Leaderboard Elements
+      const leaderboardBtn = document.getElementById('leaderboardBtn');
+      const leaderboardModal = document.getElementById('leaderboardModal');
+      const closeLeaderboardBtn = document.getElementById('closeLeaderboardBtn');
+      const leaderboardBackdrop = document.getElementById('leaderboardBackdrop');
+      const campaignLeaderboardTab = document.getElementById('campaignLeaderboardTab');
+      const singleLeaderboardTab = document.getElementById('singleLeaderboardTab');
+      const campaignLeaderboard = document.getElementById('campaignLeaderboard');
+      const singleLeaderboard = document.getElementById('singleLeaderboard');
+      const campaignLeaderboardBody = document.getElementById('campaignLeaderboardBody');
+      const singleLeaderboardBody = document.getElementById('singleLeaderboardBody');
+      const clearLeaderboardBtn = document.getElementById('clearLeaderboardBtn');
+
       function showWelcomeScreen(){
         welcomeScreen.classList.remove('hidden');
         dom.gameArea.classList.add('hidden');
         epochModal.classList.add('hidden');
         campaignModal.classList.add('hidden');
+        leaderboardModal.classList.add('hidden');
       }
 
       function hideWelcomeScreen(){
@@ -467,9 +558,101 @@
         } else {
           // Campaign complete!
           setTimeout(() => {
-            alert(`🎉🎉🎉 GRATULACJE! 🎉🎉🎉\n\nUkończyłeś całą kampanię!\n\n💰 Kapitał początkowy: $1,000\n💰 Kapitał końcowy: $${campaignData.capital.toLocaleString('en-US')}\n📈 Zysk: ${((campaignData.capital/1000 - 1) * 100).toFixed(1)}%\n\n🏆 Przeżyłeś 100 lat historii finansów!`);
+            // Save campaign score
+            const playerName = prompt('🏆 Ukończyłeś kampanię!\n\nPodaj swój nick do rankingu (lub zostaw puste):', 'Gracz') || 'Gracz';
+            saveScore('campaign', {
+              name: playerName,
+              capital: campaignData.capital,
+              date: Date.now()
+            });
+
+            alert(`🎉🎉🎉 GRATULACJE! 🎉🎉🎉\n\nUkończyłeś całą kampanię!\n\n💰 Kapitał początkowy: $1,000\n💰 Kapitał końcowy: $${campaignData.capital.toLocaleString('en-US')}\n📈 Zysk: ${((campaignData.capital/1000 - 1) * 100).toFixed(1)}%\n\n🏆 Przeżyłeś 100 lat historii finansów!\n\n✅ Wynik zapisany w rankingu!`);
             showWelcomeScreen();
           }, 1000);
+        }
+      }
+
+      // --------- LEADERBOARD SYSTEM ---------
+      function loadLeaderboard(){
+        const campaignScores = localStorage.getItem('leaderboard_campaign');
+        const singleScores = localStorage.getItem('leaderboard_single');
+        return {
+          campaign: campaignScores ? JSON.parse(campaignScores) : [],
+          single: singleScores ? JSON.parse(singleScores) : []
+        };
+      }
+
+      function saveScore(type, scoreData){
+        const leaderboard = loadLeaderboard();
+        leaderboard[type].push(scoreData);
+
+        // Sort by capital (descending) and keep top 10
+        leaderboard[type].sort((a, b) => b.capital - a.capital);
+        leaderboard[type] = leaderboard[type].slice(0, 10);
+
+        localStorage.setItem(`leaderboard_${type}`, JSON.stringify(leaderboard[type]));
+        console.log(`💾 Score saved to ${type} leaderboard:`, scoreData);
+      }
+
+      function openLeaderboardModal(){
+        const leaderboard = loadLeaderboard();
+        renderLeaderboard('campaign', leaderboard.campaign);
+        renderLeaderboard('single', leaderboard.single);
+        leaderboardModal.classList.remove('hidden');
+      }
+
+      function closeLeaderboardModal(){
+        leaderboardModal.classList.add('hidden');
+      }
+
+      function renderLeaderboard(type, scores){
+        const tbody = type === 'campaign' ? campaignLeaderboardBody : singleLeaderboardBody;
+
+        if(scores.length === 0){
+          tbody.innerHTML = '<tr><td colspan="5" class="leaderboard-empty">Brak wyników. Zagraj pierwszą grę! 🎮</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = scores.map((score, index) => {
+          const profitPercent = type === 'campaign'
+            ? ((score.capital / 1000 - 1) * 100).toFixed(1)
+            : ((score.capital / score.startCapital - 1) * 100).toFixed(1);
+          const profitClass = profitPercent >= 0 ? 'leaderboard-profit' : 'leaderboard-loss';
+
+          return `
+            <tr>
+              <td class="leaderboard-rank">${index + 1}</td>
+              <td>${score.name || 'Gracz'}</td>
+              ${type === 'single' ? `<td>${score.epoch || '?'}</td>` : ''}
+              <td>$${score.capital.toLocaleString('en-US')}</td>
+              ${type === 'campaign' ? `<td class="${profitClass}">${profitPercent > 0 ? '+' : ''}${profitPercent}%</td>` : ''}
+              <td>${new Date(score.date).toLocaleDateString('pl-PL')}</td>
+            </tr>
+          `;
+        }).join('');
+      }
+
+      function switchLeaderboardTab(tab){
+        if(tab === 'campaign'){
+          campaignLeaderboardTab.classList.add('active');
+          singleLeaderboardTab.classList.remove('active');
+          campaignLeaderboard.classList.remove('hidden');
+          singleLeaderboard.classList.add('hidden');
+        } else {
+          singleLeaderboardTab.classList.add('active');
+          campaignLeaderboardTab.classList.remove('active');
+          singleLeaderboard.classList.remove('hidden');
+          campaignLeaderboard.classList.add('hidden');
+        }
+      }
+
+      function clearLeaderboard(){
+        if(confirm('🗑️ Czy na pewno chcesz wyczyścić WSZYSTKIE rankingi? Tej operacji nie można cofnąć!')){
+          localStorage.removeItem('leaderboard_campaign');
+          localStorage.removeItem('leaderboard_single');
+          renderLeaderboard('campaign', []);
+          renderLeaderboard('single', []);
+          console.log('🗑️ Leaderboards cleared');
         }
       }
 
@@ -540,6 +723,37 @@
         resetCampaignBtn.addEventListener('click', () => {
           console.log('Reset campaign clicked');
           resetCampaign();
+        });
+
+        // Leaderboard Event Listeners
+        leaderboardBtn.addEventListener('click', () => {
+          console.log('Leaderboard clicked');
+          openLeaderboardModal();
+        });
+
+        closeLeaderboardBtn.addEventListener('click', () => {
+          console.log('Close leaderboard clicked');
+          closeLeaderboardModal();
+        });
+
+        leaderboardBackdrop.addEventListener('click', () => {
+          console.log('Leaderboard backdrop clicked');
+          closeLeaderboardModal();
+        });
+
+        campaignLeaderboardTab.addEventListener('click', () => {
+          console.log('Campaign leaderboard tab clicked');
+          switchLeaderboardTab('campaign');
+        });
+
+        singleLeaderboardTab.addEventListener('click', () => {
+          console.log('Single leaderboard tab clicked');
+          switchLeaderboardTab('single');
+        });
+
+        clearLeaderboardBtn.addEventListener('click', () => {
+          console.log('Clear leaderboard clicked');
+          clearLeaderboard();
         });
 
         console.log('✅ Menu system initialized');
@@ -1430,6 +1644,19 @@
         const startCap = capitalHistory[0];
         if(capital > startCap && !achievements.includes('survivor')){
           achievements.push('survivor');
+        }
+
+        // Save score to leaderboard (only for single epoch mode)
+        if(!isCampaignMode){
+          const playerName = prompt('🏅 Zapisz swój wynik!\n\nPodaj swój nick (lub zostaw puste):', 'Gracz') || 'Gracz';
+          const ch = chapters[currentChapterKey];
+          saveScore('single', {
+            name: playerName,
+            epoch: ch ? ch.title : currentChapterKey,
+            capital: capital,
+            startCapital: startCap,
+            date: Date.now()
+          });
         }
 
         // Handle campaign mode completion
