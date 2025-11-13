@@ -119,6 +119,25 @@
     .achievement-badge { background:rgba(139,92,246,0.2); border:1px solid var(--border); border-radius:10px; padding:12px; text-align:center; }
     .achievement-badge-icon { font-size:2rem; display:block; margin-bottom:6px; }
     .achievement-badge-name { font-size:0.85rem; font-weight:700; color:var(--text); }
+
+    /* CAMPAIGN MODE */
+    .campaign-progress { margin:20px 0; }
+    .campaign-stats { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px; margin-bottom:20px; }
+    .campaign-epochs { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:12px; margin:20px 0; }
+    .campaign-epoch-card { background:linear-gradient(135deg, rgba(139,92,246,0.1), rgba(34,211,238,0.05)); border:2px solid var(--border); border-radius:12px; padding:16px; cursor:pointer; transition:all .3s ease; position:relative; }
+    .campaign-epoch-card:hover { transform:translateY(-3px); border-color:rgba(139,92,246,0.6); box-shadow:0 8px 25px rgba(139,92,246,0.3); }
+    .campaign-epoch-card.completed { background:linear-gradient(135deg, rgba(46,213,115,0.15), rgba(52,211,153,0.1)); border-color:rgba(46,213,115,0.5); }
+    .campaign-epoch-card.current { background:linear-gradient(135deg, rgba(139,92,246,0.2), rgba(34,211,238,0.15)); border-color:var(--accent); box-shadow:0 0 20px rgba(139,92,246,0.4); animation:pulse 2s ease-in-out infinite; }
+    .campaign-epoch-card.locked { opacity:0.5; cursor:not-allowed; background:rgba(255,255,255,0.02); }
+    .campaign-epoch-card.locked:hover { transform:none; border-color:var(--border); box-shadow:none; }
+    @keyframes pulse { 0%, 100% { box-shadow:0 0 20px rgba(139,92,246,0.4); } 50% { box-shadow:0 0 30px rgba(139,92,246,0.7); } }
+    .campaign-epoch-number { display:inline-block; width:28px; height:28px; line-height:28px; text-align:center; background:var(--accent); color:#fff; border-radius:50%; font-weight:800; font-size:0.9rem; margin-right:8px; }
+    .campaign-epoch-card.completed .campaign-epoch-number { background:#2ed573; }
+    .campaign-epoch-card.locked .campaign-epoch-number { background:#555; }
+    .campaign-epoch-title { font-size:1.1rem; font-weight:700; margin-bottom:6px; display:flex; align-items:center; }
+    .campaign-epoch-desc { color:var(--muted); font-size:0.9rem; line-height:1.4; }
+    .campaign-epoch-status { position:absolute; top:12px; right:12px; font-size:1.5rem; }
+    .campaign-buttons { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:20px; }
   </style>
 <script type="text/javascript" nonce="fbaf3247a48d4e4a8f9106ab1e1" src="//local.adguard.org?ts=1754656650365&amp;type=content-script&amp;dmn=mail-attachment.googleusercontent.com&amp;url=https%3A%2F%2Fmail-attachment.googleusercontent.com%2Fattachment%2Fu%2F0%2F%3Fui%3D2%26ik%3Df2ae618626%26attid%3D0.1%26permmsgid%3Dmsg-a%3Ar1370544206735525610%26th%3D19889e3900ffb5b5%26view%3Datt%26disp%3Dsafe%26realattid%3Df_me2v9lx50%26zw%26saddbat%3DANGjdJ9tnBx_fnmLD0gV18C3e8AnDwqW-CBoSG5TniDTP7IlJxdF3c7fYm1JqWHOp1e2U9TvLYbN-S64edVSp36JLaz7lgEc4vSYRpervdKBj2MWW2Ntn3HBxZVgr9bHNRnIC2GH-o-aTVqiITTbwjK6m35XDD3sTWXR9z6IIFLWdTv9OMC80sMRwu7aSEIuiCvfHTPm_eiGFWgoLnWc-VZkHCw4JXkL0q5t3iNEwoJVjtwnwRhPB3zRA51A6WN91SU_ZnAsTCRiPXd0Msyv2fRmUcHn2k_sopUnWRhtgY5u_VoQoIX030s-Zcuh0zJo6TKagK77NwE-bfelFjigt7DCc31dXx7WGPV7smw7gaUr9YHpDXAueoQIoLQWRedXTPQRiufiugXAnck0-1NRrGAAqW6p5j4FObQXhuFeE9Mh2j8tSo-HV-wluEhwmBT87d7Xy1OOu_-rSgkdbiOk-yHROdxp3tVK8Iyge5fA6Zc88exedhQbCKYDWlU7j8wGlblf5BWObkyVKv0kUmKz7iLM1nYMdzMFFHjkEQiVWG7tT6XqnDDI-vpY4je5GRtV0qwUPxb2C9NoXTzqoNVbua0ZXTQgzJHq9W6Y6N7dgMxIJE2DuZzrreT27qAi495WlA2N0h2A_zI4Fy1Hv5PPyJ96DmfPAk4j2i1q0CCSybCT3BbeKkMOI0rgyyxRbq8UzouKTlOtpAgzrrhBDUAn-wn82BdpK5DrhOnMFii0TuNUuTPPAsjJSS5klGGZDS3O-pSyP0ag3oJg4nEAnIC52JuNpOYISp4vEefezHjrMPn74LnIR9D5SsIlpkm1ZCf-Tk2YtKz8kaMOlL-1MatxeXXR0wxxXNrKVCbffgEDVQ4xWilbjmLE_MvNdd0WafGDjkvVXEf_pWTOZJhp6HV0N5B7ViNarFcExpGJdq2Ebas0Hp1jI-es8lrVhvlv1eFF5SDbsXbsVf8Vb8fKZ5QKHMtA0fjL7-mrWSHXlr0V0Rt9uNKCqAIJ_4EF3mEEVWs0pHlUZyEG237H9Y-IHB1zAGy1gACIP5KpIx2yqPXf643aBfFM_Teq1mO7VZXxz3L4wYcnniaZ13f-PqnnMixv&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="fbaf3247a48d4e4a8f9106ab1e1" src="//local.adguard.org?ts=1754656650365&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
 <body>
@@ -131,8 +150,8 @@
       <h1 id="welcomeHeading" class="main-title">Historyczny <span>Inwestor</span></h1>
       <p class="main-subtitle">Przetrwaj największe wstrząsy rynkowe i zrozum, co się wtedy działo — krok po kroku.</p>
       <div class="menu-buttons-container">
-        <button class="menu-main-btn primary-btn" id="quickStartBtn">🎮 Szybki Start</button>
-        <button class="menu-main-btn secondary-btn" id="chooseEpochBtn">🕰️ Wybierz Epokę</button>
+        <button class="menu-main-btn primary-btn" id="campaignModeBtn">🏆 Tryb Kampanii</button>
+        <button class="menu-main-btn secondary-btn" id="chooseEpochBtn">🎮 Pojedyncza Epoka</button>
         <button class="menu-main-btn tertiary-btn" id="aboutBtn">ℹ️ O Grze</button>
       </div>
     </section>
@@ -146,6 +165,40 @@
         <div id="errorBox" class="error"></div>
         <div class="chapter-selection" id="chapterSelection"></div>
         <button class="modal-close" id="closeModalBtn" aria-label="Zamknij">❌ Zamknij</button>
+      </div>
+    </div>
+
+    <!-- MODAL TRYBU KAMPANII -->
+    <div id="campaignModal" class="epoch-modal hidden" role="dialog" aria-modal="true">
+      <div class="modal-backdrop" id="campaignBackdrop"></div>
+      <div class="modal-box">
+        <h2 class="modal-title">🏆 Tryb Kampanii</h2>
+        <p class="modal-subtitle">Przejdź przez wszystkie 9 epok chronologicznie. Twój kapitał przenosi się między epokami!</p>
+
+        <div id="campaignProgress" class="campaign-progress">
+          <div class="campaign-stats">
+            <div class="stat-card">
+              <div class="stat-label">Obecny Kapitał</div>
+              <div id="campaignCapital" class="stat-value">$1,000</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Ukończone Epoki</div>
+              <div id="campaignCompleted" class="stat-value">0/9</div>
+            </div>
+          </div>
+
+          <div class="campaign-epochs" id="campaignEpochs">
+            <!-- Campaign epochs will be added here by JavaScript -->
+          </div>
+        </div>
+
+        <div class="campaign-buttons">
+          <button class="menu-main-btn primary-btn" id="startCampaignBtn">🚀 Rozpocznij Kampanię</button>
+          <button class="menu-main-btn secondary-btn" id="continueCampaignBtn" style="display:none;">▶️ Kontynuuj Kampanię</button>
+          <button class="menu-main-btn tertiary-btn" id="resetCampaignBtn" style="display:none;">🔄 Resetuj Kampanię</button>
+        </div>
+
+        <button class="modal-close" id="closeCampaignBtn" aria-label="Zamknij">❌ Zamknij</button>
       </div>
     </div>
 
@@ -193,6 +246,27 @@
       let capitalHistory = []; // Track capital over time
       let achievements = []; // Track unlocked achievements
 
+      // --------- CAMPAIGN MODE STATE ---------
+      let isCampaignMode = false;
+      let campaignData = {
+        currentEpochIndex: 0,
+        capital: 1000,
+        completed: []
+      };
+
+      // Campaign order - chronological
+      const campaignOrder = [
+        {key: '1930s', name: 'Wielki Kryzys', years: '1929-1933', icon: '🏦'},
+        {key: '1970s', name: 'Kryzys Naftowy', years: '1971-1979', icon: '🛢️'},
+        {key: 'BlackMonday', name: 'Black Monday', years: '1987', icon: '💥'},
+        {key: '1990s', name: 'Lata 90', years: '1990-1999', icon: '📈'},
+        {key: 'DotCom', name: 'Bańka Dot-com', years: '2000-2002', icon: '💻'},
+        {key: 'GFC2008', name: 'Kryzys 2008', years: '2008-2009', icon: '🏚️'},
+        {key: 'COVID2020', name: 'Pandemia COVID', years: '2020', icon: '🦠'},
+        {key: 'FTX2022', name: 'FTX Crash', years: '2022', icon: '₿'},
+        {key: 'AIBubble2023', name: 'AI Bubble', years: '2023-2025', icon: '🤖'}
+      ];
+
       const dom = {
         mainMenu: document.getElementById('mainMenu'),
         gameArea: document.getElementById('gameArea'),
@@ -212,16 +286,28 @@
       // --------- MENU SYSTEM ---------
       const welcomeScreen = document.getElementById('welcomeScreen');
       const epochModal = document.getElementById('epochModal');
-      const quickStartBtn = document.getElementById('quickStartBtn');
       const chooseEpochBtn = document.getElementById('chooseEpochBtn');
       const aboutBtn = document.getElementById('aboutBtn');
       const closeModalBtn = document.getElementById('closeModalBtn');
       const modalBackdrop = document.getElementById('modalBackdrop');
 
+      // Campaign Mode Elements
+      const campaignModeBtn = document.getElementById('campaignModeBtn');
+      const campaignModal = document.getElementById('campaignModal');
+      const closeCampaignBtn = document.getElementById('closeCampaignBtn');
+      const campaignBackdrop = document.getElementById('campaignBackdrop');
+      const startCampaignBtn = document.getElementById('startCampaignBtn');
+      const continueCampaignBtn = document.getElementById('continueCampaignBtn');
+      const resetCampaignBtn = document.getElementById('resetCampaignBtn');
+      const campaignEpochs = document.getElementById('campaignEpochs');
+      const campaignCapital = document.getElementById('campaignCapital');
+      const campaignCompleted = document.getElementById('campaignCompleted');
+
       function showWelcomeScreen(){
         welcomeScreen.classList.remove('hidden');
         dom.gameArea.classList.add('hidden');
         epochModal.classList.add('hidden');
+        campaignModal.classList.add('hidden');
       }
 
       function hideWelcomeScreen(){
@@ -240,29 +326,172 @@
         epochModal.classList.add('hidden');
       }
 
+      // --------- CAMPAIGN MODE FUNCTIONS ---------
+      function loadCampaignProgress(){
+        const saved = localStorage.getItem('campaignProgress');
+        if(saved){
+          try {
+            const data = JSON.parse(saved);
+            campaignData = data;
+            console.log('📂 Campaign progress loaded:', data);
+          } catch(e){
+            console.error('❌ Failed to load campaign:', e);
+          }
+        }
+      }
+
+      function saveCampaignProgress(){
+        localStorage.setItem('campaignProgress', JSON.stringify(campaignData));
+        console.log('💾 Campaign progress saved:', campaignData);
+      }
+
+      function openCampaignModal(){
+        loadCampaignProgress();
+        buildCampaignUI();
+        campaignModal.classList.remove('hidden');
+
+        // Show appropriate buttons
+        if(campaignData.completed.length > 0){
+          continueCampaignBtn.style.display = 'inline-block';
+          resetCampaignBtn.style.display = 'inline-block';
+        } else {
+          continueCampaignBtn.style.display = 'none';
+          resetCampaignBtn.style.display = 'none';
+        }
+      }
+
+      function closeCampaignModal(){
+        campaignModal.classList.add('hidden');
+      }
+
+      function buildCampaignUI(){
+        // Update stats
+        campaignCapital.textContent = campaignData.capital.toLocaleString('en-US');
+        campaignCompleted.textContent = `${campaignData.completed.length}/9`;
+
+        // Build epoch cards
+        campaignEpochs.innerHTML = '';
+        campaignOrder.forEach((epoch, index) => {
+          const card = document.createElement('div');
+          const isCompleted = campaignData.completed.includes(epoch.key);
+          const isCurrent = index === campaignData.currentEpochIndex;
+          const isLocked = index > campaignData.currentEpochIndex;
+
+          let className = 'campaign-epoch-card';
+          if(isCompleted) className += ' completed';
+          if(isCurrent) className += ' current';
+          if(isLocked) className += ' locked';
+
+          let statusIcon = '';
+          if(isCompleted) statusIcon = '✅';
+          else if(isCurrent) statusIcon = '▶️';
+          else if(isLocked) statusIcon = '🔒';
+
+          card.className = className;
+          card.innerHTML = `
+            <div class="campaign-epoch-title">
+              <span class="campaign-epoch-number">${index + 1}</span>
+              ${epoch.icon} ${epoch.name}
+            </div>
+            <div class="campaign-epoch-desc">${epoch.years}</div>
+            <div class="campaign-epoch-status">${statusIcon}</div>
+          `;
+
+          // Click to start if current epoch
+          if(isCurrent && !isLocked){
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', () => {
+              startCampaign();
+            });
+          }
+
+          campaignEpochs.appendChild(card);
+        });
+      }
+
+      function startCampaign(){
+        if(campaignData.currentEpochIndex >= campaignOrder.length){
+          alert('🎉 Gratulacje! Ukończyłeś całą kampanię!\n\nKapitał końcowy: $' + campaignData.capital.toLocaleString('en-US'));
+          return;
+        }
+
+        isCampaignMode = true;
+        const currentEpoch = campaignOrder[campaignData.currentEpochIndex];
+
+        closeCampaignModal();
+        hideWelcomeScreen();
+
+        console.log('🚀 Starting campaign epoch:', currentEpoch.name);
+        startChapter(currentEpoch.key, campaignData.capital);
+      }
+
+      function resetCampaign(){
+        if(confirm('🔄 Czy na pewno chcesz zresetować całą kampanię? Stracisz cały postęp!')){
+          campaignData = {
+            currentEpochIndex: 0,
+            capital: 1000,
+            completed: []
+          };
+          saveCampaignProgress();
+          buildCampaignUI();
+          console.log('🔄 Campaign reset');
+        }
+      }
+
+      function onEpochComplete(){
+        if(!isCampaignMode) return;
+
+        // Save current capital
+        campaignData.capital = capital;
+
+        // Mark epoch as completed
+        const currentEpoch = campaignOrder[campaignData.currentEpochIndex];
+        if(!campaignData.completed.includes(currentEpoch.key)){
+          campaignData.completed.push(currentEpoch.key);
+        }
+
+        // Move to next epoch
+        campaignData.currentEpochIndex++;
+        saveCampaignProgress();
+
+        // Show transition message
+        if(campaignData.currentEpochIndex < campaignOrder.length){
+          const nextEpoch = campaignOrder[campaignData.currentEpochIndex];
+          setTimeout(() => {
+            if(confirm(`✅ Epoka ukończona!\n\n💰 Twój kapitał: $${campaignData.capital.toLocaleString('en-US')}\n\n▶️ Następna epoka: ${nextEpoch.icon} ${nextEpoch.name} (${nextEpoch.years})\n\nCzy chcesz kontynuować?`)){
+              startCampaign();
+            } else {
+              showWelcomeScreen();
+            }
+          }, 1000);
+        } else {
+          // Campaign complete!
+          setTimeout(() => {
+            alert(`🎉🎉🎉 GRATULACJE! 🎉🎉🎉\n\nUkończyłeś całą kampanię!\n\n💰 Kapitał początkowy: $1,000\n💰 Kapitał końcowy: $${campaignData.capital.toLocaleString('en-US')}\n📈 Zysk: ${((campaignData.capital/1000 - 1) * 100).toFixed(1)}%\n\n🏆 Przeżyłeś 100 lat historii finansów!`);
+            showWelcomeScreen();
+          }, 1000);
+        }
+      }
+
       // Initialize menu system AFTER DOM loads
       function initMenuSystem(){
         console.log('🎮 Initializing menu system...');
 
         dom.backBtn.addEventListener('click', () => {
           console.log('Back button clicked');
+          isCampaignMode = false; // Reset campaign mode when returning to menu
           showWelcomeScreen();
-        });
-
-        quickStartBtn.addEventListener('click', () => {
-          console.log('Quick start clicked');
-          hideWelcomeScreen();
-          startChapter('1930s');
         });
 
         chooseEpochBtn.addEventListener('click', () => {
           console.log('Choose epoch clicked');
+          isCampaignMode = false;
           showModal();
         });
 
         aboutBtn.addEventListener('click', () => {
           console.log('About clicked');
-          alert('📈 HISTORYCZNY INWESTOR - Wersja Edukacyjna\n\nWciel się w rolę inwestora przeżywającego największe kryzysy finansowe ostatnich 100 lat.\n\n🎯 Cel: Zrozum mechanizmy rynkowe i naucz się podejmować mądre decyzje\n📚 5 Epok: Od Wielkiego Kryzysu 1929 do Kryzysu Finansowego 2008\n💡 Ucz się na błędach historii!\n\nWersja: 3.0-complete');
+          alert('📈 HISTORYCZNY INWESTOR - Wersja Edukacyjna\n\nWciel się w rolę inwestora przeżywającego największe kryzysy finansowe ostatnich 100 lat.\n\n🎯 Cel: Zrozum mechanizmy rynkowe i naucz się podejmować mądre decyzje\n📚 9 Epok: Od Wielkiego Kryzysu 1929 do AI Bubble 2023\n💡 Ucz się na błędach historii!\n\n🏆 NOWOŚĆ: Tryb Kampanii - przejdź przez wszystkie epoki chronologicznie!\n\nWersja: 4.0-campaign');
         });
 
         closeModalBtn.addEventListener('click', () => {
@@ -273,6 +502,44 @@
         modalBackdrop.addEventListener('click', () => {
           console.log('Backdrop clicked');
           hideModal();
+        });
+
+        // Campaign Mode Event Listeners
+        campaignModeBtn.addEventListener('click', () => {
+          console.log('Campaign mode clicked');
+          openCampaignModal();
+        });
+
+        closeCampaignBtn.addEventListener('click', () => {
+          console.log('Close campaign modal clicked');
+          closeCampaignModal();
+        });
+
+        campaignBackdrop.addEventListener('click', () => {
+          console.log('Campaign backdrop clicked');
+          closeCampaignModal();
+        });
+
+        startCampaignBtn.addEventListener('click', () => {
+          console.log('Start campaign clicked');
+          // Reset campaign
+          campaignData = {
+            currentEpochIndex: 0,
+            capital: 1000,
+            completed: []
+          };
+          saveCampaignProgress();
+          startCampaign();
+        });
+
+        continueCampaignBtn.addEventListener('click', () => {
+          console.log('Continue campaign clicked');
+          startCampaign();
+        });
+
+        resetCampaignBtn.addEventListener('click', () => {
+          console.log('Reset campaign clicked');
+          resetCampaign();
         });
 
         console.log('✅ Menu system initialized');
@@ -706,13 +973,13 @@
       }
 
       // --------- GAME FLOW ---------
-      function startChapter(key){
-        console.log('🚀 Starting chapter:', key);
+      function startChapter(key, startingCapital = 1000){
+        console.log('🚀 Starting chapter:', key, 'with capital:', startingCapital);
         currentChapterKey = key;
-        capital = 1000;
+        capital = startingCapital;
         currentScenario = 0;
         decisions = 0;
-        capitalHistory = [1000]; // Reset and track starting capital
+        capitalHistory = [startingCapital]; // Reset and track starting capital
         achievements = []; // Reset achievements
         const ch = chapters[key];
 
@@ -1163,6 +1430,12 @@
         const startCap = capitalHistory[0];
         if(capital > startCap && !achievements.includes('survivor')){
           achievements.push('survivor');
+        }
+
+        // Handle campaign mode completion
+        if(isCampaignMode){
+          onEpochComplete();
+          return; // Don't show end screen, onEpochComplete handles transitions
         }
 
         // Generate achievements HTML
