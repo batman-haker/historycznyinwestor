@@ -293,12 +293,16 @@
           'Lekcja: Deflacja + leverage = disaster. Gotówka + jakość = survival. Don't catch falling knives.'
         ],
         '1970s': [
-          'Embargo OPEC (1973) winduje ceny ropy; szok podażowy i początek stagflacji.',
-          'Limity cen → niedobory; gotówka i zwykłe obligacje przegrywają z inflacją.',
-          'Watergate i wysokie stopy: przewagę mają dywidendy i metale szlachetne.',
-          'Recesja 1974–75; „jakość po przecenie” bywa nagradzana.',
-          'Wydajność rośnie dzięki oszczędzaniu energii i automatyzacji.',
-          '1979: drugi szok naftowy i wyższa inflacja.'
+          'Sierpień 1971: Nixon zamyka "gold window". Bretton Woods collapse. Dolar dewaluowany. Złoto i commodities boom start.',
+          'Październik 1973: Wojna Yom Kippur. OPEC embargo. Ropa $3 → $12. Gas lines. Szok podażowy = stagflacja.',
+          'Marzec 1974: Inflacja + recesja = stagflacja. Limity cen = niedobory. Cash + bonds lose to inflation.',
+          'Sierpień 1974: Nixon resign (Watergate). Wysokie stopy procentowe. Growth stocks massacred.',
+          'Styczeń 1975: Recesja peak. Bezrobocie 9%. Fed łagodzi, ale inflacja wysoka. Jakość po przecenie.',
+          'Lipiec 1976: Recovery. Mikroprocesory wchodzą do przemysłu. Efficiency tech trend.',
+          'Maj 1977: Carter prezydent. Misery Index 13.5%. Inflacja 6.5%+. Dolar słaby. Złoto $148 (było $35).',
+          'Grudzień 1978: Drugi szok naftowy (Iran revolution ahead). Inflacja rozkręca się. Real assets dominują.',
+          'Sierpień 1979: Volcker Fed Chair. War on inflation. Stopy → 20% (1981). Złoto → $850. Bonds massacred.',
+          'Lekcja: Real assets (złoto, commodities, RE) chronią w stagflacji. Cash = trash. Volcker wins long term.'
         ],
         '1990s': [
           'Listopad 1990: S&L crisis 700+ banków. $160B bailout. Gulf War buildup. Recesja.',
@@ -421,26 +425,33 @@
           subtitle:'Lata 70. to szkoła przetrwania: ceny ropy rosną jak szalone, inflacja wysysa siłę nabywczą, a gospodarka zwalnia. Zobaczysz, kto korzysta na drogim paliwie, a kto cierpi — i jak myśleć o ochronie oszczędności.',
           indexLabel:'S&P 500',
           scenarios:[
+            { month:'Sierpień 1971', indexValue:100, title:'Nixon Shock – koniec gold standard', description:'15 sierpnia – Nixon zamyka "gold window". USA nie wymienia już dolarów na złoto. Bretton Woods system collapse. Dolar dewaluowany. Floating currencies begin. Inflacja leci w górę (food +8%, energy +10%). Arthur Burns (Fed) drukuje pieniądze na Vietnamskie deficit. Złoto legalnie dostępne dla Amerykanów (od 1974). Commodities boom zaczyna się.',
+              choices:[{text:'Złoto – koniec gold standard!',effect:'buy_gold_71'},{text:'Commodities broad – inflacja',effect:'buy_commodities_71'},{text:'International diversification',effect:'buy_intl_71'},{text:'Stay US stocks – ignore macro',effect:'stay_stocks_71'}]},
             { month:'Październik 1973', indexValue:108, title:'Wojna Yom Kippur', description:'OPEC ogranicza wydobycie i eksport. Cena ropy skacze wielokrotnie; na stacjach ustawiają się kolejki, a koszt transportu i produkcji rośnie niemal wszędzie. To szok podażowy: mniej towaru → wyższe ceny. Firmy paliwowe i właściciele surowców zarabiają, a linie lotnicze i logistyka dostają cios.',
               choices:[{text:'Kup spółki naftowe',effect:'buy_oil'},{text:'Short na transport',effect:'short_transport'},{text:'Energia alternatywna',effect:'buy_alt_energy'},{text:'Złoto i towary',effect:'buy_commodities_70s'}],
               image:'https://upload.wikimedia.org/wikipedia/commons/0/0a/Gas_station_line2.jpg' },
-            { month:'Marzec 1974', indexValue:95, title:'Kryzys się pogłębia', description:'Rządy próbują zamrażać ceny, co kończy się niedoborami. Inflacja rośnie, a gospodarka hamuje — to „stagflacja”. Dla inwestora oznacza to, że gotówka traci siłę nabywczą, a zwykłe obligacje też nie ratują. Zyskują biznesy z mocnym „pricing power” i infrastruktura energetyczna.',
+            { month:'Marzec 1974', indexValue:95, title:'Kryzys się pogłębia', description:'Rządy próbują zamrażać ceny, co kończy się niedoborami. Inflacja rośnie, a gospodarka hamuje — to „stagflacja". Dla inwestora oznacza to, że gotówka traci siłę nabywczą, a zwykłe obligacje też nie ratują. Zyskują biznesy z mocnym „pricing power" i infrastruktura energetyczna.',
               choices:[{text:'Infrastruktura energetyczna',effect:'buy_energy_infrastructure'},{text:'Towary podstawowe (staples)',effect:'buy_staples_70s'},{text:'Nieruchomości',effect:'buy_real_estate_70s'},{text:'Gotówka',effect:'hold_cash_70s'}],
               image:'https://upload.wikimedia.org/wikipedia/commons/1/17/Oil_barrel.jpg' },
             { month:'Sierpień 1974', indexValue:72, title:'Rezygnacja Nixona', description:'Kryzys polityczny zwiększa niepewność, a wysokie stopy procentowe obniżają wyceny spółek wzrostowych. Inwestorzy szukają przystani w dywidendach i metalach szlachetnych. Krótka sprzedaż sektorów zależnych od taniego finansowania może działać, ale wymaga dyscypliny.',
               choices:[{text:'Dywidendowe defensywy',effect:'buy_dividends_70s'},{text:'Metale szlachetne',effect:'buy_precious_metals'},{text:'Short growth',effect:'short_growth'},{text:'Rynki międzynarodowe',effect:'buy_international'}],
               image:'https://upload.wikimedia.org/wikipedia/commons/0/0d/Nixon_Resigns.jpg' },
-            { month:'Styczeń 1975', indexValue:68, title:'Mocna recesja', description:'Bezrobocie sięga szczytów. Bank centralny zaczyna luzować politykę, ale inflacja nadal wysoka. „Jakość po przecenie” często wygrywa w kolejnych latach. Realną wartość pomagają chronić aktywa rosnące z inflacją (część towarów, nieruchomości) i obligacje indeksowane inflacją.',
+            { month:'Styczeń 1975', indexValue:68, title:'Mocna recesja', description:'Bezrobocie sięga szczytów. Bank centralny zaczyna luzować politykę, ale inflacja nadal wysoka. „Jakość po przecenie" często wygrywa w kolejnych latach. Realną wartość pomagają chronić aktywa rosnące z inflacją (część towarów, nieruchomości) i obligacje indeksowane inflacją.',
               choices:[{text:'Jakość po przecenie',effect:'buy_quality_70s'},{text:'Tech efektywnościowy',effect:'buy_efficiency_tech'},{text:'Rolnictwo',effect:'buy_agriculture_70s'},{text:'Inflation-linked',effect:'buy_tips'}],
               image:'https://upload.wikimedia.org/wikipedia/commons/2/2e/Unemployment_line_1970s.jpg' },
             { month:'Lipiec 1976', indexValue:104, title:'Dwustulecie', description:'Gospodarka łapie oddech. Firmy inwestują w oszczędność energii i automatyzację; do przemysłu wchodzą mikroprocesory. Innowacje potrafią poprawić produktywność nawet w trudnych czasach kosztowych.',
               choices:[{text:'Wczesny tech',effect:'buy_tech_70s'},{text:'Oszczędzanie energii',effect:'buy_conservation'},{text:'Dobra konsumpcyjne',effect:'buy_consumer_disc'},{text:'Zostań w towarach',effect:'stay_commodities'}],
               image:'https://upload.wikimedia.org/wikipedia/commons/5/53/Microprocessor.jpg' },
+            { month:'Maj 1977', indexValue:97, title:'Carter i stagflacja w pełni', description:'Jimmy Carter prezydent (od stycznia). Inflacja 6.5% i rośnie. Unemployment 7%. "Misery Index" (inflacja + unemployment) = 13.5%. Fed słaby – Arthur Burns ustępuje, William Miller (1978) też miękki. Dolar słabnie. "Malaise" speech (1979). Energy crisis trwa. Złoto $148 (było $35 w 1971). Real assets dominują.',
+              choices:[{text:'Złoto i srebro – dolar słaby',effect:'gold_silver_77'},{text:'Energy stocks – crisis długoterminowy',effect:'energy_77'},{text:'TIPS – inflacja double-digit ahead',effect:'tips_77'},{text:'Short dolar – currency diversify',effect:'short_dollar_77'}]},
             { month:'Grudzień 1978', indexValue:96, title:'Drugi szok naftowy', description:'Napięcia na Bliskim Wschodzie ponownie ograniczają podaż ropy. Inflacja rozkręca się, a rynki zaczynają dyskontować ostrzejszą politykę pieniężną w kolejnych latach. Premiowane są realne aktywa i spółki surowcowe; sektory wrażliwe na stopy dostają po kieszeni.',
               choices:[{text:'Ponownie: spółki naftowe',effect:'buy_oil_again'},{text:'Mocniej w alternatywę',effect:'buy_alt_energy_late'},{text:'Aktywa antyinflacyjne',effect:'buy_inflation_assets'},{text:'Short sektory wrażliwe na stopy',effect:'short_rates'}],
+              image:'https://upload.wikimedia.org/wikipedia/commons/9/9a/Oil_platform.jpg' },
+            { month:'Sierpień 1979', indexValue:107, title:'Volcker appointment – wojna z inflacją', description:'6 sierpnia – Paul Volcker zostaje Fed Chairman. Inflacja 11.3%. Złoto $300. Volcker zapowiada: "będę walczył z inflacją za wszelką cenę". Stopy pójdą w górę MOCNO (peak 20% w 1981). Short term ból, long term wygrana. Bonds massacred. Złoto rally do $850 (styczeń 1980). Stocks volatile. Koniec ery stagflacji blisko – ale przez ból.',
+              choices:[{text:'Obligacje krótkoterminowe – rates spike',effect:'short_bonds_79'},{text:'Złoto parabolic – $850 coming',effect:'gold_parabolic_79'},{text:'Defensive stocks – recession ahead',effect:'defensive_79'},{text:'Bet on Volcker – buy quality',effect:'quality_volcker_79'}],
               image:'https://upload.wikimedia.org/wikipedia/commons/9/9a/Oil_platform.jpg' }
           ],
-          stockPrices:{ 'Exxon Mobil':[52,71,84,78,89,96], 'Texaco':[28,42,38,35,47,52], 'Ford':[65,41,38,33,42,39], 'Złoto':[97,154,161,140,125,208], 'IBM':[341,246,238,264,287,354], "McDonald's":[77,52,49,58,71,86] }
+          stockPrices:{ 'Exxon Mobil':[45,52,71,84,78,89,92,96,110], 'Texaco':[25,28,42,38,35,47,50,52,58], 'Ford':[70,65,41,38,33,42,40,39,38], 'Złoto':[40,97,154,161,140,125,148,208,300], 'IBM':[360,341,246,238,264,287,310,354,340], "McDonald's":[85,77,52,49,58,71,78,86,90] }
         },
 
         '1990s': {
@@ -809,7 +820,24 @@
           // Marzec 1933 - Bank Holiday i New Deal
           buy_infrastructure:[R(40,160),'New Deal pompował inwestycje.','profit'], sell_gold:[R(-60,40),'Niepewność co do regulacji.','neutral'], buy_agriculture:[R(20,90),'Wsparcie programów rolnych.','profit'], buy_railroads:[R(-20,80),'Koleje cykliczne, ale skorzystają na inwestycjach.','neutral'],
           // 1970s
-          buy_oil:[R(250,380),'Energetyka eksplodowała w górę.','profit'], short_transport:[R(180,340),'Transport oberwał – zysk.','profit'], buy_alt_energy:[R(-50,180),'Wczesna faza — mieszane.','neutral'], buy_commodities_70s:[R(40,140),'Towary hedgują inflację.','profit'], buy_energy_infrastructure:[R(40,150),'Rurociągi/rafinerie zyskują.','profit'], buy_staples_70s:[R(20,100),'Podstawowe dobra trzymają popyt.','profit'], buy_real_estate_70s:[R(20,120),'Nieruchomości jako tarcza.','profit'], hold_cash_70s:[R(-20,20),'Inflacja zjada cash.','loss'], buy_dividends_70s:[R(10,80),'Dywidendy łagodzą ból.','neutral'], buy_precious_metals:[R(60,180),'Złoto/srebro korzystają.','profit'], short_growth:[R(60,160),'Wzrostówki karcone stopami.','profit'], buy_international:[R(-30,120),'Dywersyfikacja bywa pomocna.','neutral'], buy_quality_70s:[R(40,160),'Jakość po przecenie.','profit'], buy_efficiency_tech:[R(20,140),'Efektywność kosztowa mile widziana.','profit'], buy_agriculture_70s:[R(20,120),'Rolnictwo korzysta z cen towarów.','profit'], buy_tips:[R(20,90),'Inflation-linked chronią realny zwrot.','profit'], buy_tech_70s:[R(-20,120),'Wczesny tech zmienny.','neutral'], buy_conservation:[R(10,120),'Oszczędność energii trendem.','profit'], buy_consumer_disc:[R(-40,80),'Dyskrecyjne wrażliwe na realne dochody.','neutral'], stay_commodities:[R(-20,80),'Zależne od cyklu; częściowo działa.','neutral'], buy_oil_again:[R(80,200),'Drugi szok naftowy.','profit'], buy_alt_energy_late:[R(-20,140),'Alternatywa rośnie, ale niestabilna.','neutral'], buy_inflation_assets:[R(40,160),'Aktywa antyinflacyjne w cenie.','profit'], short_rates:[R(40,140),'Wrażliwe sektory cierpią.','profit'],
+          // Sierpień 1971 - Nixon Shock
+          buy_gold_71:[R(160,380),'Gold standard ends – złoto eksploduje!','profit'], buy_commodities_71:[R(80,220),'Commodities boom – inflacja hedge.','profit'], buy_intl_71:[R(20,120),'Dywersyfikacja waluty pomaga.','profit'], stay_stocks_71:[R(-60,80),'Stagflacja ahead – stocks struggle.','neutral'],
+          // Październik 1973 - Wojna Yom Kippur
+          buy_oil:[R(250,380),'Energetyka eksplodowała w górę.','profit'], short_transport:[R(180,340),'Transport oberwał – zysk.','profit'], buy_alt_energy:[R(-50,180),'Wczesna faza — mieszane.','neutral'], buy_commodities_70s:[R(40,140),'Towary hedgują inflację.','profit'],
+          // Marzec 1974 - Kryzys się pogłębia
+          buy_energy_infrastructure:[R(40,150),'Rurociągi/rafinerie zyskują.','profit'], buy_staples_70s:[R(20,100),'Podstawowe dobra trzymają popyt.','profit'], buy_real_estate_70s:[R(20,120),'Nieruchomości jako tarcza.','profit'], hold_cash_70s:[R(-20,20),'Inflacja zjada cash.','loss'],
+          // Sierpień 1974 - Rezygnacja Nixona
+          buy_dividends_70s:[R(10,80),'Dywidendy łagodzą ból.','neutral'], buy_precious_metals:[R(60,180),'Złoto/srebro korzystają.','profit'], short_growth:[R(60,160),'Wzrostówki karcone stopami.','profit'], buy_international:[R(-30,120),'Dywersyfikacja bywa pomocna.','neutral'],
+          // Styczeń 1975 - Mocna recesja
+          buy_quality_70s:[R(40,160),'Jakość po przecenie.','profit'], buy_efficiency_tech:[R(20,140),'Efektywność kosztowa mile widziana.','profit'], buy_agriculture_70s:[R(20,120),'Rolnictwo korzysta z cen towarów.','profit'], buy_tips:[R(20,90),'Inflation-linked chronią realny zwrot.','profit'],
+          // Lipiec 1976 - Dwustulecie
+          buy_tech_70s:[R(-20,120),'Wczesny tech zmienny.','neutral'], buy_conservation:[R(10,120),'Oszczędność energii trendem.','profit'], buy_consumer_disc:[R(-40,80),'Dyskrecyjne wrażliwe na realne dochody.','neutral'], stay_commodities:[R(-20,80),'Zależne od cyklu; częściowo działa.','neutral'],
+          // Maj 1977 - Carter/Stagflacja
+          gold_silver_77:[R(120,320),'Metale szlachetne rally – dolar słaby!','profit'], energy_77:[R(60,180),'Energy crisis długoterminowy – solid.','profit'], tips_77:[R(40,140),'TIPS chronią przed double-digit inflation.','profit'], short_dollar_77:[R(80,220),'Dolar słabnie – currency diversify wygrywa.','profit'],
+          // Grudzień 1978 - Drugi szok naftowy
+          buy_oil_again:[R(80,200),'Drugi szok naftowy.','profit'], buy_alt_energy_late:[R(-20,140),'Alternatywa rośnie, ale niestabilna.','neutral'], buy_inflation_assets:[R(40,160),'Aktywa antyinflacyjne w cenie.','profit'], short_rates:[R(40,140),'Wrażliwe sektory cierpią.','profit'],
+          // Sierpień 1979 - Volcker appointment
+          short_bonds_79:[R(180,420),'Bonds massacred – rates do 20%!','profit'], gold_parabolic_79:[R(240,580),'Złoto $300 → $850 w 6 miesięcy!','profit'], defensive_79:[R(20,100),'Recession 1980-82 ahead – defensywa OK.','profit'], quality_volcker_79:[R(60,180),'Volcker wins long term – jakość wygrywa.','profit'],
           // 1990s
           // Listopad 1990 - Recesja S&L
           buy_def_90:[R(40,120),'Defensywa chroni w recesji.','profit'], hold_cash_90:[R(-20,20),'Bezpiecznie, ale miss recovery.','neutral'], buy_bonds_90:[R(30,90),'Fed cuts = bond rally.','profit'], buy_pc_90:[R(-60,200),'PC boom dopiero zaczyna - volatile.','neutral'],
