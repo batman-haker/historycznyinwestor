@@ -204,6 +204,20 @@
       .result-modal-content { padding:28px 20px; }
       .result-modal-title { font-size:1.3rem; }
       .result-modal-capital-change { font-size:1.8rem; }
+
+      /* Chart modal mobile fixes */
+      .chart-modal { max-width:95%; padding:20px 16px; max-height:90vh; overflow-y:auto; }
+      .chart-container { height:250px; }
+      .chart-info { flex-direction:column; gap:10px; }
+      .modal-close { width:100%; padding:14px; font-size:1.1rem; position:sticky; bottom:0; background:linear-gradient(135deg, #e74c3c, #c0392b); }
+
+      /* Welcome screen mobile */
+      .main-menu { padding:24px 16px; min-height:auto; }
+      .game-cover-logo { max-width:90%; margin:0 auto 20px; }
+      .main-title { font-size:2rem; }
+      .main-subtitle { font-size:0.9rem; }
+      .menu-buttons-container { gap:12px; }
+      .menu-main-btn { padding:14px 24px; font-size:1rem; }
     }
 
     /* Touch-friendly hover states for mobile */
@@ -1895,9 +1909,6 @@
           // Restore body scroll
           document.body.style.overflow = '';
 
-          // Scroll to top smoothly (mobile-friendly)
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-
           // Continue to next scenario
           const ch = chapters[currentChapterKey];
           currentScenario++;
@@ -1905,6 +1916,15 @@
             endGame();
           } else {
             renderScenario();
+
+            // Scroll to game content after render (small delay for DOM update)
+            setTimeout(() => {
+              const gameContent = document.getElementById('gameContent');
+              const firstPanel = gameContent?.querySelector('.panel');
+              if(firstPanel) {
+                firstPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }, 100);
           }
         };
 
