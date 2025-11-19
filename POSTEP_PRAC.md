@@ -386,5 +386,56 @@ POSTEP_PRAC.md                     - Stan projektu
 
 ---
 
+## 🔧 SESJA 2025-01-19 (CD2): MOBILE UX FIXES
+
+### Problemy zgłoszone przez użytkownika:
+1. ❌ Auto-scroll do góry - trzeba było scrollować w dół do nowego pytania
+2. ❌ Modal wykresu - nie można zamknąć (przycisk niewidoczny)
+3. ❌ Ekran powitalny - za duży na mobile
+
+### Rozwiązania:
+
+#### 1. Auto-scroll do treści pytania ✅
+```javascript
+// PRZED: scrollował do góry strony
+window.scrollTo({ top: 0, behavior: 'smooth' });
+
+// PO: scrolluje do treści nowego pytania
+setTimeout(() => {
+  const firstPanel = gameContent?.querySelector('.panel');
+  if(firstPanel) {
+    firstPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}, 100);
+```
+
+#### 2. Modal wykresu - mobile friendly ✅
+```css
+@media (max-width:768px) {
+  .chart-modal { max-width:95%; max-height:90vh; overflow-y:auto; }
+  .chart-container { height:250px; }
+  .modal-close {
+    width:100%;
+    position:sticky;
+    bottom:0;
+    /* Zawsze widoczny na dole */
+  }
+}
+```
+
+#### 3. Ekran powitalny - kompaktowy ✅
+```css
+@media (max-width:768px) {
+  .main-menu { padding:24px 16px; min-height:auto; }
+  .main-title { font-size:2rem; }
+  .game-cover-logo { max-width:90%; }
+  .menu-main-btn { padding:14px 24px; font-size:1rem; }
+}
+```
+
+**Commit:** `9bb9aab` - fix: Mobile UX - poprawki scrollowania i modal wykresu
+
+---
+
 **Data ostatniej aktualizacji:** 2025-01-19
-**Ostatnia sesja:** Mobile UX improvements - modal z wynikiem + touch-friendly przyciski
+**Ostatnia sesja:** Mobile UX fixes - scroll do pytania + modal wykresu + ekran powitalny
