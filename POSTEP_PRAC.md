@@ -339,5 +339,52 @@ POSTEP_PRAC.md                     - Stan projektu
 
 ---
 
+## 📱 SESJA 2025-01-19 (CD): MOBILE UX IMPROVEMENTS
+
+### Problem: Niewygodne UX na mobile ❌→✅
+**Objawy:**
+- Po podjęciu decyzji trzeba było scrollować do góry aby odkliknąć wynik
+- Przyciski decyzji za małe na dotyk
+- Lista akcji w dwóch kolumnach nieczytelna na małych ekranach
+
+**Rozwiązanie - Modal z wynikiem:**
+- ✅ Wynik wyskakuje jako modal na środku ekranu
+- ✅ Duży przycisk "Kontynuuj ▶" zawsze widoczny
+- ✅ Auto-scroll do góry po zamknięciu modalu
+- ✅ Blokada scroll'u tła podczas wyświetlania wyniku
+- ✅ Animacje fadeIn + slideUp dla lepszego UX
+- ✅ Backdrop można kliknąć aby zamknąć
+
+**Mobile improvements:**
+```css
+@media (max-width:768px) {
+  - Przyciski decyzji: min-height 60px, większy padding
+  - Lista cen: 1 kolumna zamiast 2
+  - Większe fonty dla statystyk
+  - Touch-friendly active states
+}
+```
+
+**Commit:** `4350e18` - feat: Mobile UX - modal z wynikiem decyzji + lepsze przyciski
+
+### Nowa struktura modalu wyniku:
+```html
+<div class="result-modal">
+  <div class="result-modal-backdrop"></div>
+  <div class="result-modal-content">
+    <h3>Wynik Decyzji</h3>
+    <div class="result-modal-choice">Twoja decyzja</div>
+    <div class="result-modal-result">
+      <div class="message">Rezultat</div>
+      <div class="capital-change">+/- $XXX</div>
+      <div class="capital-new">Nowy kapitał</div>
+    </div>
+    <button class="continue">Kontynuuj ▶</button>
+  </div>
+</div>
+```
+
+---
+
 **Data ostatniej aktualizacji:** 2025-01-19
-**Ostatnia sesja:** Naprawiono deployment Streamlit - przyciski menu + okładka PNG
+**Ostatnia sesja:** Mobile UX improvements - modal z wynikiem + touch-friendly przyciski
