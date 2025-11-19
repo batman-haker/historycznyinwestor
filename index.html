@@ -160,7 +160,21 @@
     .leaderboard-loss { color:#ff4757; font-weight:600; }
     .leaderboard-empty { text-align:center; padding:40px; color:var(--muted); font-style:italic; }
     .leaderboard-actions { display:flex; gap:12px; justify-content:center; margin-top:20px; }
+
+    /* CHART MODAL */
+    .chart-modal { max-width:700px; }
+    .chart-container { position:relative; height:350px; margin:20px 0; background:rgba(255,255,255,0.02); border-radius:12px; padding:20px; }
+    .chart-info { display:flex; justify-content:space-around; margin:15px 0; padding:15px; background:rgba(139,92,246,0.1); border-radius:8px; }
+    .chart-stat { text-align:center; }
+    .chart-stat-label { font-size:0.85rem; color:var(--muted); margin-bottom:4px; }
+    .chart-stat-value { font-size:1.3rem; font-weight:700; color:var(--accent); }
+    .chart-stat-value.negative { color:#ff4757; }
+    #chartButton { margin-top:15px; padding:10px 20px; background:rgba(139,92,246,0.2); border:2px solid var(--accent); border-radius:8px; color:var(--text); font-weight:600; cursor:pointer; transition:all .3s ease; }
+    #chartButton:hover { background:var(--accent); transform:translateY(-2px); }
   </style>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script type="text/javascript" nonce="fbaf3247a48d4e4a8f9106ab1e1" src="//local.adguard.org?ts=1754656650365&amp;type=content-script&amp;dmn=mail-attachment.googleusercontent.com&amp;url=https%3A%2F%2Fmail-attachment.googleusercontent.com%2Fattachment%2Fu%2F0%2F%3Fui%3D2%26ik%3Df2ae618626%26attid%3D0.1%26permmsgid%3Dmsg-a%3Ar1370544206735525610%26th%3D19889e3900ffb5b5%26view%3Datt%26disp%3Dsafe%26realattid%3Df_me2v9lx50%26zw%26saddbat%3DANGjdJ9tnBx_fnmLD0gV18C3e8AnDwqW-CBoSG5TniDTP7IlJxdF3c7fYm1JqWHOp1e2U9TvLYbN-S64edVSp36JLaz7lgEc4vSYRpervdKBj2MWW2Ntn3HBxZVgr9bHNRnIC2GH-o-aTVqiITTbwjK6m35XDD3sTWXR9z6IIFLWdTv9OMC80sMRwu7aSEIuiCvfHTPm_eiGFWgoLnWc-VZkHCw4JXkL0q5t3iNEwoJVjtwnwRhPB3zRA51A6WN91SU_ZnAsTCRiPXd0Msyv2fRmUcHn2k_sopUnWRhtgY5u_VoQoIX030s-Zcuh0zJo6TKagK77NwE-bfelFjigt7DCc31dXx7WGPV7smw7gaUr9YHpDXAueoQIoLQWRedXTPQRiufiugXAnck0-1NRrGAAqW6p5j4FObQXhuFeE9Mh2j8tSo-HV-wluEhwmBT87d7Xy1OOu_-rSgkdbiOk-yHROdxp3tVK8Iyge5fA6Zc88exedhQbCKYDWlU7j8wGlblf5BWObkyVKv0kUmKz7iLM1nYMdzMFFHjkEQiVWG7tT6XqnDDI-vpY4je5GRtV0qwUPxb2C9NoXTzqoNVbua0ZXTQgzJHq9W6Y6N7dgMxIJE2DuZzrreT27qAi495WlA2N0h2A_zI4Fy1Hv5PPyJ96DmfPAk4j2i1q0CCSybCT3BbeKkMOI0rgyyxRbq8UzouKTlOtpAgzrrhBDUAn-wn82BdpK5DrhOnMFii0TuNUuTPPAsjJSS5klGGZDS3O-pSyP0ag3oJg4nEAnIC52JuNpOYISp4vEefezHjrMPn74LnIR9D5SsIlpkm1ZCf-Tk2YtKz8kaMOlL-1MatxeXXR0wxxXNrKVCbffgEDVQ4xWilbjmLE_MvNdd0WafGDjkvVXEf_pWTOZJhp6HV0N5B7ViNarFcExpGJdq2Ebas0Hp1jI-es8lrVhvlv1eFF5SDbsXbsVf8Vb8fKZ5QKHMtA0fjL7-mrWSHXlr0V0Rt9uNKCqAIJ_4EF3mEEVWs0pHlUZyEG237H9Y-IHB1zAGy1gACIP5KpIx2yqPXf643aBfFM_Teq1mO7VZXxz3L4wYcnniaZ13f-PqnnMixv&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="fbaf3247a48d4e4a8f9106ab1e1" src="//local.adguard.org?ts=1754656650365&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
 <body>
   <div class="container">
@@ -279,6 +293,36 @@
       </div>
     </div>
 
+    <!-- MODAL WYKRESU KAPITAŁU -->
+    <div id="chartModal" class="epoch-modal hidden" role="dialog" aria-modal="true">
+      <div class="modal-backdrop" id="chartBackdrop"></div>
+      <div class="modal-box chart-modal">
+        <h2 class="modal-title">📊 Twój Wykres Kapitału</h2>
+        <p class="modal-subtitle" id="chartSubtitle">Śledzenie postępów</p>
+
+        <div class="chart-info">
+          <div class="chart-stat">
+            <div class="chart-stat-label">Szczyt</div>
+            <div class="chart-stat-value" id="chartPeak">-</div>
+          </div>
+          <div class="chart-stat">
+            <div class="chart-stat-label">Dno</div>
+            <div class="chart-stat-value negative" id="chartBottom">-</div>
+          </div>
+          <div class="chart-stat">
+            <div class="chart-stat-label">Zmiana</div>
+            <div class="chart-stat-value negative" id="chartChange">-</div>
+          </div>
+        </div>
+
+        <div class="chart-container">
+          <canvas id="marketChart"></canvas>
+        </div>
+
+        <button class="modal-close" id="closeChartBtn" aria-label="Zamknij">❌ Zamknij</button>
+      </div>
+    </div>
+
     <!-- STARE MENU (teraz ukryte, używane tylko przez modal) -->
     <section id="mainMenu" class="hidden" aria-labelledby="menuHeading">
       <h1 id="menuHeading" class="main-title">Historyczny <span>Inwestor</span></h1>
@@ -361,37 +405,18 @@
       };
 
       // --------- MENU SYSTEM ---------
-      const welcomeScreen = document.getElementById('welcomeScreen');
-      const epochModal = document.getElementById('epochModal');
-      const chooseEpochBtn = document.getElementById('chooseEpochBtn');
-      const aboutBtn = document.getElementById('aboutBtn');
-      const closeModalBtn = document.getElementById('closeModalBtn');
-      const modalBackdrop = document.getElementById('modalBackdrop');
-
-      // Campaign Mode Elements
-      const campaignModeBtn = document.getElementById('campaignModeBtn');
-      const campaignModal = document.getElementById('campaignModal');
-      const closeCampaignBtn = document.getElementById('closeCampaignBtn');
-      const campaignBackdrop = document.getElementById('campaignBackdrop');
-      const startCampaignBtn = document.getElementById('startCampaignBtn');
-      const continueCampaignBtn = document.getElementById('continueCampaignBtn');
-      const resetCampaignBtn = document.getElementById('resetCampaignBtn');
-      const campaignEpochs = document.getElementById('campaignEpochs');
-      const campaignCapital = document.getElementById('campaignCapital');
-      const campaignCompleted = document.getElementById('campaignCompleted');
-
-      // Leaderboard Elements
-      const leaderboardBtn = document.getElementById('leaderboardBtn');
-      const leaderboardModal = document.getElementById('leaderboardModal');
-      const closeLeaderboardBtn = document.getElementById('closeLeaderboardBtn');
-      const leaderboardBackdrop = document.getElementById('leaderboardBackdrop');
-      const campaignLeaderboardTab = document.getElementById('campaignLeaderboardTab');
-      const singleLeaderboardTab = document.getElementById('singleLeaderboardTab');
-      const campaignLeaderboard = document.getElementById('campaignLeaderboard');
-      const singleLeaderboard = document.getElementById('singleLeaderboard');
-      const campaignLeaderboardBody = document.getElementById('campaignLeaderboardBody');
-      const singleLeaderboardBody = document.getElementById('singleLeaderboardBody');
-      const clearLeaderboardBtn = document.getElementById('clearLeaderboardBtn');
+      // Declare variables at top level (will be initialized in initMenuSystem)
+      let welcomeScreen, epochModal, chooseEpochBtn, aboutBtn, closeModalBtn, modalBackdrop;
+      let campaignModeBtn, campaignModal, closeCampaignBtn, campaignBackdrop;
+      let startCampaignBtn, continueCampaignBtn, resetCampaignBtn;
+      let campaignEpochs, campaignCapital, campaignCompleted;
+      let leaderboardBtn, leaderboardModal, closeLeaderboardBtn, leaderboardBackdrop;
+      let campaignLeaderboardTab, singleLeaderboardTab;
+      let campaignLeaderboard, singleLeaderboard;
+      let campaignLeaderboardBody, singleLeaderboardBody, clearLeaderboardBtn;
+      let chartModal, closeChartBtn, chartBackdrop, marketChartCanvas;
+      let chartPeak, chartBottom, chartChange, chartSubtitle;
+      let currentChart = null; // Store chart instance
 
       function showWelcomeScreen(){
         welcomeScreen.classList.remove('hidden');
@@ -399,6 +424,7 @@
         epochModal.classList.add('hidden');
         campaignModal.classList.add('hidden');
         leaderboardModal.classList.add('hidden');
+        chartModal.classList.add('hidden');
       }
 
       function hideWelcomeScreen(){
@@ -656,9 +682,176 @@
         }
       }
 
+      // --------- CHART SYSTEM ---------
+      function openChartModal(epochKey){
+        // Use capitalHistory (player's capital over time)
+        if(capitalHistory.length < 2){
+          alert('📊 Wykres dostępny po pierwszej decyzji!');
+          return;
+        }
+
+        const ch = chapters[epochKey];
+        if(!ch) return;
+
+        // Labels: Start, Decyzja 1, Decyzja 2, etc.
+        const labels = capitalHistory.map((_, idx) => {
+          if(idx === 0) return 'Start';
+          return `Decyzja ${idx}`;
+        });
+
+        const startCap = capitalHistory[0];
+        const currentCap = capitalHistory[capitalHistory.length - 1];
+        const peak = Math.max(...capitalHistory);
+        const bottom = Math.min(...capitalHistory);
+        const change = ((currentCap / startCap - 1) * 100).toFixed(1);
+
+        // Determine color based on profit/loss
+        const isProfit = currentCap >= startCap;
+        const lineColor = isProfit ? '#2ed573' : '#ff4757';
+        const bgColor = isProfit ? 'rgba(46, 213, 115, 0.1)' : 'rgba(255, 71, 87, 0.1)';
+
+        // Update stats
+        chartSubtitle.textContent = `Twój kapitał (${ch.title})`;
+        chartPeak.textContent = `$${peak.toLocaleString()}`;
+        chartBottom.textContent = `$${bottom.toLocaleString()}`;
+        chartChange.textContent = `${change > 0 ? '+' : ''}${change}%`;
+        chartChange.className = `chart-stat-value ${isProfit ? '' : 'negative'}`;
+
+        // Destroy previous chart
+        if(currentChart){
+          currentChart.destroy();
+        }
+
+        // Create chart
+        const ctx = marketChartCanvas.getContext('2d');
+        currentChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Kapitał',
+              data: capitalHistory,
+              borderColor: lineColor,
+              backgroundColor: bgColor,
+              borderWidth: 3,
+              tension: 0.3,
+              fill: true,
+              pointBackgroundColor: lineColor,
+              pointBorderColor: '#fff',
+              pointBorderWidth: 2,
+              pointRadius: 5,
+              pointHoverRadius: 7
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: true,
+                labels: {
+                  color: '#eef3ff',
+                  font: { size: 14, weight: '600' }
+                }
+              },
+              tooltip: {
+                backgroundColor: 'rgba(15, 18, 34, 0.95)',
+                titleColor: '#8b5cf6',
+                bodyColor: '#eef3ff',
+                borderColor: '#8b5cf6',
+                borderWidth: 2,
+                padding: 12,
+                displayColors: false,
+                callbacks: {
+                  label: function(context){
+                    return `Kapitał: $${context.parsed.y.toLocaleString()}`;
+                  }
+                }
+              }
+            },
+            scales: {
+              x: {
+                ticks: {
+                  color: '#cbd5e1',
+                  maxRotation: 45,
+                  minRotation: 45
+                },
+                grid: {
+                  color: 'rgba(255, 255, 255, 0.05)'
+                }
+              },
+              y: {
+                ticks: {
+                  color: '#cbd5e1',
+                  callback: function(value){
+                    return '$' + value.toLocaleString();
+                  }
+                },
+                grid: {
+                  color: 'rgba(255, 255, 255, 0.05)'
+                }
+              }
+            },
+            animation: {
+              duration: 1500,
+              easing: 'easeInOutQuart'
+            }
+          }
+        });
+
+        chartModal.classList.remove('hidden');
+        console.log('📈 Chart opened for', epochKey);
+      }
+
+      function closeChartModal(){
+        chartModal.classList.add('hidden');
+      }
+
       // Initialize menu system AFTER DOM loads
       function initMenuSystem(){
         console.log('🎮 Initializing menu system...');
+
+        // Initialize all DOM elements
+        welcomeScreen = document.getElementById('welcomeScreen');
+        epochModal = document.getElementById('epochModal');
+        chooseEpochBtn = document.getElementById('chooseEpochBtn');
+        aboutBtn = document.getElementById('aboutBtn');
+        closeModalBtn = document.getElementById('closeModalBtn');
+        modalBackdrop = document.getElementById('modalBackdrop');
+
+        campaignModeBtn = document.getElementById('campaignModeBtn');
+        campaignModal = document.getElementById('campaignModal');
+        closeCampaignBtn = document.getElementById('closeCampaignBtn');
+        campaignBackdrop = document.getElementById('campaignBackdrop');
+        startCampaignBtn = document.getElementById('startCampaignBtn');
+        continueCampaignBtn = document.getElementById('continueCampaignBtn');
+        resetCampaignBtn = document.getElementById('resetCampaignBtn');
+        campaignEpochs = document.getElementById('campaignEpochs');
+        campaignCapital = document.getElementById('campaignCapital');
+        campaignCompleted = document.getElementById('campaignCompleted');
+
+        leaderboardBtn = document.getElementById('leaderboardBtn');
+        leaderboardModal = document.getElementById('leaderboardModal');
+        closeLeaderboardBtn = document.getElementById('closeLeaderboardBtn');
+        leaderboardBackdrop = document.getElementById('leaderboardBackdrop');
+        campaignLeaderboardTab = document.getElementById('campaignLeaderboardTab');
+        singleLeaderboardTab = document.getElementById('singleLeaderboardTab');
+        campaignLeaderboard = document.getElementById('campaignLeaderboard');
+        singleLeaderboard = document.getElementById('singleLeaderboard');
+        campaignLeaderboardBody = document.getElementById('campaignLeaderboardBody');
+        singleLeaderboardBody = document.getElementById('singleLeaderboardBody');
+        clearLeaderboardBtn = document.getElementById('clearLeaderboardBtn');
+
+        chartModal = document.getElementById('chartModal');
+        closeChartBtn = document.getElementById('closeChartBtn');
+        chartBackdrop = document.getElementById('chartBackdrop');
+        marketChartCanvas = document.getElementById('marketChart');
+        chartPeak = document.getElementById('chartPeak');
+        chartBottom = document.getElementById('chartBottom');
+        chartChange = document.getElementById('chartChange');
+        chartSubtitle = document.getElementById('chartSubtitle');
+
+        console.log('✅ All DOM elements initialized');
 
         dom.backBtn.addEventListener('click', () => {
           console.log('Back button clicked');
@@ -754,6 +947,17 @@
         clearLeaderboardBtn.addEventListener('click', () => {
           console.log('Clear leaderboard clicked');
           clearLeaderboard();
+        });
+
+        // Chart Event Listeners
+        closeChartBtn.addEventListener('click', () => {
+          console.log('Close chart clicked');
+          closeChartModal();
+        });
+
+        chartBackdrop.addEventListener('click', () => {
+          console.log('Chart backdrop clicked');
+          closeChartModal();
         });
 
         console.log('✅ Menu system initialized');
@@ -1267,6 +1471,7 @@
             </div>
             <button class="hint-btn" id="hintBtn" aria-expanded="false" aria-controls="hintBox">💡 Wskazówka</button>
             <div id="hintBox" class="hint-box" aria-hidden="true">${hintText}</div>
+            <button id="chartButton">📊 Zobacz mój wykres</button>
           </section>
           <aside class="panel" aria-label="Ceny na rynku">
             <h3 class="panel-title">Ceny na rynku</h3>
@@ -1291,6 +1496,16 @@
             hintBox.setAttribute('aria-hidden', String(expanded));
           });
         }
+
+        // Chart button (only for 1930s)
+        const chartButton = document.getElementById('chartButton');
+        if(chartButton){
+          chartButton.addEventListener('click', () => {
+            console.log('Chart button clicked');
+            openChartModal(currentChapterKey);
+          });
+        }
+
         updateProgress();
       }
 
@@ -1301,118 +1516,145 @@
         const outcomes={
           // 1930s
           // Październik 1929 - Czarny Czwartek
-          buy_stocks:[-600,'Kupiłeś tuż przed krachem!','loss'], sell_all:[100,'Uniknąłeś krachu – brawo.','profit'], buy_gold:[50,'Złoto utrzymało wartość.','profit'], short_market:[400,'Doskonały timing na short!','profit'],
+          buy_stocks:[-R(1000,1600),'Kupiłeś tuż przed krachem. Broker dzwoni: wezwanie do uzupełnienia depozytu! Musisz sprzedać po -70%. KATASTROFA. Panika wszędzie.','loss'],
+          sell_all:[R(15,60),'Sprzedałeś przed krachem. Sąsiedzi mówią że jesteś tchórzem. Ocalił kapitał, ale prowizja 3% zjada część.','profit'],
+          buy_gold:[R(-80,40),'Złoto też spada w panice - wszyscy potrzebują gotówki na pokrycie strat. Gorsze niż myślałeś.','neutral'],
+          short_market:[R(50,140),'Gra na spadki działała! Ale broker zamknął pozycję w panice i prowizje wysokie. Zysk znacznie mniejszy.','profit'],
           // Listopad 1929 - Krach
-          buy_dip:[-R(250,450),'Spadki jeszcze bolały.','loss'], hold_cash:[R(10,40),'Bezpiecznie, ale nudno.','neutral'], buy_utilities:[R(-40,60),'Użyteczności trzymają się lepiej.','neutral'], buy_commodities:[R(-30,80),'Towary mieszane, zależne od popytu.','neutral'],
-          // Czerwiec 1930 - Fałszywy świt
-          buy_dividends:[R(-40,90),'Dywidendy amortyzują spadki.','neutral'], buy_gold_miners:[R(-50,120),'Górnicy złota zmienni, ale dają alfę.','neutral'], buy_bonds:[R(20,80),'Obligacje rządowe stabilizują.','profit'], start_business:[R(-120,200),'Ryzyko w recesji ogromne.','neutral'],
-          // Grudzień 1930 - Bank of US upada
-          cash_mattress_30:[R(-30,40),'Cash bezpieczny, ale deflacja zjada wartość.','neutral'], biggest_banks_30:[R(-80,120),'JP Morgan przetrwa, mniejsze padną.','neutral'], gold_safety_30:[R(20,90),'Złoto jedyne bezpieczeństwo w panice.','profit'], govt_bonds_30:[R(30,100),'Treasuries safe haven – solid.','profit'],
-          // Maj 1931 - Credit-Anstalt
-          sell_global_31:[R(-40,60),'Sprzedaż w panice – some safety ale late.','neutral'], short_europe_31:[R(160,360),'European banks collapse – świetny short!','profit'], usa_haven_31:[R(-60,80),'USA nie odizolowane – contagion hits.','neutral'], gold_commodities_31:[R(40,140),'Flight to real assets – działa.','profit'],
-          // Wrzesień 1931 - Britain opuszcza złoto
-          buy_real_estate:[R(-180,120),'RE w depresji bardzo ryzykowne.','loss'], buy_staples:[R(10,90),'Staples bardziej odporne.','profit'], hoard_cash:[R(0,40),'Gotówka królem w kryzysie.','neutral'], buy_more_gold:[R(20,90),'Złoto trzyma wartość.','profit'],
-          // Lipiec 1932 - Dno
-          buy_bottom:[R(160,420),'Kupno dna – legenda.','profit'], buy_quality:[R(80,240),'Jakość wychodzi z kryzysu mocniej.','profit'], buy_alcohol:[R(20,120),'„Sin stocks" bywają defensywne.','profit'], stay_safe:[R(-10,30),'Bezpiecznie, ale ominiesz odbicie.','neutral'],
-          // Listopad 1932 - FDR wygrywa
-          buy_fdr_hope:[R(60,180),'Nadzieja przed inauguracją – momentum rośnie.','profit'], wait_fdr_action:[R(20,80),'Ostrożność OK, ale miss early rally.','neutral'], infra_new_deal:[R(80,220),'Infrastruktura perfect bet na New Deal!','profit'], alcohol_prohibition_end:[R(100,280),'Prohibition ends 1933 – świetny timing!','profit'],
-          // Marzec 1933 - Bank Holiday i New Deal
-          buy_infrastructure:[R(40,160),'New Deal pompował inwestycje.','profit'], sell_gold:[R(-60,40),'Niepewność co do regulacji.','neutral'], buy_agriculture:[R(20,90),'Wsparcie programów rolnych.','profit'], buy_railroads:[R(-20,80),'Koleje cykliczne, ale skorzystają na inwestycjach.','neutral'],
+          buy_dip:[-R(600,1000),'To NIE było dno. Banki upadają. Spadki trwają jeszcze 3 LATA. Kupiłeś za wcześnie - łapanie spadającego noża. RUINA.','loss'],
+          hold_cash:[R(-15,35),'Gotówka bezpieczna, ale deflacja zbliża się. Prowizja za przechowanie w banku. Eksperci mówią "kupuj dno" - ignorujesz.','neutral'],
+          buy_utilities:[R(-180,40),'Użyteczności też cierpią - nikt nie płaci rachunków. 30% klientów nie wywiązuje się z płatności. Lepsze niż akcje, ale bolesna strata.','loss'],
+          buy_commodities:[R(-220,60),'Popyt się załamuje. Fabryki zamykają. Deflacja zabija towary. Może tylko złoto się utrzyma?','loss'],
+          // Czerwiec 1930 - Fałszywy świt (PUŁAPKA!)
+          buy_dividends:[-R(300,550),'WIELKA PUŁAPKA! Spółki ZAWIESZAJĄ dywidendy tydzień po twoim zakupie. Ta "pewna" wypłata to iluzja. Fałszywe odbicie w bessie. KATASTROFA!','loss'],
+          buy_gold_miners:[R(-350,80),'Górnicy to akcje - dźwignia finansowa działa PRZECIWKO tobie. Cena złota rośnie, ale akcje górnicze padają -40%. Żądania dopłat!','loss'],
+          buy_bonds:[R(25,80),'Mądry wybór. Obligacje skarbowe = jedyny bezpieczny port. Ale zysk niewielki i prowizje 2%.','profit'],
+          start_business:[-R(500,50),'Załóż biznes w Depresji? SZALEŃSTWO! 25% bezrobocie. Nikt nie kupuje. Bankructwo po 4 miesiącach. Stracone oszczędności.','loss'],
+          // Grudzień 1930 - Bank of US upada (400k deponentów traci oszczędności)
+          cash_mattress_30:[R(-30,40),'Trzymasz gotówkę pod materacem. Deflacja zjada 5% rocznie. Ryzyko kradzieży. Sąsiedzi tracą wszystko w bankach - ty przynajmniej masz kapitał.','neutral'],
+          biggest_banks_30:[R(-280,50),'Postawiłeś na JP Morgan. Oni przetrwają... ale ich akcje spadają -35%. Zaraza paniki wszędzie. Szturm na banki codziennie.','loss'],
+          gold_safety_30:[R(35,100),'Złoto = jedyna bezpieczna przystań. Ludzie uciekają od papierów. Mądra decyzja w panice bankowej. Ale prowizje dealerów wysokie.','profit'],
+          govt_bonds_30:[R(50,120),'Obligacje skarbowe - bezpieczna przystań. Wszyscy uciekają do bezpieczeństwa. Rentowność spada, ceny w górę. Ale defensywna strategia - zwroty niewielkie.','profit'],
+          // Maj 1931 - Credit-Anstalt collapse (Austria → Europe → świat)
+          sell_global_31:[R(-150,50),'Sprzedajesz w PANICE po najgorszych cenach. Za późno - strata -25% już zrealizowana. Zaraza błyskawiczna. Najgorszy moment.','loss'],
+          short_europe_31:[R(60,150),'MORALNY DYLEMAT: grasz na spadki europejskich banków. Zarabiasz na tragedii milionów. Austria, Niemcy w chaosie. Ale broker ogranicza pozycje - mniej zysków.','profit'],
+          usa_haven_31:[-R(180,300),'PUŁAPKA! Myślałeś że USA jest bezpieczne od europejskiego kryzysu? WIELKI BŁĄD! Depresja idzie do Ameryki. Zaraza globalna.','loss'],
+          gold_commodities_31:[R(50,120),'Ucieczka do jakości. Wszyscy uciekają do realnych aktywów. Złoto, srebro. Ale transport i koszty przechowania wysokie -20%.','profit'],
+          // Wrzesień 1931 - Britain opuszcza gold standard (funt -25%!)
+          buy_real_estate:[-R(500,250),'Nieruchomości w Depresji? NAJGORSZA DECYZJA! Egzekucje wszędzie. Podatek od nieruchomości + koszty utrzymania. Ceny spadają -60%+. KATASTROFA.','loss'],
+          buy_staples:[R(15,80),'Jedzenie, mydło, tytoń - ludzie nadal kupują podstawy. Defensywna strategia działa, ale zyski niewielkie. Prowizje 3%.','profit'],
+          hoard_cash:[R(-40,45),'Deflacja zjada wartość -3% rocznie, ale gotówka daje spokój. Rezerwa Federalna podnosi stopy (błąd historyczny!) - gospodarka w dół.','neutral'],
+          buy_more_gold:[R(40,100),'Wielka Brytania zrywa ze standardem złota = chaos walutowy. Złoto prawdziwym pieniądzem. Mądra decyzja, ale koszty przechowania i premie dealerów wysokie.','profit'],
+          // Lipiec 1932 - ABSOLUTNE DNO (Dow 41, -89% od szczytu, 25% bezrobocie)
+          buy_bottom:[R(-300,200),'ZAKŁAD PRZECIWKO TŁUMOWI - najwyższe ryzyko! Wszyscy w panice, ty kupujesz. NIE WIESZ czy to dno. Może czekać rok bez wzrostów. Irving Fisher zbankrutował próbując.','neutral'],
+          buy_quality:[R(25,130),'Coca-Cola, IBM po przecenie. Jakość ZAWSZE wraca... ale moment trudny. Może czekać 12-18 miesięcy na odbicie. Prowizje wysokie.','profit'],
+          buy_alcohol:[R(-120,120),'Prohibicja kończy się wkrótce - spekulacja na przyszłość! Ale nielegalny rynek działa świetnie, legalne spółki słabe. Wielki hazard.','neutral'],
+          stay_safe:[R(-50,30),'Kapitulacja po 3 latach kryzysu. Nie wierzysz już w rynek. Trzymasz gotówkę. OMINIESZ największe odbicie w historii! Stracona szansa.','neutral'],
+          // Listopad 1932 - FDR wygrywa landslide (nadzieja!)
+          buy_fdr_hope:[R(45,110),'Nowy Ład nadchodzi! Rynek przeczuwa. Kupujesz nadzieję - klasyczne "kup plotkę". Impet powoli rośnie. Ale inauguracja za 4 miesiące.','profit'],
+          wait_fdr_action:[R(-50,45),'Czekasz na konkretne działania. Ostrożny... ale rynek już zaczyna wyceniać. Omijasz wczesne wzrosty. Koszt oczekiwania.','neutral'],
+          infra_new_deal:[R(60,140),'Dobra przewidywanie! Infrastruktura = serce Nowego Ładu. Cement, stal, koleje. Ale wykonanie zajmie miesiące. Wybór wymaga cierpliwości.','profit'],
+          alcohol_prohibition_end:[R(35,110),'Prohibicja kończy się 1933! Legalny alkohol = nowa branża. Ale które spółki przetrwają? Wielkie ryzyko realizacji. Przemytnicy mają przewagę.','profit'],
+          // Marzec 1933 - Bank Holiday i New Deal (DNO POTWIERDZONE! Odbicie się zaczyna)
+          buy_infrastructure:[R(50,140),'Nowy Ład DZIAŁA! Masywne projekty publiczne. Infrastruktura solidny zakład. Ale realizacja zajmie kwartały. Trzeba cierpliwości.','profit'],
+          sell_gold:[-R(180,350),'KATASTROFA! Roosevelt konfiskuje złoto Rozporządzeniem 6102. Przeliczenie $20.67 → $35. Sprzedałeś tuż przed 40% wzrostem! Najgorszy moment w historii.','loss'],
+          buy_agriculture:[R(35,100),'Ustawa o dostosowaniach rolnych subsydiuje farmerów. Ceny stabilizują się. Mądry sektor, ale ryzyko suszy 1934. Zwroty umiarkowane.','profit'],
+          buy_railroads:[R(-120,90),'Koleje cykliczne i zadłużone. Nowy Ład pomaga, ale odbicie BARDZO długie. Może zająć 3-5 lat. Moment ekstremalnie trudny.','neutral'],
           // 1970s
           // Sierpień 1971 - Nixon Shock
-          buy_gold_71:[R(160,380),'Gold standard ends – złoto eksploduje!','profit'], buy_commodities_71:[R(80,220),'Commodities boom – inflacja hedge.','profit'], buy_intl_71:[R(20,120),'Dywersyfikacja waluty pomaga.','profit'], stay_stocks_71:[R(-60,80),'Stagflacja ahead – stocks struggle.','neutral'],
+          buy_gold_71:[R(80,200),'Standard złota kończy się – złoto rośnie! Ale koszty przechowywania, marże dealerów 5-8%, opóźnienia. Nie tak prosto jak myślałeś.','profit'], buy_commodities_71:[R(45,130),'Surowce rosną – ochrona przed inflacją. Ale wymogi depozytu na kontraktach, koszty rolowania. Prowizje 4%.','profit'], buy_intl_71:[R(10,80),'Dywersyfikacja walutowa pomaga trochę. Spready walutowe, ryzyko kursu, opłaty konwersji -3%.','profit'], stay_stocks_71:[R(-120,50),'PUŁAPKA! Stagflacja przez dekadę! Akcje walczą z inflacją i recesją. Nifty Fifty collapse ahead -40%.','loss'],
           // Październik 1973 - Wojna Yom Kippur
-          buy_oil:[R(250,380),'Energetyka eksplodowała w górę.','profit'], short_transport:[R(180,340),'Transport oberwał – zysk.','profit'], buy_alt_energy:[R(-50,180),'Wczesna faza — mieszane.','neutral'], buy_commodities_70s:[R(40,140),'Towary hedgują inflację.','profit'],
+          buy_oil:[R(120,220),'Energetyka w górę! Ale kontrola OPEC = zmienność. Ryzyko nacjonalizacji. Groźby podatków nadzwyczajnych. Trudny timing.','profit'], short_transport:[R(90,180),'Transport oberwał – zysk. Ale ryzyko przymusowego zamknięcia pozycji, opłaty maklera 5%, wysokie wymogi depozytowe.','profit'], buy_alt_energy:[R(-120,100),'Wczesna faza solar/wiatr – BARDZO ryzykowne! Większość startupów bankrutuje. Technologia nieudowodniona. Może strata totalna.','neutral'], buy_commodities_70s:[R(25,90),'Surowce chronią przed inflacją częściowo. Ale struktura cen futures zjada zwroty, koszty magazynowania, ryzyko wygaśnięcia.','profit'],
           // Marzec 1974 - Kryzys się pogłębia
-          buy_energy_infrastructure:[R(40,150),'Rurociągi/rafinerie zyskują.','profit'], buy_staples_70s:[R(20,100),'Podstawowe dobra trzymają popyt.','profit'], buy_real_estate_70s:[R(20,120),'Nieruchomości jako tarcza.','profit'], hold_cash_70s:[R(-20,20),'Inflacja zjada cash.','loss'],
+          buy_energy_infrastructure:[R(25,95),'Rurociągi/rafinerie zyskują trochę. Niepewność regulacyjna, kapitałochłonne, możliwe cięcia dywidend.','profit'], buy_staples_70s:[R(10,65),'Podstawowe dobra trzymają popyt OK. Ale ograniczona siła cenowa, marże ściśnięte. Defensywa słaba.','profit'], buy_real_estate_70s:[R(-40,80),'Nieruchomości mieszane! Inflacja pomaga, ALE oprocentowanie kredytów 10%+! Finansowanie trudne, kryzys płynności.','neutral'], hold_cash_70s:[R(-60,-10),'Inflacja 12% ZJADA gotówkę -10% realnie rocznie! Najgorsza decyzja w stagflacji. Gwarantowana strata!','loss'],
           // Sierpień 1974 - Rezygnacja Nixona
-          buy_dividends_70s:[R(10,80),'Dywidendy łagodzą ból.','neutral'], buy_precious_metals:[R(60,180),'Złoto/srebro korzystają.','profit'], short_growth:[R(60,160),'Wzrostówki karcone stopami.','profit'], buy_international:[R(-30,120),'Dywersyfikacja bywa pomocna.','neutral'],
+          buy_dividends_70s:[R(-10,50),'Dywidendy łagodzą ból trochę. Ale wiele spółek TNIE dywidendy. Wskaźniki wypłat nie do utrzymania. Pułapka wartości!','neutral'], buy_precious_metals:[R(35,110),'Złoto/srebro korzystają z politycznego chaosu. Ale marże dealerów 6-10%, różnica między kupnem a sprzedażą, magazynowanie.','profit'], short_growth:[R(35,100),'Wzrostówki karcone stopami OK. Ale koszty pozycji krótkiej, żądania dopłat jeśli odbicie. Timing trudny.','profit'], buy_international:[R(-60,80),'Dywersyfikacja międzynarodowa RYZYKOWNA! Europa/Japonia też w stagflacji. Chaos walutowy. Może gorsze niż USA.','neutral'],
           // Styczeń 1975 - Mocna recesja
-          buy_quality_70s:[R(40,160),'Jakość po przecenie.','profit'], buy_efficiency_tech:[R(20,140),'Efektywność kosztowa mile widziana.','profit'], buy_agriculture_70s:[R(20,120),'Rolnictwo korzysta z cen towarów.','profit'], buy_tips:[R(20,90),'Inflation-linked chronią realny zwrot.','profit'],
+          buy_quality_70s:[R(25,100),'Jakość po przecenie - dobry pomysł długoterminowo. Ale recesja trwa. Ryzyko pułapki wartości. Trzeba czekać 2-3 lata.','profit'], buy_efficiency_tech:[R(10,90),'Efektywność kosztowa mile widziana przez firmy. Ale wczesna faza, zmienne, wiele bankructw. Wysokie ryzyko.','profit'], buy_agriculture_70s:[R(15,80),'Rolnictwo korzysta z cen surowców. Ale ryzyko pogody, interwencja rządu, cykle nadpodaży.','profit'], buy_tips:[R(15,60),'Obligacje antyinflacyjne chronią teoretycznie. Ale nowy instrument, niska płynność, błędy śledzenia.','profit'],
           // Lipiec 1976 - Dwustulecie
-          buy_tech_70s:[R(-20,120),'Wczesny tech zmienny.','neutral'], buy_conservation:[R(10,120),'Oszczędność energii trendem.','profit'], buy_consumer_disc:[R(-40,80),'Dyskrecyjne wrażliwe na realne dochody.','neutral'], stay_commodities:[R(-20,80),'Zależne od cyklu; częściowo działa.','neutral'],
+          buy_tech_70s:[R(-50,80),'Wczesny tech 1976 BARDZO zmienny! Apple/Microsoft jeszcze małe. Większość firm bankrutuje. Los na loterii.','neutral'], buy_conservation:[R(5,75),'Efektywność energetyczna słabym trendem. Konsumenci niezainteresowani gdy ceny spadają. Subsydia ograniczone.','profit'], buy_consumer_disc:[R(-80,50),'Dobra luksusowe CIERPIĄ! Realne płace spadają, bezrobocie wysokie. Ludzie kupują tylko podstawy. Recesja boli.','neutral'], stay_commodities:[R(-50,60),'Surowce cykliczne - szczyt przed nami? Może korekta nadchodzi. Timing bardzo trudny. Zmienność ekstremalna.','neutral'],
           // Maj 1977 - Carter/Stagflacja
-          gold_silver_77:[R(120,320),'Metale szlachetne rally – dolar słaby!','profit'], energy_77:[R(60,180),'Energy crisis długoterminowy – solid.','profit'], tips_77:[R(40,140),'TIPS chronią przed double-digit inflation.','profit'], short_dollar_77:[R(80,220),'Dolar słabnie – currency diversify wygrywa.','profit'],
+          gold_silver_77:[R(65,180),'Metale szlachetne w górę – dolar słaby! Ale zmienność +/- 20% miesięcznie. Spready dealerów 8%. Timing krytyczny.','profit'], energy_77:[R(35,110),'Kryzys energetyczny długoterminowy - solidna teza. Ale nacjonalizacja, podatki nadzwyczajne, manipulacje OPEC. Wysokie ryzyko.','profit'], tips_77:[R(25,90),'Obligacje antyinflacyjne chronią teoretycznie. Ale rentowności opóźnione za inflacją, niska płynność, błędy nowego instrumentu.','profit'], short_dollar_77:[R(45,130),'Dolar słabnie – dywersyfikacja walutowa pomaga. Ale ekstremalna zmienność walut, koszty konwersji 3-5%, komplikacje podatkowe.','profit'],
           // Grudzień 1978 - Drugi szok naftowy
-          buy_oil_again:[R(80,200),'Drugi szok naftowy.','profit'], buy_alt_energy_late:[R(-20,140),'Alternatywa rośnie, ale niestabilna.','neutral'], buy_inflation_assets:[R(40,160),'Aktywa antyinflacyjne w cenie.','profit'], short_rates:[R(40,140),'Wrażliwe sektory cierpią.','profit'],
+          buy_oil_again:[R(45,120),'Drugi szok naftowy - rewolucja w Iranie. Energia w górę! Ale chaos geopolityczny, podaż nieprzewidywalna, obawy o szczyt ropy przesadzone.','profit'], buy_alt_energy_late:[R(-50,90),'Alternatywy solar/wiatr pod koniec lat 70 - cykl szumu! Większość projektów upada. Technologia niedojrzała. Zależność od subsydiów.','neutral'], buy_inflation_assets:[R(25,100),'Aktywa realne antyinflacyjne (surowce, nieruchomości) częściowo działają. Ale timing szczytu? Volcker nadchodzi = ból.','profit'], short_rates:[R(25,90),'Sektory wrażliwe na stopy cierpią (użyteczność publiczna, fundusze nieruchomości). Gra na spadki działa. Ale szok Volckera nadchodzi = więcej bólu.','profit'],
           // Sierpień 1979 - Volcker appointment
-          short_bonds_79:[R(180,420),'Bonds massacred – rates do 20%!','profit'], gold_parabolic_79:[R(240,580),'Złoto $300 → $850 w 6 miesięcy!','profit'], defensive_79:[R(20,100),'Recession 1980-82 ahead – defensywa OK.','profit'], quality_volcker_79:[R(60,180),'Volcker wins long term – jakość wygrywa.','profit'],
+          short_bonds_79:[R(90,220),'Obligacje rozgromione – stopy 20%! Gra na spadki działa ŚWIETNIE! Ale brutalne żądania dopłat, broker może zamknąć pozycję, ryzyko przymusowego odkupu.','profit'], gold_parabolic_79:[R(120,300),'Złoto PARABOLICZNE $300 → $850! Ale zmienność SZALONA ±15% dziennie! Manipulacja braci Hunt, może zawalić się w każdym momencie. Timing = loteria!','profit'], defensive_79:[R(10,65),'Recesja 1980-82 przed nami – defensywa... ale stagflacja niszczy wszystko. Nawet "bezpieczne" sektory cierpią. Brak bezpiecznej przystani.','profit'], quality_volcker_79:[R(35,110),'Volcker wygrywa długoterminowo – jakość wygra za 3-5 lat. Ale krótkoterminowy ból EKSTREMALNY. Trzeba wytrzymać -30% spadek.','profit'],
           // 1990s
           // Listopad 1990 - Recesja S&L
-          buy_def_90:[R(40,120),'Defensywa chroni w recesji.','profit'], hold_cash_90:[R(-20,20),'Bezpiecznie, ale miss recovery.','neutral'], buy_bonds_90:[R(30,90),'Fed cuts = bond rally.','profit'], buy_pc_90:[R(-60,200),'PC boom dopiero zaczyna - volatile.','neutral'],
+          buy_def_90:[R(20,75),'Defensywa chroni w recesji trochę. Ale kryzys kas oszczędnościowych = ryzyko systemowe. Wiele "defensywnych" banków upada. Ograniczona ochrona.','profit'], hold_cash_90:[R(-35,15),'Gotówka bezpieczna, ale tracisz timing odbicia. Obniżki stóp Fed nadchodzą = ogromny koszt utraconych okazji. Inflacja 5% zjada wartość.','neutral'], buy_bonds_90:[R(20,60),'Obniżki stóp Fed = wzrost obligacji OK. Ale ryzyko duracji, recesja może być długa. Ryzyko spreadu kredytowego.','profit'], buy_pc_90:[R(-120,140),'Boom na komputery PC DOPIERO zaczyna! IBM dominuje ale Apple/Compaq walczą. Timing trudny, ekstremalna zmienność ±40%.','neutral'],
           // Marzec 1991 - Gulf War victory
-          buy_cyclicals_91:[R(140,320),'Recovery play – cyclicals odbijają!','profit'], buy_tech_91:[R(180,420),'MSFT, Intel start of decade boom!','profit'], stay_defensive_91:[R(-40,80),'Za ostrożnie – miss rally.','neutral'], buy_international_91:[R(60,180),'Europe benefit from peace dividend.','profit'],
+          buy_cyclicals_91:[R(70,170),'Zakład na odbicie – spółki cykliczne rosną, ale timing trudny! Recesja nieskończona. Bezrobocie 7%. Możliwe fałszywe starty.','profit'], buy_tech_91:[R(90,220),'MSFT, Intel start boomu... ALE wyceny już wysokie! Zacięta konkurencja. Ryzyko realizacji. Trzeba cierpliwości 3-5 lat.','profit'], stay_defensive_91:[R(-70,50),'PUŁAPKA! Za ostrożnie = przegapiasz najlepszą bessę dekady. Koszt utraconych okazji GIGANTYCZNY. Strach paraliżuje.','neutral'], buy_international_91:[R(30,110),'Europa/Japonia korzystają z dywidendy pokojowej teoretycznie. Ale ich gospodarki słabe, problemy strukturalne. USA wygrywa.','profit'],
           // Luty 1994 - Fed tightening
-          rotate_value_94:[R(100,260),'Value outperforms w tightening.','profit'], short_bonds_94:[R(120,300),'Bond massacre – świetny short!','profit'], buy_em_94:[R(-180,120),'EM hit by Fed + Tequila crisis.','loss'], hold_tech_94:[R(60,200),'Tech correction short, long term OK.','profit'],
+          rotate_value_94:[R(55,140),'Wartościowe spółki radzą sobie lepiej przy zaostrzeniu trochę. Ale timing rotacji trudny, pułapek wartości mnóstwo. Potrzebne umiejętności wyboru akcji.','profit'], short_bonds_94:[R(65,160),'Masakra obligacji -9% w 1994! Gra na spadki działa ALE brutalne wymogi depozytowe, ograniczona dźwignia. Opłaty maklera 4%.','profit'], buy_em_94:[R(-280,60),'WIELKA PUŁAPKA! Rynki wschodzące zdziesiątkowane przez Fed + kryzys Tequila w Meksyku. Zaraza w Azji/Ameryce Łacińskiej. Może stracić -50%. KATASTROFA!','loss'], hold_tech_94:[R(30,120),'Korekta tech -15% krótkoterminowo boli. Długoterminowo OK ale trzeba wytrzymać spadek. Wielu inwestorów kapituluje.','profit'],
           // Lipiec 1995 - Goldilocks
-          buy_index_95:[R(60,140),'Passive investing boom – solid.','profit'], buy_scv_95:[R(40,160),'Small-cap value silne.','profit'], buy_telco_95:[R(-40,80),'Telco debt concerns – mieszane.','neutral'], stay_def_95:[R(-20,40),'Za konserwatywnie – miss tech boom.','neutral'],
+          buy_index_95:[R(35,90),'Inwestowanie pasywne rosnącym trendem. Solidny wybór ale timing rynku ma znaczenie. Wyceny już wysokie P/E 18.','profit'], buy_scv_95:[R(25,100),'Małe wartościowe spółki działają... ale niska płynność, szerokie spready 2-4%. Wiele mikro-spółek = pułapki wartości.','profit'], buy_telco_95:[R(-80,50),'Obawy o zadłużenie telekomunikacji POWAŻNE! Chaos deregulacji. Oszustwo WorldCom przed nami. Niepewność podziału AT&T. Ryzyko!','neutral'], stay_def_95:[R(-45,25),'Za konserwatywnie = przegapiasz 5-letni mega boom tech! Największy koszt utraconych okazji dekady. Może całkowicie -50% relatywnie.','neutral'],
           // Lipiec 1996 - Irrational exuberance
-          allin_tech_96:[R(220,580),'New economy real – mega gains!','profit'], heed_greenspan_96:[R(-140,80),'Za wcześnie – 4 lata boomu ahead.','loss'], balanced_96:[R(80,220),'Balance approach działa.','profit'], international_96:[R(40,140),'Diversyfikacja OK, ale USA best.','profit'],
+          allin_tech_96:[R(110,290),'Nowa gospodarka DZIAŁA 4 lata! Mega zyski... ALE zmienność ±30%, korekty -20% brutalne. Timing wyjścia = niemożliwy. Może być krach 2000.','profit'], heed_greenspan_96:[R(-180,40),'WIELKA PUŁAPKA! "Irracjonalny entuzjazm" ALE 4 lata boomu przed nami! Wyjście za wcześnie = przegapiasz +300% zwrotów. Najgorszy timing!','loss'], balanced_96:[R(45,130),'Zrównoważone podejście rozsądne ale koszt utraconych okazji. Tech dominuje. Rebalansowanie = ciągła sprzedaż zwycięzców. Frustrujące.','profit'], international_96:[R(20,85),'Dywersyfikacja międzynarodowa OK teoretycznie. ALE kryzys azjatycki 1997 przed nami! Europa/Japonia wypadają gorzej niż USA masywnie.','profit'],
           // Październik 1997 - Asian crisis
-          buy_dip_97:[R(60,160),'USA decoupling – quick recovery.','profit'], bonds_97:[R(10,70),'Safe haven – płytki zysk.','neutral'], short_em_97:[R(80,220),'EM massacre – solid short!','profit'], gold_97:[R(-30,30),'Gold flat – nie czas.','neutral'],
+          buy_dip_97:[R(35,100),'Oddzielenie USA działa... ale ryzyko zarazy realne! LTCM przed nami 1998. Szybkie odbicie ale zmienność. Timing kształtu V trudny.','profit'], bonds_97:[R(5,45),'Ucieczka do bezpiecznej przystani. Płytki zysk, rentowności już niskie. Ograniczona duracja. Lepiej niż akcje ale nieinspirujące.','neutral'], short_em_97:[R(45,130),'Masakra rynków wschodzących Tajlandia/Korea/Indonezja! Gra na spadki działa ALE płynność wysycha, trudno zamknąć pozycje. Ryzyko kontrahenta.','profit'], gold_97:[R(-50,20),'Złoto PŁASKIE - najgorszy przypadek! Silny dolar, dezinflacja. Banki centralne sprzedają rezerwy. Martwy aktyw pod koniec lat 90.','neutral'],
           // Sierpień 1998 - LTCM
-          buy_after_fed_98:[R(80,200),'Don\'t fight the Fed – classic!','profit'], hold_98:[R(-20,30),'Bezpiecznie, ale miss rally.','neutral'], short_fin_98:[R(-100,120),'Lewar complex – trudny trade.','neutral'], buy_momo_98:[R(40,220),'Tech momentum do 2000 – działa!','profit'],
+          buy_after_fed_98:[R(45,120),'Ratowanie LTCM przez Fed = zwyżkowe! "Nie walcz z Fed" działa... ale timing trudny. Zaraza rosyjskiego bankructwa. Ekstremalna zmienność.','profit'], hold_98:[R(-35,20),'Gotówka "bezpieczna" ale tracisz gwałtowne wzrosty 1999-2000! Koszt utraconych okazji OGROMNY. Najlepszy bieg byka finału przed nami.','neutral'], short_fin_98:[R(-180,80),'PUŁAPKA! Grasz na spadki finansowych w kryzysie LTCM... ale ratowanie Fed = BRUTALNE przymusowe zamknięcie pozycji! Żądania dopłat. Może bankructwo.','neutral'], buy_momo_98:[R(25,130),'Tech momentum do 2000 działa... ALE spadki -30% po drodze. Stalowe nerwy potrzebne. Timing wyjścia niemożliwy.','profit'],
           // Maj 1999 - Mania acceleration
-          join_mania_99:[R(180,480),'FOMO justified – jeszcze rok boomu!','profit'], quality_tech_99:[R(140,360),'MSFT, Cisco survive crash – mądre.','profit'], rotate_out_99:[R(-120,60),'Rok za wcześnie – miss final surge.','loss'], hedge_puts_99:[R(80,220),'Puts cheap insurance – smart.','profit'],
+          join_mania_99:[R(90,250),'Strach przed przegapieniem uzasadniony - jeszcze 10 miesięcy! ALE zmienność SZALONA ±50%! Timing wyjścia = loteria. Możesz zostać z torbą.','profit'], quality_tech_99:[R(75,190),'MSFT, Cisco jakość... przetrwają krach długoterminowo. ALE krótkoterminowo -80% spadek 2000-02! Trzeba wytrzymać 3 lata.','profit'], rotate_out_99:[R(-200,30),'WIELKA PUŁAPKA! Rotacja za wcześnie = przegapiasz finałowy paraboliczny wzrost +150%! Najgorszy timing. Patrzenie z boku = agonia.','loss'], hedge_puts_99:[R(40,130),'Ubezpieczenie opcjami sprzedaży MĄDRE teoretycznie... ale rozpad wartości czasowej -5%/miesiąc! Zanik premii brutalny. Timing musi być PERFEKCYJNY.','profit'],
           // Grudzień 1999 - Y2K peak
-          allin_dotcom_99:[R(-500,400),'3 miesiące przed crashem – bolesne.','neutral'], rot_value_99:[R(60,180),'Perfect timing – value wygra 2000+.','profit'], rebal_99:[R(40,120),'Dyscyplina saves – rebalance działa.','profit'], short_hyper_99:[R(120,320),'Bubble burst ahead – świetny short!','profit'],
+          allin_dotcom_99:[R(-600,250),'ABSOLUTNY SZCZYT! 3 miesiące przed -80% krachem! Wszystko na jedną kartę = KATASTROFA! Pets.com, Webvan bankrutują. Może stracić WSZYSTKO.','neutral'], rot_value_99:[R(35,110),'Perfekcyjny timing teoretycznie – wartościowe wygra 2000-07. ALE krótkoterminowy ból patrząc na tech +40% Q1 2000. Nerwy!','profit'], rebal_99:[R(25,80),'Mechaniczna dyscyplina rebalansowania ratuje przed katastrofą. ALE emocjonalnie trudne sprzedawać zwycięzców. Presja otoczenia.','profit'], short_hyper_99:[R(65,180),'Pęknięcie bańki 3 mies przed nami! Gra na spadki PERFEKCYJNY timing... ALE styczeń-marzec 2000 szał wzrostów +40% = żądania dopłat! Może bankructwo przed zyskiem.','profit'],
           // DotCom
           // Sierpień 1998 - Początek manii
-          allin_dotcom_98:[R(180,580),'Early in = massive gains... aż do 2000.','profit'], buy_bluechip_tech_98:[R(220,480),'MSFT, Intel, Cisco solid winners!','profit'], buy_value_98:[R(-80,120),'Value underperforms w bańce – frustrujące.','neutral'], bonds_caution_98:[R(-60,40),'Za wcześnie – przegapiłeś 3 lata boomu.','loss'],
+          allin_dotcom_98:[R(90,300),'Wcześnie w 1998 = masywne zyski do marca 2000... ALE trzeba wyjść IDEALNIE! Timing wyjścia = niemożliwy. Większość odda zyski z powrotem.','profit'], buy_bluechip_tech_98:[R(110,250),'MSFT, Intel, Cisco wygrywają 1998-2000... potem -80% krach! Trzeba wytrzymać 2 lata bessy. Potrzebne diamentowe ręce.','profit'], buy_value_98:[R(-150,80),'WIELKA PUŁAPKA! Wartościowe radzi sobie BRUTALNIE gorzej 1998-2000. Presja otoczenia ogromna. Może być -40% relatywnie. Ryzyko kariery!','neutral'], bonds_caution_98:[R(-100,25),'Ostrożność = KATASTROFA! Przegapiłeś 2 lata +150% boomu. Najgorszy koszt utraconych okazji dekady. Patrzenie z boku = tortura.','loss'],
           // Styczeń 1999 - IPO mania
-          flip_ipos_99:[R(280,680),'Flipping IPOs = jackpot w 1999!','profit'], quality_growth_99:[R(180,420),'Amazon -90% later, ale długoterminowo wygrywa.','profit'], old_economy_99:[R(-100,80),'Old economy ignored – miss rally.','loss'], cash_out_99:[R(-140,60),'Rok za wcześnie – Nasdaq +85% w 1999.','loss'],
+          flip_ipos_99:[R(140,350),'Obracanie IPO to jackpot 1999... ALE potrzebny dostęp dla wtajemniczonych! Zwykli inwestorzy dostają resztki. Ryzyko wygaśnięcia blokady. 90% IPO upada później.','profit'], quality_growth_99:[R(90,220),'Amazon jakość długoterminowo +10000%... ALE -95% spadek 2000-01! $100 → $5! Trzeba wytrzymać 7 LAT bessy!','profit'], old_economy_99:[R(-180,50),'MEGA PUŁAPKA! Stara gospodarka (banki, energia) CAŁKOWICIE ignorowana. Przegapiasz tech +300%! Może -50% wynik relatywny. Samobójstwo kariery!','loss'], cash_out_99:[R(-220,30),'Wypłata gotówki 1999 = KATASTROFA! Za wcześnie - Nasdaq jeszcze +85%! Największy strach przed przegapieniem w historii. Tracisz $100k → $500k możliwe.','loss'],
           // Marzec 2000 - SZCZYT
-          buy_ipos_00:[R(-420,220),'IPO często wracają do $0 – massacre.','loss'], rot_quality_00:[R(40,160),'Quality profitable przetrwało.','profit'], rot_value_00:[R(60,200),'Value wygrywa w bessie tech – świetnie!','profit'], short_extreme_00:[R(120,360),'Crazy valuations collapse – trafiony short!','profit'],
+          buy_ipos_00:[R(-650,120),'ABSOLUTNY SZCZYT! IPO na szczycie bańki = 99% wraca do $0! Pets.com $11→$0. Webvan $34→$0. CAŁKOWITE WYKOŃCZENIE możliwe!','loss'], rot_quality_00:[R(25,100),'Jakościowe zyskowne przetrwają... ale -60% spadek! MSFT $60→$20. Timing trudny, ból 2 lata. Większość kapituluje.','profit'], rot_value_00:[R(35,120),'Rotacja w wartościowe PERFEKCYJNY timing teoretycznie! Ale patrzenie na Nasdaq +40% marzec boli. Presja otoczenia = rezygnacja ze strategii.','profit'], short_extreme_00:[R(65,190),'Szalone P/S 50x załamanie! Gra na spadki świetna... ALE marzec finałowy szał wzrostów +25% = żądania dopłat BRUTALNE! Może zlikwidować przed zyskiem.','profit'],
           // Kwiecień 2000 - Pierwsze pęknięcie
-          buy_dip_dotcom_00:[R(-320,80),'To nie był dip – dopiero początek.','loss'], sell_unprofitable_00:[R(180,380),'Unprofitable do zera – mądra selekcja!','profit'], rotate_defensive_00:[R(80,200),'Defensywa chroni w bessie.','profit'], short_nasdaq_00:[R(220,520),'Perfect timing – Nasdaq -78%!','profit'],
+          buy_dip_dotcom_00:[R(-550,50),'PUŁAPKA STULECIA! "Kupuj dołek" = łapanie spadającego noża! To NIE dołek, to początek -78% krachu! 2 lata bessy. KATASTROFA!','loss'], sell_unprofitable_00:[R(90,200),'Niezyskowne → $0 świetna selekcja! ALE timing wyjścia trudny, płynność wysycha. Możesz utknąć -50% zanim sprzedasz.','profit'], rotate_defensive_00:[R(45,120),'Defensywa chroni w bessie częściowo. ALE wzrosty w bessie +40% = tortura strachu przed przegapieniem. Trudne psychologicznie.','profit'], short_nasdaq_00:[R(110,270),'Perfekcyjny timing Nasdaq -78%! ALE wzrosty w bessie +50% = żądania dopłat! Broker może zamknąć. Potrzebne diamentowe ręce.','profit'],
           // Listopad 2000 - Kapitulacja funding
-          hold_bag_00:[R(-280,40),'Hold & pray = bag holder. Bolesne.','loss'], move_cash_00:[R(20,80),'Kapitał zachowany – mądra decyzja.','neutral'], buy_prof_00:[R(-40,140),'Profitable też spadają, ale mniej.','neutral'], hedge_00:[R(40,120),'Hedge/short amortyzuje ból.','profit'],
+          hold_bag_00:[R(-420,25),'Trzymaj i módl się = ZOSTAŁEŚ Z TORBĄ! Finansowanie wysycha, startupy bankrutują codziennie. Może -90% totalnie. Najbardziej bolesna decyzja. Błąd utopionego kosztu.','loss'], move_cash_00:[R(10,55),'Kapitał zachowany mądrze... ale koszty transakcji 3%, podatki 20-35% od zysków kapitałowych. Nie idealnie ale przeżywasz.','neutral'], buy_prof_00:[R(-80,90),'Zyskowne spółki też SPADAJĄ -40%! Zaraza wszędzie. EBAY, Yahoo mocno oberwały. "Jakość" nie chroni krótkoterminowo.','neutral'], hedge_00:[R(25,75),'Zabezpieczenie/gra na spadki pomaga amortyzować ból... ale poślizg beta, koszty rebalansowania, błąd śledzenia. Nie perfekcyjne zabezpieczenie.','profit'],
           // Czerwiec 2001 - Bankruptcy wave
-          tech_bounce_01:[R(-120,160),'Dead cat bounce – dalej spada.','neutral'], telecom_value_01:[R(-280,40),'Telecom fraud – WorldCom bankrut.','loss'], safe_haven_01:[R(80,180),'Bonds/gold safe w kryzysie.','profit'], international_01:[R(-80,100),'International też w bessie, ale diversyfikacja.','neutral'],
+          tech_bounce_01:[R(-200,100),'PUŁAPKA odbicia martwego kota! Wzrost +30% w maju... potem -50% dalej! 9/11 przed nami. Timing = niemożliwy. Szarpanie brutalne.','neutral'], telecom_value_01:[R(-480,25),'MEGA KATASTROFA! Telecom "wartościowy" = PUŁAPKA WARTOŚCI! WorldCom $64→$0 oszustwo! Enron, Global Crossing bankrut. Całkowite wykończenie!','loss'], safe_haven_01:[R(45,110),'Obligacje/złoto bezpieczna przystań działa... ale rentowności już niskie 5%. Ograniczony wzrost. Koszt utraconych okazji patrząc na odbicie tech +30%.','profit'], international_01:[R(-140,65),'Dywersyfikacja międzynarodowa PORAŻKA! Europa/Azja tech też krach -60%. Zaraza globalna. Zabezpieczenie walutowe kosztuje 2-3%.','neutral'],
           // Wrzesień 2001 - 9/11
-          buy_defense_01:[R(40,120),'Defense contractors boom po 9/11.','profit'], short_travel_01:[R(80,200),'Airlines/travel decimated – solid short.','profit'], hold_cash_01:[R(-10,40),'Cash OK, ale przegapisz odbicie.','neutral'], buy_quality_01:[R(-40,120),'Quality nadal spada, ale mniej.','neutral'],
+          buy_defense_01:[R(25,75),'Wykonawcy obronni długoterminowo OK... ale KRÓTKOTERMINOWO panika -20%! Rynki zamknięte 4 dni. Płynność zerowa. Timing wyjścia trudny.','profit'], short_travel_01:[R(45,120),'Linie lotnicze/turystyka zdziesiątkowane -50%! Gra na spadki działa... ALE ratowanie przez rząd! Ratunek UAL, może przymusowe zamknięcie pozycji. Ryzyko kontrahenta.','profit'], hold_cash_01:[R(-30,25),'Gotówka "bezpieczna" w panice 9/11... ale tracisz odbicie od dna w kształcie V +20% w 3 tygodnie! Awaryjne obniżki Fed. Najgorszy timing wyjścia.','neutral'], buy_quality_01:[R(-90,80),'PUŁAPKA! Jakościowe spółki nadal spadają -30% po 9/11! Recesja się pogłębia. Skandal Enron. Zaufanie znika. Ból trwa.','neutral'],
           // Lipiec 2002 - WorldCom/Enron
-          capitulate_02:[R(-80,60),'Kapitulacja blisko dna – źle.','loss'], bluechips_only_02:[R(100,260),'Blue chips survive – MSFT, Intel solid.','profit'], value_cashflow_02:[R(120,300),'Cashflow matters – value wygrywa!','profit'], bonds_only_02:[R(40,100),'Bonds bezpieczne, ale miss rally.','neutral'],
+          capitulate_02:[R(-150,40),'KAPITULACJA 2 miesiące przed DNO! Najgorszy timing w historii! Sprzedajesz $20, odbija do $80. Maksymalny ból. Emocjonalny wrak.','loss'], bluechips_only_02:[R(55,150),'Najbardziej wartościowe MSFT/Intel przetrwają OK... ale -60% już miniony spadek! Timing dna trudny. Może czekać 6 mies przed wzrostem.','profit'], value_cashflow_02:[R(65,170),'Rotacja przepływy pieniężne/wartość działa długoterminowo! ALE oszustwa korporacyjne wszędzie = zaufanie zerowe. Skandale księgowe. Wysokie ryzyko.','profit'], bonds_only_02:[R(25,65),'Obligacje bezpieczne... ale rentowność tylko 4%. Przegapiasz wzrost tech +100% 2003-04! Masywny koszt utraconych okazji. Patrzenie ze strachem przed przegapieniem.','neutral'],
           // Październik 2002 - DNO
-          buy_leaders_02:[R(60,200),'Survivors = winners. Amazon +10,000% later!','profit'], buy_value_02:[R(60,180),'Value rotation – cashflow > hype.','profit'], stay_bonds_02:[R(10,60),'Rally był prawdziwy – miss out.','neutral'], penny_02:[R(-200,200),'Penny stocks = gambling. Może wszystko.','neutral'],
+          buy_leaders_02:[R(35,120),'Ocaleni AMZN/GOOG = ostatecznie +10000%... ALE trzeba wytrzymać 5-7 LAT! Wielu się poddaje. Spadki -30% po drodze. Diamentowe ręce.','profit'], buy_value_02:[R(35,110),'Rotacja wartościowe przepływy > szum działa... ale timing dna TRUDNY! Możliwe fałszywe starty. Wzrosty w bessie +25% szarpią torturą.','profit'], stay_bonds_02:[R(-20,35),'Obligacje "bezpieczne" ale przegapiasz +100% wzrost tech 2003-07! Największa zmarnowana okazja. Patrzenie z boku = agonia.','neutral'], penny_02:[R(-350,180),'PUŁAPKA! Akcje groszowe $0.10 hazard = 95% bankrutuje! Może +500% ALE może całkowita strata. Czysta spekulacja. Los na loterii.','neutral'],
           // Black Monday 1987
           // Styczeń 1987 - Reagan Bull Market
-          stay_invested_87:[R(-180,120),'Zostałeś na szczycie – krach hurt.','loss'], take_profits_early_87:[R(80,180),'Mądra ostrożność – kapitał zachowany!','profit'], buy_insurance_87:[R(140,280),'Puts insurance saved you – świetna decyzja!','profit'], leverage_long_87:[R(-320,80),'Leverage before crash = disaster.','loss'],
+          stay_invested_87:[R(-280,80),'PUŁAPKA szczytu! Zostałeś w pełni zainwestowany przed -22% krachem w JEDEN DZIEŃ! Ubezpieczenie portfela zawodzi. Bezpieczniki zerowe. BÓL!','loss'], take_profits_early_87:[R(45,110),'Mądra ostrożność zachowała kapitał... ale tracisz wzrost styczeń-sierpień +35%! Koszt utraconych okazji. Timing szczytu = niemożliwy.','profit'], buy_insurance_87:[R(75,160),'Ubezpieczenie opcjami sprzedaży pomogło... ALE premie 5-8% zjadły część! Rozpad wartości czasowej brutalny. Trzeba perfekcyjny timing realizacji.','profit'], leverage_long_87:[R(-550,40),'KATASTROFA! Dźwignia 2-3x przed krachem = ŻĄDANIE DOPŁAT! -22% x dźwignia = może -60%! Broker likwiduje. CAŁKOWITE WYKOŃCZENIE możliwe!','loss'],
           // Kwiecień 1987 - Volcker/Greenspan transition
-          bet_greenspan_87:[R(-100,140),'Greenspan dovish eventually, ale crash first.','neutral'], hedge_dollar_87:[R(60,160),'Gold/intl hedge pomógł – dywersyfikacja.','profit'], reduce_exposure_87:[R(40,140),'Ostrożność opłaciła się – mniej strat.','profit'], bonds_caution_87:[R(20,100),'Bonds bezpieczniejsze od akcji w crash.','profit'],
+          bet_greenspan_87:[R(-180,90),'PUŁAPKA! Greenspan łagodny długoterminowo... ALE krach za 6 miesięcy NAJPIERW! -22% jednego dnia. Zostać w pełni zainwestowanym = ruina.','neutral'], hedge_dollar_87:[R(35,95),'Zabezpieczenie złoto/waluta pomogło częściowo. Ale ryzyko bazowe, koszty rolowania 3-4%. Dolar umacnia się w krachu. Nie perfekcyjne zabezpieczenie.','profit'], reduce_exposure_87:[R(25,85),'Ostrożność zmniejszyła ekspozycję... ale timing trudny. Może wyjście za wcześnie tracisz +20%. Może za późno -10%. Stresujące.','profit'], bonds_caution_87:[R(15,65),'Obligacje bezpieczniejsze niż akcje w krachu... ale rentowności 8% już wysokie. Ograniczony wzrost. Tracisz wzrost akcji po krachu +30%.','profit'],
           // Sierpień 1987 - Szczyt ATH
-          stay_bull_87:[R(-150,50),'Kupiłeś szczyt przed krachem.','loss'], buy_puts_87:[R(180,350),'Opcje put – zabezpieczenie zadziałało!','profit'], rotate_bonds_87:[R(40,100),'Obligacje uciekły przed burzą.','profit'], short_fut_87:[R(200,420),'Short futures – trafiłeś!','profit'],
+          stay_bull_87:[R(-320,30),'MEGA PUŁAPKA szczytu rekord wszechczasów! "Bessa wspina się po ścianie obaw" ALE -22% krach za 2 miesiące! Ubezpieczenie portfela = iluzja. RUINA!','loss'], buy_puts_87:[R(90,180),'Ochrona opcjami sprzedaży zadziałała... ALE premia 6-9%! Rozpad wartości czasowej. Timing wygaśnięcia KRYTYCZNY. Może wygasnąć bezwartościowo dzień przed krachem!','profit'], rotate_bonds_87:[R(25,65),'Obligacje uciekły przed burzą OK. Ale koszt utraconych okazji tracisz sierpień wzrost +8%. Timing rotacji = stresujące zgadywanie.','profit'], short_fut_87:[R(100,220),'Gra na spadki kontraktów przed krachem trafiona! ALE wymogi depozytu 10-20%! Wycena rynkowa codzienna = możliwe żądania dopłat przed zyskiem.','profit'],
           // Wrzesień 1987 - Pierwsze pęknięcia
-          buy_dip_sept_87:[R(-160,80),'Za wcześnie – korekta stała się krachem.','loss'], increase_hedges_87:[R(160,320),'Hedges ratują – świetny timing!','profit'], move_cash_87:[R(80,160),'Cash przed krachem – mądre wyjście.','profit'], short_aggressive_87:[R(220,480),'Agresywny short przed krachem – jackpot!','profit'],
+          buy_dip_sept_87:[R(-320,50),'WIELKA PUŁAPKA! "Kupuj korekkcję" = łapanie spadającego noża! To NIE korekta, to początek -22% JEDNEGO dnia krach! KATASTROFA!','loss'], increase_hedges_87:[R(80,170),'Zabezpieczenia timing PERFEKCYJNY teoretycznie! ALE koszty 5-7%, wymogi depozytu brutalne. Może likwidacja przed zyskiem. Ryzyko realizacji.','profit'], move_cash_87:[R(45,95),'Wyjście w gotówkę przed krachem mądre... ale koszty transakcji 2-3%, podatki od zysków kapitałowych 28%! Zysk netto mniejszy niż się wydaje.','profit'], short_aggressive_87:[R(110,250),'Agresywna gra na spadki przed krachem może jackpot... ALE zasada uptick, lokalizacja akcji, koszty pożyczki 8-12%. Żądania dopłat MOŻLIWE!','profit'],
           // 16 Października - Piątek
-          sell_friday_87:[R(120,200),'Doskonała decyzja – uciekłeś przed krachem.','profit'], buy_dip_87:[R(-280,80),'Spadki były głębsze niż myślałeś.','loss'], hold_87:[R(-220,40),'To nie była zwykła korekta.','loss'], more_puts_87:[R(280,480),'Podwójne zabezpieczenie – jackpot!','profit'],
+          sell_friday_87:[R(65,120),'Świetna decyzja wyjście przed CZARNYM PONIEDZIAŁKIEM! ALE płynność wysycha -5% piątek. Możesz utknąć -3% realizacja. Poślizg brutalny.','profit'], buy_dip_87:[R(-480,40),'ABSOLUTNA PUŁAPKA! Kupujesz piątek spadek -5%... PONIEDZIAŁEK -22% WIĘCEJ! Łącznie może -27%! Łapanie spadającego fortepianu. RUINA TOTALNA!','loss'], hold_87:[R(-350,25),'Trzymanie piątek = KATASTROFA! -22% poniedziałek! Ubezpieczenie portfela ZAWODZI - kaskadowa sprzedaż! Płynność ZERO. Telefony nie działają!','loss'], more_puts_87:[R(140,250),'Podwojenie opcji sprzedaży GENIALNY timing! ALE wygaśnięcie może być złe, różnica kupno-sprzedaż 30-50% w panice! Koszmar realizacji.','profit'],
           // 19 Października - BLACK MONDAY
-          panic_sell_87:[R(-150,20),'Sprzedałeś w panice po najgorszych cenach.','loss'], buy_crash_87:[R(200,450),'Kupno w dniu krachu – legendarny ruch!','profit'], wait_stable_87:[R(60,140),'Cierpliwość popłaca – kupiłeś niżej.','profit'], short_more_87:[R(-120,180),'Odbicie było szybsze niż się spodziewałeś.','neutral'],
+          panic_sell_87:[R(-280,15),'PANICZNA SPRZEDAŻ przy -22% = NAJGORSZE CENY W HISTORII! Płynność ZERO! Telefony nie działają! Różnica kupno-sprzedaż 5-10%! Realizacja -25% całość. KOSZMAR!','loss'], buy_crash_87:[R(100,230),'Kupno w Czarny Poniedziałek LEGENDARNE przeciwstawne! ALE płynność zero, może się nie zrealizować! Straszny Wtorek -8% więcej możliwe! Nerwy stalowe!','profit'], wait_stable_87:[R(35,85),'Cierpliwość ciężka emocjonalnie... -22% patrzenie. Straszny Wtorek może być gorszy! Timing dna = niemożliwa gra w zgadywanie.','profit'], short_more_87:[R(-200,110),'PUŁAPKA! WIĘCEJ gry na spadki w Czarny Poniedziałek = interwencja Fed! Straszny Wtorek +5% wzrost = BRUTALNE przymusowe zamknięcie pozycji! Żądanie dopłat!','neutral'],
           // 20 Października - Wtorek (Terrible Tuesday)
-          sell_rally_87:[R(-80,60),'Rally był real – Fed put works.','loss'], buy_fed_put_87:[R(140,340),'Fed liquidity + buying – perfect timing!','profit'], wait_confirm_87:[R(40,120),'Ostrożność OK, ale miss initial bounce.','neutral'], double_short_87:[R(-240,80),'Short squeeze destroyed you.','loss'],
+          sell_rally_87:[R(-150,40),'PUŁAPKA! Sprzedajesz wtorek wzrost +5%... ale to INTERWENCJA FED! Płynność Greenspana! Tracisz +15% odbicie w miesiąc. Zły timing wyjścia!','loss'], buy_fed_put_87:[R(75,180),'Płynność Fed timing PERFEKCYJNY! "Nie walcz z Fed"... ALE zmienność ±8% dziennie TYGODNIE! Może szarpnięcie -15% przed +30%. Diamentowe ręce!','profit'], wait_confirm_87:[R(20,75),'Ostrożne czekanie... ale tracisz początkowe dno w V +10% w 3 dni! Okno interwencji Fed wąskie. Timing = loteria. Maksymalna frustracja.','neutral'], double_short_87:[R(-380,45),'KATASTROFA podwójna gra na spadki! INTERWENCJA Fed bezpieczniki nadchodzą! Przymusowe zamknięcie pozycji +20% Straszny Wtorek! CAŁKOWITE WYKOŃCZENIE ŻĄDANIAMI DOPŁAT!','loss'],
           // Grudzień 1987 - Odbicie
-          buy_quality_87:[R(100,240),'Quality blue chips wróciły mocno.','profit'], buy_tech_87:[R(80,200),'Tech rośnie – Microsoft na fali.','profit'], stay_def_87:[R(20,80),'Bezpiecznie, ale wolniej.','neutral'], keep_cash_87:[R(-20,40),'Przegapiłeś odbicie.','neutral'],
+          buy_quality_87:[R(55,140),'Jakościowe blue chips odbicie OK... ale zmienność ±5% dziennie trwa! Możliwe fałszywe starty. Timing trudny. Psychologia = wrak.','profit'], buy_tech_87:[R(45,120),'Tech MSFT rośnie długoterminowo... ALE krótkoterminowo szarpnięcia ±10%! Wielu inwestorów kapituluje po urazach Czarnego Poniedziałku. Nerwy testowane.','profit'], stay_def_87:[R(10,50),'Defensywa "bezpieczna" ale tracisz wzrost odbicia +15%! Koszt utraconych okazji patrząc. Tortura strachu przed przegapieniem po traumie Czarnego Poniedziałku.','neutral'], keep_cash_87:[R(-40,25),'Gotówka = tracisz NAJWIĘKSZĄ okazję odbicia! Dno w V +20% w 2 miesiące! Paraliż traumy = najgorsza decyzja. Patrzenie = agonia.','neutral'],
           // Styczeń 1988 - Nowa normalność
-          allin_recovery_88:[R(120,280),'Bull market resumed – świetny entry!','profit'], gradual_entry_88:[R(80,200),'DCA approach działa – solid returns.','profit'], defensive_88:[R(20,80),'Za konserwatywnie – bull back.','neutral'], wait_better_88:[R(-40,40),'Czekałeś za długo – momentum gone.','neutral'],
+          allin_recovery_88:[R(65,155),'Bessa wznowiona OK... ALE wszystko na jedną kartę = wysokie ryzyko! Może korekta -10% w każdej chwili. Urazy Czarnego Poniedziałku realne. Podwyższona zmienność.','profit'], gradual_entry_88:[R(45,115),'Uśrednianie kosztu rozsądne po krachu... ale tracisz początkowy wyskok +12%. Timing wejść = szczęście. Uśrednianie ogranicza wzrosty.','profit'], defensive_88:[R(10,50),'Defensywa za konserwatywna! Bessa wraca +20% 1988! Tracisz okazję. Trauma Czarnego Poniedziałku paraliżuje = ograniczenie kariery.','neutral'], wait_better_88:[R(-65,25),'PUŁAPKA czekania! "Lepsze wejście" NIGDY nie przychodzi! Bessa biega +50% 1988-89! Najgorszy koszt utraconych okazji. Syndrom wiecznej bessy = bankructwo.','neutral'],
           // GFC 2008
           // Sierpień 2007 - BNP Paribas
-          short_mbs_07:[R(180,400),'Housing/MBS collapse – perfekcyjny short!','profit'], move_quality_07:[R(20,80),'Jakość daje poduszkę, ale nie chroni.','neutral'], ignore_07:[R(-140,60),'To nie było „lokalne" – global contagion.','loss'], gold_07:[R(40,120),'Złoto do $1900 – bezpieczna przystań.','profit'],
+          short_mbs_07:[R(75,180),'Załamanie kredytów hipotecznych – gra na spadki działa, ALE koszty pożyczki 8-12%, brutalne wymogi depozytowe! Timing trudny.','profit'], move_quality_07:[R(10,40),'Jakość daje poduszkę, ale nie chroni. GE, Citi też upadają! Koszty transakcji 2-3%. Słaba ochrona.','neutral'], ignore_07:[R(-250,30),'WIELKA PUŁAPKA! To nie było „lokalne" – globalna zaraza! Lehman przed nami -99%. Może stracić -60% całość!','loss'], gold_07:[R(15,55),'Złoto rośnie, ale zmienność ±15%! Marże dealerów 6-8%, koszty magazynowania. Nie tak solidne jak myślałeś.','profit'],
           // Styczeń 2008 - Recesja
-          sell_recession_08:[R(120,280),'Uniknąłeś najgorszego – mądra decyzja.','profit'], buy_dip_recession:[R(-180,80),'To nie był dip – początek bessy.','loss'], rotate_defensive_08:[R(60,180),'Defensywa pomogła, ale też spadła.','profit'], diversify_international_08:[R(-100,60),'International też upadł – globalne.','loss'],
+          sell_recession_08:[R(50,120),'Uniknąłeś najgorszego – mądra decyzja. ALE koszty transakcji 3%, podatki od zysków kapitałowych 25%! Zysk mniejszy.','profit'], buy_dip_recession:[R(-280,40),'PUŁAPKA STULECIA! To nie był spadek – początek bessy -57%! Bear Stearns, Lehman, AIG bankrut przed nami! KATASTROFA!','loss'], rotate_defensive_08:[R(25,80),'Defensywa pomogła, ale też spadła -30%! Nawet użyteczność publiczna cierpi. Recesja zabija wszystko. Słaba ochrona.','profit'], diversify_international_08:[R(-180,30),'MEGA PUŁAPKA! Międzynarodowe też upadły GORZEJ! Banki europejskie -80%, Islandia bankrut! Globalna zaraza! RUINA!','loss'],
           // Marzec 2008 - Bear Stearns
-          buy_banks_08:[R(-260,180),'Za wcześnie – Lehman jeszcze upadnie.','neutral'], short_fin_08:[R(120,360),'Investment banks collapse – świetny short!','profit'], cash_08:[R(20,60),'Kapitał zachowany – cash is king.','neutral'], def_08:[R(-40,80),'Defensywy mniej bolą, ale też spadają.','neutral'],
+          buy_banks_08:[R(-380,80),'ABSOLUTNA PUŁAPKA! Za wcześnie – Lehman, Wachovia, WaMu jeszcze upadną! Może -90% total! Catching falling knife! RUINA!','loss'], short_fin_08:[R(50,160),'Investment banks collapse – short działa, ALE uptick rule, borrow costs 10-15%, SEC ban możliwy! Execution trudna.','profit'], cash_08:[R(5,25),'Kapitał zachowany – cash is king. ALE inflation 4%, opportunity cost. Money market funds freeze risk! Nie idealnie.','neutral'], def_08:[R(-65,40),'PUŁAPKA! Defensywy też spadają -25%! Utilities cierpią, dividend cuts! "Bezpieczeństwo" to iluzja w kryzysie!','neutral'],
           // Lipiec 2008 - Fannie/Freddie
-          short_regional_banks:[R(180,420),'Regional banks massacre – trafiony short!','profit'], buy_energy_08:[R(-140,80),'Oil crash z $147 do $40 – źle wyczułeś.','loss'], treasuries_08:[R(80,200),'Treasuries ultimate safe haven – solid.','profit'], buy_em_08:[R(-220,40),'Emerging markets crashed harder – decoupling myth.','loss'],
+          short_regional_banks:[R(75,190),'Masakra banków regionalnych – gra na spadki działa! ALE wymogi depozytowe 15-20%, ryzyko kontrahenta! Może nie zrealizować przed zyskiem.','profit'], buy_energy_08:[R(-220,40),'WIELKA PUŁAPKA! Krach ropy z $147 do $40 = -73%! Contango, koszty magazynowania, koszty rolowania zabijają! Łącznie może -80%! KATASTROFA!','loss'], treasuries_08:[R(35,90),'Obligacje skarbowe jako bezpieczna przystań działają. ALE rentowności już niskie 3%, ograniczony potencjał wzrostu. Koszty transakcji 1-2%. OK ale nie wielkie zyski.','profit'], buy_em_08:[R(-340,20),'MEGA KATASTROFA! Rynki wschodzące spadły MOCNIEJ -65%! "Oddzielenie" to mit! Brazylia, Rosja, Chiny wszyscy upadli! RUINA TOTALNA!','loss'],
           // Wrzesień 2008 - Lehman
-          panic_sell_gfc:[R(-120,60),'Sprzedałeś blisko dna – źle.','loss'], safe_haven_08:[R(40,140),'Złoto/Treasuries jedyne schronienie.','profit'], short_cyc_08:[R(80,220),'Cyclicals decimated – short zadziałał!','profit'], stay_cash_08:[R(-10,40),'Bezpiecznie, ale przegapisz odbicie.','neutral'],
+          panic_sell_gfc:[R(-180,30),'PANICZNA sprzedaż 2 miesiące przed dnem! Kryzys płynności, różnica kupno-sprzedaż 8-12%! Realizacja z poślizgiem -15%! Najgorszy timing! KATASTROFA!','loss'], safe_haven_08:[R(15,65),'Złoto i obligacje skarbowe jedyne schronienie. ALE zmienność złota ±20%, rentowności obligacji już 2%. Ograniczone zyski. Koszty 3-4%.','profit'], short_cyc_08:[R(35,100),'Sektor cykliczny zdziesiątkowany – gra na spadki działa! ALE koszty pożyczki 12-18%, brutalne wezwania do uzupełnienia depozytu, SEC może zakaz gry na spadki! Trudna realizacja.','profit'], stay_cash_08:[R(-20,20),'Gotówka "bezpieczna", ale tracisz NAJWIĘKSZE odbicie! Dno w V +70% w 6 mies! Koszt utraconych okazji OGROMNY! Paraliż = agonia.','neutral'],
           // Październik 2008 - TARP
-          capitulate_oct08:[R(-80,40),'Capitulation przy dnie – najgorszy timing.','loss'], buy_index_oct08:[R(180,420),'Blisko dna – odważna decyzja nagrodzona!','profit'], gold_commodities_08:[R(60,180),'Gold OK, commodities crashed – mieszane.','profit'], wait_clarity_08:[R(20,80),'Czekanie bezpieczne, ale miss dna.','neutral'],
+          capitulate_oct08:[R(-140,20),'KAPITULACJA miesiąc przed dnem! Sprzedajesz po $25, rynek odbija do $70! Paniczna sprzedaż, zerowa płynność! Maksymalny ból! Emocjonalny wrak! KATASTROFA!','loss'], buy_index_oct08:[R(75,190),'Blisko dna – odważna decyzja! ALE zmienność ±10% DZIENNIE! Fałszywe starty możliwe. Trafienie w dno = loteria. Nerwy stalowe potrzebne!','profit'], gold_commodities_08:[R(25,80),'Złoto rośnie OK, ALE surowce spadły -60%! Mieszane wyniki. Koszty magazynowania, koszty rolowania. Dywersyfikacja kosztowna.','profit'], wait_clarity_08:[R(5,35),'Czekanie "bezpieczne", ale tracisz +60% wzrost w 5 miesięcy! Strata dekady! Koszt utraconych okazji GIGANTYCZNY! Obserwowanie = tortura.','neutral'],
           // Grudzień 2008 - Citi bailout, ZIRP
-          buy_fear_dec08:[R(140,340),'Max fear blisko dna – solid kupno!','profit'], quality_dividend_08:[R(100,280),'Dividend aristocrats przetrwali – mądre.','profit'], bonds_deflation_08:[R(40,120),'Deflation risk przeszacowany, ale bezpiecznie.','profit'], international_dec08:[R(-60,100),'International też w bessie, ale diversyfikacja.','neutral'],
+          buy_fear_dec08:[R(60,150),'Maksymalny strach blisko dna – kupno działa! ALE zmienność ±8% dziennie, może fałszywy start -20%! Timing trudny, potrzebne nerwy stalowe!','profit'], quality_dividend_08:[R(45,125),'Dywidendowa arystokracja przetrwała – mądre. ALE wiele CIĘTO dywidendy! GE i finanse upadają! Pułapki wartości! Selekcja krytyczna.','profit'], bonds_deflation_08:[R(15,55),'Ryzyko deflacji przeszacowane, ale obligacje bezpieczne. Rentowności już 2%, ograniczony potencjał wzrostu. Koszty transakcji 1-2%. OK ale nie wielkie zyski.','profit'], international_dec08:[R(-95,45),'PUŁAPKA! Międzynarodowe rynki też w bessie -50%! Europa GORZEJ, Azja cierpi! "Dywersyfikacja" nie chroni w globalnym kryzysie! Ryzyko!','neutral'],
           // Luty 2009 - Obama stimulus
-          allin_feb09:[R(180,460),'Tuż przed dnem – brave call!','profit'], wait_stress_tests:[R(60,180),'Stress tests dały clarity – kupno po nich OK.','profit'], dividend_aristocrats_09:[R(120,300),'Quality dividends wygrywa długoterminowo.','profit'], stay_defensive_09:[R(40,120),'Defensywa miss rally – za ostrożnie.','neutral'],
+          allin_feb09:[R(75,210),'Tuż przed dnem – brave call działa! ALE może false start -15% before +80%! Volatility extreme ±12% daily! Diamond hands needed!','profit'], wait_stress_tests:[R(25,80),'Stress tests dały clarity – kupno po nich OK. ALE tracisz +25% initial surge! Timing opóźniony. Opportunity cost watching.','profit'], dividend_aristocrats_09:[R(50,135),'Quality dividends wygrywa długoterminowo. ALE short term whipsaw -20%! Wiele dividend cuts! Selekcja stock picking critical!','profit'], stay_defensive_09:[R(15,55),'Defensywa "bezpieczna" ale tracisz +100% rally! Miss greatest bull market decade! Opportunity cost = career limiting! FOMO torture.','neutral'],
           // Marzec 2009 - DNO QE1
-          allin_09:[R(220,480),'Legendarny bottom – trade dekady!','profit'], buy_value_09:[R(140,320),'Value/financials eksplozja – świetnie!','profit'], stay_bonds_09:[R(20,80),'Rally był prawdziwy – przegapiłeś.','neutral'], wait_09:[R(-40,60),'Czekanie za długie – market uciekł.','neutral'],
+          allin_09:[R(95,220),'Legendarny bottom – trade dekady! ALE timing PERFEKCYJNY needed! Może być -10% false start before +100%! Nerwy stalowe! Volatility ±10% daily!','profit'], buy_value_09:[R(60,145),'Value/financials eksplozja działa! ALE wiele bank stocks -80% from peak! Picking winners critical! Citi może $1, JPM survive. Selekcja trudna!','profit'], stay_bonds_09:[R(5,35),'PUŁAPKA bezpieczeństwa! Rally był prawdziwy +80%! Przegapiłeś greatest trade! Bonds yields 3%, miss everything. Opportunity cost = agonia!','neutral'], wait_09:[R(-65,25),'WIELKA PUŁAPKA czekania! "Better entry" NIGDY nie przychodzi! Market uciekł +150%! Worst decision ever! Perma-bear syndrome = bankruptcy!','neutral'],
           // COVID 2020
           // Styczeń 2020 - Wuhan lockdown
           ignore_wuhan:[R(-140,80),'Nie było lokalnym problemem – globalna pandemia.','loss'], buy_vix_hedge_covid:[R(280,620),'VIX do 80 – perfect hedge!','profit'], short_cruises_early:[R(320,680),'Cruise lines -90% – legendarny short!','profit'], rotate_tech_jan:[R(180,420),'Stay home = tech boom early!','profit'],
@@ -1483,9 +1725,12 @@
         decisions++;
         capital = Math.max(0, Math.round(capital + result.moneyChange));
         capitalHistory.push(capital); // Track capital after each decision
+
+        // Disable all choice buttons during result display
+        dom.gameContent.querySelectorAll('.choice-btn').forEach(btn => btn.disabled = true);
+
         showResult(choice, result);
         checkAchievements(result); // Check for unlocked achievements
-        setTimeout(()=>{ currentScenario++; if(currentScenario>=ch.scenarios.length) endGame(); else renderScenario(); }, 2200);
       }
 
       // --------- ACHIEVEMENTS SYSTEM ---------
@@ -1570,13 +1815,27 @@
       function showResult(choice, result){
         const panel = document.createElement('div');
         panel.className = 'result-panel';
+        panel.style.cursor = 'pointer';
         panel.innerHTML = `
           <h3 class="panel-title">Wynik decyzji</h3>
           <p><strong>Wybrałeś:</strong> ${choice.text}</p>
           <p class="${result.type}"><strong>Rezultat:</strong> ${result.message}</p>
-          <p class="${result.type}"><strong>Zmiana kapitału:</strong> ${result.moneyChange>0?'+':''}${result.moneyChange} $</p>`;
+          <p class="${result.type}"><strong>Zmiana kapitału:</strong> ${result.moneyChange>0?'+':''}${result.moneyChange} $</p>
+          <p style="margin-top:15px;color:var(--accent-2);font-size:0.95rem;">👆 Kliknij aby kontynuować</p>`;
         dom.gameContent.prepend(panel);
         dom.capital.textContent = `$${capital.toLocaleString()}`;
+
+        // Click anywhere on panel to continue
+        panel.addEventListener('click', () => {
+          panel.remove();
+          const ch = chapters[currentChapterKey];
+          currentScenario++;
+          if(currentScenario >= ch.scenarios.length) {
+            endGame();
+          } else {
+            renderScenario();
+          }
+        });
       }
 
       // --------- CAPITAL CHART ---------
