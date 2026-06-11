@@ -254,8 +254,10 @@
     .result-modal-icon { font-size:64px; line-height:1; text-align:center; margin:4px auto 12px; width:96px; height:96px; display:flex; align-items:center; justify-content:center; filter: drop-shadow(0 6px 16px rgba(0,0,0,.5)); }
     .result-modal-icon svg { width:100%; height:100%; }
     /* --- Animacja fal na dole menu --- */
-    .menu-fale { width:100%; max-width:1100px; margin:28px auto 0; pointer-events:none; -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent); mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent); }
-    .menu-fale dotlottie-player { width:100%; height:170px; display:block; }
+    #welcomeScreen { position:relative; overflow:hidden; }
+    #welcomeScreen > *:not(.menu-fale) { position:relative; z-index:1; }
+    .menu-fale { position:absolute; inset:0; z-index:0; margin:0; pointer-events:none; opacity:.5; }
+    .menu-fale dotlottie-player { width:100%; height:100%; display:block; }
   </style>
 
   <!-- Chart.js CDN -->
