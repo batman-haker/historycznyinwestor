@@ -225,6 +225,29 @@
       .choice-btn:hover { transform: none; }
       .choice-btn:active { background:#252a48; border-color: rgba(34,211,238,.8); }
     }
+    /* --- Rejestr decyzji (ledger) --- */
+    .ledger-panel { grid-column:1 / -1; }
+    .ledger-summary { margin:0 0 12px; color:var(--muted); font-size:14px; }
+    .ledger-summary .profit { color:var(--win); font-weight:700; }
+    .ledger-summary .loss { color:var(--loss); font-weight:700; }
+    .ledger-head, .ledger-row { display:grid; grid-template-columns:120px 1fr 120px 120px; gap:8px; align-items:center; }
+    .ledger-head { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; padding:6px 10px; border-bottom:1px solid var(--border); }
+    .ledger-list { max-height:260px; overflow-y:auto; }
+    .ledger-row { padding:8px 10px; border-bottom:1px solid rgba(255,255,255,.04); font-size:14px; }
+    .ledger-row:nth-child(odd) { background:rgba(255,255,255,.02); }
+    .ledger-period { color:var(--muted); font-size:13px; }
+    .ledger-change { text-align:right; font-weight:700; }
+    .ledger-change.profit { color:var(--win); }
+    .ledger-change.loss { color:var(--loss); }
+    .ledger-change.neutral { color:var(--neutral); }
+    .ledger-cap { text-align:right; font-weight:700; color:var(--accent-2); }
+    @media (max-width:600px){
+      .ledger-head { display:none; }
+      .ledger-row { grid-template-columns:1fr auto; }
+      .ledger-row .ledger-period { grid-column:1; font-size:12px; }
+      .ledger-row .ledger-choice { grid-column:1; }
+      .ledger-row .ledger-change, .ledger-row .ledger-cap { grid-column:2; }
+    }
     /* --- Dodatki graficzne --- */
     #particles-bg { position:fixed; inset:0; z-index:0; pointer-events:none; }
     .container { position:relative; z-index:1; }
@@ -239,6 +262,10 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/build/player/lottie.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tsparticles/slim@3.5.0/tsparticles.slim.bundle.min.js"></script>
+  <!-- Animacje Lottie wyniku (inline) -->
+  <script>
+    window.GAME_LOTTIE_DATA = { profit: {"v":"5.5.7","meta":{"g":"LottieFiles AE 0.1.20","a":"","k":"","d":"","tc":""},"fr":30,"ip":0,"op":30,"w":200,"h":200,"nm":"Comp 1","ddd":0,"assets":[],"layers":[{"ddd":0,"ind":1,"ty":4,"nm":"Arrow shape","sr":1,"ks":{"o":{"a":1,"k":[{"i":{"x":[0.667],"y":[0.35]},"o":{"x":[0.333],"y":[0]},"t":9,"s":[0]},{"i":{"x":[0.667],"y":[1]},"o":{"x":[0.333],"y":[0.35]},"t":22,"s":[50]},{"t":29,"s":[100]}],"ix":11},"r":{"a":0,"k":-0.078,"ix":10},"p":{"a":0,"k":[150.226,78.785,0],"ix":2},"a":{"a":0,"k":[50.125,-21,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0,0],[0,0],[0,0]],"o":[[0,0],[0,0],[0,0]],"v":[[28.25,-42],[70,-0.125],[70,-41.75]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.133333333,0.772549019,0.368627451,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Shape 1","np":3,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":321,"st":0,"bm":0},{"ddd":0,"ind":2,"ty":3,"nm":"Trace Shape Layer 1: Path 1 [1.1]","cl":"1","sr":1,"ks":{"o":{"a":0,"k":0,"ix":11},"r":{"a":0,"k":0,"ix":10,"x":"var $bm_rt;\nvar pathToTrace = thisComp.layer('arrow line')('ADBE Root Vectors Group')(1)('ADBE Vectors Group')(1)('ADBE Vector Shape');\nvar progress = $bm_div(thisLayer.effect('Pseudo/ADBE Trace Path')('Pseudo/ADBE Trace Path-0001'), 100);\nvar pathTan = pathToTrace.tangentOnPath(progress);\n$bm_rt = radiansToDegrees(Math.atan2(pathTan[1], pathTan[0]));"},"p":{"a":0,"k":[100,100,0],"ix":2,"x":"var $bm_rt;\nvar pathLayer = thisComp.layer('arrow line');\nvar progress = $bm_div(thisLayer.effect('Pseudo/ADBE Trace Path')('Pseudo/ADBE Trace Path-0001'), 100);\nvar pathToTrace = pathLayer('ADBE Root Vectors Group')(1)('ADBE Vectors Group')(1)('ADBE Vector Shape');\n$bm_rt = pathLayer.toComp(pathToTrace.pointOnPath(progress));"},"a":{"a":0,"k":[0,0,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"ef":[{"ty":5,"nm":"Trace Path","np":4,"mn":"Pseudo/ADBE Trace Path","ix":1,"en":1,"ef":[{"ty":0,"nm":"Progress","mn":"Pseudo/ADBE Trace Path-0001","ix":1,"v":{"a":1,"k":[{"i":{"x":[0.667],"y":[0.333]},"o":{"x":[0.333],"y":[0]},"t":0,"s":[0]},{"i":{"x":[0.667],"y":[1]},"o":{"x":[0.333],"y":[0.333]},"t":20,"s":[50]},{"t":30,"s":[100]}],"ix":1,"x":"var $bm_rt;\nif (thisProperty.propertyGroup(1)('Pseudo/ADBE Trace Path-0002') == true && thisProperty.numKeys > 1) {\n    $bm_rt = thisProperty.loopOut('cycle');\n} else {\n    $bm_rt = value;\n}"}},{"ty":7,"nm":"Loop","mn":"Pseudo/ADBE Trace Path-0002","ix":2,"v":{"a":0,"k":1,"ix":2}}]}],"ip":0,"op":321,"st":0,"bm":0},{"ddd":0,"ind":3,"ty":4,"nm":"arrow line","sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[100,100,0],"ix":2},"a":{"a":0,"k":[0,0,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0,0],[0,0],[0,0],[0,0]],"o":[[0,0],[0,0],[0,0],[0,0]],"v":[[-64,36],[-18.125,-10],[9.875,18],[50.375,-22.625]],"c":false},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"st","c":{"a":0,"k":[0.133333333,0.772549019,0.368627451,1],"ix":3},"o":{"a":0,"k":100,"ix":4},"w":{"a":0,"k":13,"ix":5},"lc":1,"lj":1,"ml":4,"bm":0,"nm":"Stroke 1","mn":"ADBE Vector Graphic - Stroke","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Shape 1","np":3,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false},{"ty":"tm","s":{"a":0,"k":0,"ix":1},"e":{"a":0,"k":100,"ix":2,"x":"var $bm_rt;\n$bm_rt = thisComp.layer('Trace Shape Layer 1: Path 1 [1.1]').effect('Trace Path')('Progress');"},"o":{"a":0,"k":0,"ix":3},"m":1,"ix":2,"nm":"Trim Paths 1","mn":"ADBE Vector Filter - Trim","hd":false}],"ip":0,"op":321,"st":0,"bm":0}],"markers":[]}, loss: {"v":"5.5.7","meta":{"g":"LottieFiles AE 0.1.20","a":"","k":"","d":"","tc":""},"fr":30,"ip":0,"op":30,"w":200,"h":200,"nm":"Comp 1","ddd":0,"assets":[],"layers":[{"ddd":0,"ind":1,"ty":4,"nm":"Arrow shape","sr":1,"ks":{"o":{"a":1,"k":[{"i":{"x":[0.667],"y":[0.35]},"o":{"x":[0.333],"y":[0]},"t":9,"s":[0]},{"i":{"x":[0.667],"y":[1]},"o":{"x":[0.333],"y":[0.35]},"t":22,"s":[50]},{"t":29,"s":[100]}],"ix":11},"r":{"a":0,"k":-0.078,"ix":10},"p":{"a":0,"k":[150.226,121.098,0],"ix":2},"a":{"a":0,"k":[50.125,-21,0],"ix":1},"s":{"a":0,"k":[100,-100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0,0],[0,0],[0,0]],"o":[[0,0],[0,0],[0,0]],"v":[[28.25,-42],[70,-0.125],[70,-41.75]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.937254902,0.266666667,0.266666667,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Shape 1","np":3,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":321,"st":0,"bm":0},{"ddd":0,"ind":2,"ty":3,"nm":"Trace Shape Layer 1: Path 1 [1.1]","cl":"1","sr":1,"ks":{"o":{"a":0,"k":0,"ix":11},"r":{"a":0,"k":0,"ix":10,"x":"var $bm_rt;\nvar pathToTrace = thisComp.layer('arrow line')('ADBE Root Vectors Group')(1)('ADBE Vectors Group')(1)('ADBE Vector Shape');\nvar progress = $bm_div(thisLayer.effect('Pseudo/ADBE Trace Path')('Pseudo/ADBE Trace Path-0001'), 100);\nvar pathTan = pathToTrace.tangentOnPath(progress);\n$bm_rt = radiansToDegrees(Math.atan2(pathTan[1], pathTan[0]));"},"p":{"a":0,"k":[100,100,0],"ix":2,"x":"var $bm_rt;\nvar pathLayer = thisComp.layer('arrow line');\nvar progress = $bm_div(thisLayer.effect('Pseudo/ADBE Trace Path')('Pseudo/ADBE Trace Path-0001'), 100);\nvar pathToTrace = pathLayer('ADBE Root Vectors Group')(1)('ADBE Vectors Group')(1)('ADBE Vector Shape');\n$bm_rt = pathLayer.toComp(pathToTrace.pointOnPath(progress));"},"a":{"a":0,"k":[0,0,0],"ix":1},"s":{"a":0,"k":[100,-100,100],"ix":6}},"ao":0,"ef":[{"ty":5,"nm":"Trace Path","np":4,"mn":"Pseudo/ADBE Trace Path","ix":1,"en":1,"ef":[{"ty":0,"nm":"Progress","mn":"Pseudo/ADBE Trace Path-0001","ix":1,"v":{"a":1,"k":[{"i":{"x":[0.667],"y":[0.333]},"o":{"x":[0.333],"y":[0]},"t":0,"s":[0]},{"i":{"x":[0.667],"y":[1]},"o":{"x":[0.333],"y":[0.333]},"t":20,"s":[50]},{"t":30,"s":[100]}],"ix":1,"x":"var $bm_rt;\nif (thisProperty.propertyGroup(1)('Pseudo/ADBE Trace Path-0002') == true && thisProperty.numKeys > 1) {\n    $bm_rt = thisProperty.loopOut('cycle');\n} else {\n    $bm_rt = value;\n}"}},{"ty":7,"nm":"Loop","mn":"Pseudo/ADBE Trace Path-0002","ix":2,"v":{"a":0,"k":1,"ix":2}}]}],"ip":0,"op":321,"st":0,"bm":0},{"ddd":0,"ind":3,"ty":4,"nm":"arrow line","sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[100,100,0],"ix":2},"a":{"a":0,"k":[0,0,0],"ix":1},"s":{"a":0,"k":[100,-100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[0,0],[0,0],[0,0],[0,0]],"o":[[0,0],[0,0],[0,0],[0,0]],"v":[[-64,36],[-18.125,-10],[9.875,18],[50.375,-22.625]],"c":false},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"st","c":{"a":0,"k":[0.937254902,0.266666667,0.266666667,1],"ix":3},"o":{"a":0,"k":100,"ix":4},"w":{"a":0,"k":13,"ix":5},"lc":1,"lj":1,"ml":4,"bm":0,"nm":"Stroke 1","mn":"ADBE Vector Graphic - Stroke","hd":false},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Shape 1","np":3,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false},{"ty":"tm","s":{"a":0,"k":0,"ix":1},"e":{"a":0,"k":100,"ix":2,"x":"var $bm_rt;\n$bm_rt = thisComp.layer('Trace Shape Layer 1: Path 1 [1.1]').effect('Trace Path')('Progress');"},"o":{"a":0,"k":0,"ix":3},"m":1,"ix":2,"nm":"Trim Paths 1","mn":"ADBE Vector Filter - Trim","hd":false}],"ip":0,"op":321,"st":0,"bm":0}],"markers":[]} };
+  </script>
 </head>
 <body>
   <div id="particles-bg"></div>
@@ -431,6 +458,7 @@
       let decisions = 0;
       let capitalHistory = []; // Track capital over time
       let achievements = []; // Track unlocked achievements
+      let history = []; // Rejestr decyzji: co wybrano i jak wplynelo na kapital
 
       // --------- CAMPAIGN MODE STATE ---------
       let isCampaignMode = false;
@@ -1467,6 +1495,7 @@
         decisions = 0;
         capitalHistory = [startingCapital]; // Reset and track starting capital
         achievements = []; // Reset achievements
+        history = []; // Reset rejestru decyzji
         const ch = chapters[key];
 
         if (!ch) {
@@ -1519,6 +1548,26 @@
         return base + body + tail;
       }
 
+      function renderLedger(){
+        if(!history.length) return '';
+        const rows = history.map(e => `
+          <div class="ledger-row">
+            <span class="ledger-period">${e.month}</span>
+            <span class="ledger-choice">${e.choice}</span>
+            <span class="ledger-change ${e.type}">${e.change>0?'+':''}${e.change.toLocaleString()} $</span>
+            <span class="ledger-cap">$${e.capital.toLocaleString()}</span>
+          </div>`).join('');
+        const startCap = capitalHistory.length ? capitalHistory[0] : 1000;
+        const pnl = capital - startCap;
+        return `
+          <section class="panel ledger-panel">
+            <h3 class="panel-title">📒 Historia decyzji — na co poszła kasa</h3>
+            <div class="ledger-summary">Kapitał startowy: <strong>$${startCap.toLocaleString()}</strong> → obecny: <strong>$${capital.toLocaleString()}</strong> <span class="${pnl>=0?'profit':'loss'}">(${pnl>=0?'+':''}${pnl.toLocaleString()} $)</span></div>
+            <div class="ledger-head"><span>Okres</span><span>Twoja decyzja</span><span>Zmiana</span><span>Kapitał po</span></div>
+            <div class="ledger-list">${rows}</div>
+          </section>`;
+      }
+
       function renderScenario(){
         const ch = chapters[currentChapterKey];
         const s = ch.scenarios[currentScenario];
@@ -1548,7 +1597,8 @@
                 <div class="stock-item"><span class="stock-name">${name}</span><span class="stock-price">${formatPrice(arr[currentScenario])}</span></div>
               `).join('')}
             </div>
-          </aside>`;
+          </aside>
+          ${renderLedger()}`;
 
         dom.gameContent.querySelectorAll('.choice-btn').forEach(btn => btn.addEventListener('click', () => {
           const idx = Number(btn.getAttribute('data-idx'));
@@ -1793,6 +1843,7 @@
         decisions++;
         capital = Math.max(0, Math.round(capital + result.moneyChange));
         capitalHistory.push(capital); // Track capital after each decision
+        history.push({ month: s.month, title: s.title, choice: choice.text, change: result.moneyChange, capital: capital, type: result.type });
 
         // Disable all choice buttons during result display
         dom.gameContent.querySelectorAll('.choice-btn').forEach(btn => btn.disabled = true);
@@ -1931,9 +1982,12 @@
         // Ikona wyniku: Lottie (jeśli podano URL w window.GAME_LOTTIE) lub animowany emoji
         const iconEl = modal.querySelector('#resultIcon');
         const emojiMap = { profit: '📈', loss: '📉', neutral: '⚖️' };
+        const lottieData = (window.GAME_LOTTIE_DATA || {})[result.type];
         const lottieUrl = (window.GAME_LOTTIE || {})[result.type];
-        if(lottieUrl && window.lottie){
-          window.lottie.loadAnimation({ container: iconEl, renderer: 'svg', loop: true, autoplay: true, path: lottieUrl });
+        if(window.lottie && (lottieData || lottieUrl)){
+          const cfg = { container: iconEl, renderer: 'svg', loop: true, autoplay: true };
+          if(lottieData){ cfg.animationData = lottieData; } else { cfg.path = lottieUrl; }
+          window.lottie.loadAnimation(cfg);
         } else {
           iconEl.textContent = emojiMap[result.type] || '📊';
           if(window.gsap){
@@ -2095,6 +2149,8 @@
             ${renderCapitalChart()}
 
             ${achievementsHTML}
+
+            ${renderLedger()}
 
             <div style="display:flex;gap:12px;margin-top:24px;justify-content:center;">
               <button class="restart" id="restartChapter">🔄 Zagraj ponownie</button>
