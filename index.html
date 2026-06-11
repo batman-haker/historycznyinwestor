@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Historyczny Inwestor — Wersja Edukacyjna</title>
+  <!-- Font gry: Inter (ten sam w menu i podczas rozgrywki) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #0f1222; --panel:#15182a; --text:#eef3ff; --muted:#cbd5e1;
@@ -258,6 +262,9 @@
     #welcomeScreen > *:not(.menu-fale) { position:relative; z-index:1; }
     .menu-fale { position:absolute; inset:0; z-index:0; margin:0; pointer-events:none; opacity:.5; }
     .menu-fale dotlottie-player { width:100%; height:100%; display:block; transform:scale(1.7); transform-origin:center; }
+    /* --- Animacja na ekranie konca epoki --- */
+    .end-anim { width:220px; height:220px; margin:0 auto 4px; }
+    .end-anim svg { width:100%; height:100%; }
   </style>
 
   <!-- Chart.js CDN -->
@@ -2151,6 +2158,7 @@
 
         dom.gameContent.innerHTML = `
           <div class="result-panel">
+            <div class="end-anim" id="endAnim"></div>
             <h3 class="panel-title">🏆 Koniec rozdziału</h3>
             <p>Łączna liczba decyzji: <strong>${decisions}</strong></p>
             <p>Końcowy kapitał: <strong class="${capital >= startCap ? 'profit' : 'loss'}">$${capital.toLocaleString()}</strong></p>
@@ -2167,6 +2175,16 @@
               <button class="restart" id="backToMenu">🏠 Wróć do menu</button>
             </div>
           </div>`;
+
+        // Animacja podsumowania: rajd (zysk) lub czerwona strzalka (strata)
+        const endAnimEl = document.getElementById('endAnim');
+        if(endAnimEl && window.lottie){
+          if(capital >= startCap){
+            window.lottie.loadAnimation({ container:endAnimEl, renderer:'svg', loop:true, autoplay:true, path:'https://raw.githubusercontent.com/batman-haker/historycznyinwestor/main/rajd.json' });
+          } else {
+            window.lottie.loadAnimation({ container:endAnimEl, renderer:'svg', loop:true, autoplay:true, animationData:(window.GAME_LOTTIE_DATA||{}).loss });
+          }
+        }
 
         // Add event listeners to buttons
         const restartBtn = document.getElementById('restartChapter');
