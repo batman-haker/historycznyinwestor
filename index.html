@@ -477,6 +477,20 @@
       let achievements = []; // Track unlocked achievements
       let history = []; // Rejestr decyzji: co wybrano i jak wplynelo na kapital
 
+      // --- TRUDNOSC PER EPOKA --- tnie zyski (gain) i powieksza straty (loss).
+      // 1.0 = bez zmian. Latwo regulowac kazda epoke osobno.
+      const DIFFICULTY = {
+        '1930s':        { gain:1.00, loss:1.00 }, // juz dopracowana - bez zmian
+        '1970s':        { gain:0.85, loss:1.10 },
+        '1990s':        { gain:0.80, loss:1.15 },
+        'DotCom':       { gain:0.80, loss:1.15 },
+        'BlackMonday':  { gain:0.85, loss:1.10 },
+        'GFC2008':      { gain:0.80, loss:1.15 },
+        'COVID2020':    { gain:0.55, loss:1.35 }, // bylo za latwo
+        'FTX2022':      { gain:0.55, loss:1.35 }, // bylo za latwo
+        'AIBubble2023': { gain:0.55, loss:1.35 }  // bylo za latwo
+      };
+
       // --------- CAMPAIGN MODE STATE ---------
       let isCampaignMode = false;
       let campaignData = {
@@ -1849,6 +1863,10 @@
         };
         if(outcomes[effect]){ [moneyChange,message,type]=outcomes[effect]; }
         else { moneyChange = R(-100,120); message='Efekt zależy od timingu rynku.'; type = moneyChange>0?'profit':(moneyChange<0?'loss':'neutral'); }
+        // Trudnosc per epoka: tnij zyski, powieksz straty
+        const diff = DIFFICULTY[currentChapterKey] || { gain:1, loss:1 };
+        if(moneyChange > 0) moneyChange = Math.round(moneyChange * diff.gain);
+        else if(moneyChange < 0) moneyChange = Math.round(moneyChange * diff.loss);
         return { moneyChange, message, type };
       }
 
