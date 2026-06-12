@@ -288,9 +288,9 @@
     <section id="welcomeScreen" class="main-menu" aria-labelledby="welcomeHeading">
       <div class="game-cover-logo">
         <video autoplay muted loop playsinline
-               poster="https://raw.githubusercontent.com/batman-haker/historycznyinwestor/main/kochampatronow_okadka_gry_dla_inwestora_giedowego_z_elementam_1f221263-b989-4da4-8eb4-42536d07774d.png"
+               poster="kochampatronow_okadka_gry_dla_inwestora_giedowego_z_elementam_1f221263-b989-4da4-8eb4-42536d07774d.png"
                aria-label="Historyczny Inwestor - intro">
-          <source src="https://raw.githubusercontent.com/batman-haker/historycznyinwestor/main/Inwestor_przemierza_ulice_NY_w.mp4" type="video/mp4">
+          <source src="Inwestor_przemierza_ulice_NY_w.mp4" type="video/mp4">
         </video>
       </div>
       <h1 id="welcomeHeading" class="main-title">Historyczny <span>Inwestor</span></h1>
@@ -302,7 +302,7 @@
         <button class="menu-main-btn tertiary-btn" id="aboutBtn">ℹ️ O Grze</button>
       </div>
       <div class="menu-fale">
-        <dotlottie-player src="https://raw.githubusercontent.com/batman-haker/historycznyinwestor/main/faleintro.lottie" autoplay loop></dotlottie-player>
+        <dotlottie-player src="faleintro.lottie" autoplay loop></dotlottie-player>
       </div>
     </section>
 
@@ -2399,7 +2399,7 @@
         const endAnimEl = document.getElementById('endAnim');
         if(endAnimEl && window.lottie){
           if(capital >= startCap){
-            window.lottie.loadAnimation({ container:endAnimEl, renderer:'svg', loop:true, autoplay:true, path:'https://raw.githubusercontent.com/batman-haker/historycznyinwestor/main/rajd.json' });
+            window.lottie.loadAnimation({ container:endAnimEl, renderer:'svg', loop:true, autoplay:true, path:'rajd.json' });
           } else {
             window.lottie.loadAnimation({ container:endAnimEl, renderer:'svg', loop:true, autoplay:true, animationData:(window.GAME_LOTTIE_DATA||{}).loss });
           }
