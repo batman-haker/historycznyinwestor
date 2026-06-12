@@ -2056,6 +2056,12 @@
         // z faktycznej zmiany ceny (komunikat narracyjny zostaje z outcomes)
         const anchored = anchoredResult(effect);
         if(anchored !== null) moneyChange = anchored;
+        else {
+          // Widelki skaluja sie z kapitalem (stawka kazdej rundy proporcjonalna
+          // do majatku - wazne w kampanii i w poznych rundach epoki)
+          const stake = Math.max(0.5, Math.min(4, capital / 1000));
+          moneyChange = Math.round(moneyChange * stake);
+        }
         // Trudnosc per epoka: tnij zyski, powieksz straty
         const diff = DIFFICULTY[currentChapterKey] || { gain:1, loss:1 };
         if(moneyChange > 0) moneyChange = Math.round(moneyChange * diff.gain);
