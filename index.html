@@ -78,8 +78,8 @@
 
     /* NOWE STYLE DLA MENU */
     .game-cover-logo { width:100%; max-width:400px; margin:0 auto 30px; }
-    .game-cover-logo img { width:100%; height:auto; border-radius:20px; box-shadow:0 20px 60px rgba(0,0,0,0.6); border:3px solid var(--accent-2); transition: transform .3s ease; }
-    .game-cover-logo img:hover { transform: scale(1.02); box-shadow:0 25px 70px rgba(139,92,246,0.4); }
+    .game-cover-logo img, .game-cover-logo video { width:100%; height:auto; border-radius:20px; box-shadow:0 20px 60px rgba(0,0,0,0.6); border:3px solid var(--accent-2); transition: transform .3s ease; display:block; }
+    .game-cover-logo img:hover, .game-cover-logo video:hover { transform: scale(1.02); box-shadow:0 25px 70px rgba(139,92,246,0.4); }
     .menu-buttons-container { display:flex; flex-direction:column; gap:16px; max-width:500px; margin:24px auto 0; }
     .menu-main-btn { padding:18px 32px; font-size:1.2rem; font-weight:700; border:none; border-radius:12px; cursor:pointer; transition: all .3s ease; text-align:center; }
     .menu-main-btn:hover { transform: translateY(-3px); box-shadow:0 12px 30px rgba(0,0,0,.3); }
@@ -287,7 +287,11 @@
     <!-- EKRAN POWITALNY Z GUZIKAMI -->
     <section id="welcomeScreen" class="main-menu" aria-labelledby="welcomeHeading">
       <div class="game-cover-logo">
-        <img src="https://raw.githubusercontent.com/batman-haker/historycznyinwestor/main/kochampatronow_okadka_gry_dla_inwestora_giedowego_z_elementam_1f221263-b989-4da4-8eb4-42536d07774d.png" alt="Historyczny Inwestor - Okładka">
+        <video autoplay muted loop playsinline
+               poster="https://raw.githubusercontent.com/batman-haker/historycznyinwestor/main/kochampatronow_okadka_gry_dla_inwestora_giedowego_z_elementam_1f221263-b989-4da4-8eb4-42536d07774d.png"
+               aria-label="Historyczny Inwestor - intro">
+          <source src="https://raw.githubusercontent.com/batman-haker/historycznyinwestor/main/Inwestor_przemierza_ulice_NY_w.mp4" type="video/mp4">
+        </video>
       </div>
       <h1 id="welcomeHeading" class="main-title">Historyczny <span>Inwestor</span></h1>
       <p class="main-subtitle">Przetrwaj największe wstrząsy rynkowe i zrozum, co się wtedy działo — krok po kroku.</p>
@@ -1660,6 +1664,60 @@
 
       function rng(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
 
+      // --- KOTWICE CENOWE ---
+      // Decyzje dotyczace aktywow z panelu "Ceny na rynku" licza wynik z FAKTYCZNEJ
+      // zmiany ceny do nastepnego okresu (+ szum i prowizja), zamiast czystego losowania.
+      // assets: klucze ze stockPrices danej epoki; dir: 1 kupno / -1 gra na spadek;
+      // weight: jaka czesc kapitalu pracuje. Efekty bez wpisu = stare widelki.
+      const PRICE_ANCHORS = {
+        'AIBubble2023': {
+          buy_nvda:            { assets:['Nvidia (NVDA)'], dir:1, weight:1.0 },
+          buy_msft_ai:         { assets:['Microsoft (MSFT)'], dir:1, weight:0.6 },
+          buy_all_ai:          { assets:['Microsoft (MSFT)','Google (GOOGL)','Meta (META)'], dir:1, weight:0.8 },
+          buy_msft_copilot:    { assets:['Microsoft (MSFT)'], dir:1, weight:0.7 },
+          buy_google_catchup:  { assets:['Google (GOOGL)'], dir:1, weight:0.6 },
+          buy_nvda_breakout:   { assets:['Nvidia (NVDA)'], dir:1, weight:1.0 },
+          short_nvda:          { assets:['Nvidia (NVDA)'], dir:-1, weight:0.7 },
+          buy_amd_ai:          { assets:['AMD'], dir:1, weight:0.6 },
+          buy_cloud:           { assets:['Microsoft (MSFT)','Google (GOOGL)'], dir:1, weight:0.6 },
+          bet_opensource:      { assets:['Meta (META)'], dir:1, weight:0.6 },
+          bet_proprietary:     { assets:['Microsoft (MSFT)'], dir:1, weight:0.6 },
+          stick_nvda:          { assets:['Nvidia (NVDA)'], dir:1, weight:0.8 },
+          buy_ai_etf:          { assets:['Nvidia (NVDA)','Microsoft (MSFT)','Google (GOOGL)','Meta (META)','AMD','ARM Holdings'], dir:1, weight:0.7 },
+          buy_msft_drama:      { assets:['Microsoft (MSFT)'], dir:1, weight:0.7 },
+          buy_anthropic_google:{ assets:['Google (GOOGL)'], dir:1, weight:0.6 },
+          rotate_google:       { assets:['Google (GOOGL)'], dir:1, weight:0.8 },
+          bet_duopoly:         { assets:['Microsoft (MSFT)','Google (GOOGL)'], dir:1, weight:0.8 },
+          nvda_picks_shovels:  { assets:['Nvidia (NVDA)'], dir:1, weight:0.8 },
+          public_only:         { assets:['Nvidia (NVDA)','Microsoft (MSFT)','Google (GOOGL)','Meta (META)','AMD','ARM Holdings'], dir:1, weight:0.7 },
+          hodl_ai:             { assets:['Nvidia (NVDA)','Microsoft (MSFT)','Google (GOOGL)','Meta (META)','AMD','ARM Holdings'], dir:1, weight:0.9 },
+          rotate_infra:        { assets:['ARM Holdings'], dir:1, weight:0.7 },
+          short_ai_bubble:     { assets:['Nvidia (NVDA)','Microsoft (MSFT)','Google (GOOGL)','Meta (META)'], dir:-1, weight:0.7 }
+        }
+      };
+
+      function anchoredResult(effect){
+        const map = PRICE_ANCHORS[currentChapterKey];
+        if(!map || !map[effect]) return null;
+        const ch = chapters[currentChapterKey];
+        if(currentScenario >= ch.scenarios.length - 1) return null; // ostatnia runda: brak nastepnej ceny
+        const a = map[effect];
+        const rets = [];
+        for(const name of a.assets){
+          const arr = ch.stockPrices[name];
+          if(!arr || !arr[currentScenario] || !arr[currentScenario+1]) continue;
+          rets.push(arr[currentScenario+1] / arr[currentScenario] - 1);
+        }
+        if(!rets.length) return null;
+        const ret = (rets.reduce((x,y)=>x+y,0) / rets.length) * (a.dir || 1);
+        const engaged = capital * (a.weight || 0.6);
+        const gross = engaged * ret;
+        // szum: +-25% wielkosci ruchu + drobne wahniecie pozycji; prowizja 1.5%
+        const noise = gross * ((Math.random()-0.5)*0.5) + engaged * ((Math.random()-0.5)*0.06);
+        const fee = engaged * 0.015;
+        return Math.round(gross + noise - fee);
+      }
+
       function calculateResult(effect){
         const R=(min,max)=>rng(min,max); let moneyChange=0, message='', type='neutral';
         const outcomes={
@@ -1863,6 +1921,10 @@
         };
         if(outcomes[effect]){ [moneyChange,message,type]=outcomes[effect]; }
         else { moneyChange = R(-100,120); message='Efekt zależy od timingu rynku.'; type = moneyChange>0?'profit':(moneyChange<0?'loss':'neutral'); }
+        // Kotwica cenowa: jesli decyzja dotyczy aktywa z panelu cen, wynik liczony
+        // z faktycznej zmiany ceny (komunikat narracyjny zostaje z outcomes)
+        const anchored = anchoredResult(effect);
+        if(anchored !== null) moneyChange = anchored;
         // Trudnosc per epoka: tnij zyski, powieksz straty
         const diff = DIFFICULTY[currentChapterKey] || { gain:1, loss:1 };
         if(moneyChange > 0) moneyChange = Math.round(moneyChange * diff.gain);
