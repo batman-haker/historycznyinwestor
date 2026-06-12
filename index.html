@@ -277,6 +277,15 @@
     /* --- Animacja na ekranie konca epoki --- */
     .end-anim { width:220px; height:220px; margin:0 auto 4px; }
     .end-anim svg { width:100%; height:100%; }
+    /* --- Lekcja epoki (ekran koncowy) --- */
+    .end-lesson { margin:18px auto 6px; max-width:640px; padding:14px 18px; text-align:left;
+      background:rgba(139,92,246,.08); border-left:3px solid var(--accent); border-radius:10px;
+      color:var(--muted); font-size:.97rem; line-height:1.5; }
+    .end-lesson strong { color:var(--text); }
+    /* --- Wskazowka o mechanice cen (1. runda epoki) --- */
+    .anchor-tip { margin:12px 0 4px; padding:10px 14px; background:rgba(34,211,238,.07);
+      border:1px solid rgba(34,211,238,.35); border-radius:10px; color:var(--muted);
+      font-size:.92rem; line-height:1.45; }
   </style>
 
   <!-- Chart.js CDN -->
@@ -1239,7 +1248,8 @@
           'Google kontratakuje modelem Gemini – ma dane, moc obliczeniową i ludzi.',
           'Start-upy AI warte miliardy bez przychodów. Brzmi znajomo?',
           'Modele „myślące" i AI obsługująca komputer. Giganci wydają po 50 mld dolarów rocznie.',
-          'AI pożera prąd – energia i sieci przesyłowe mogą być wąskim gardłem.'
+          'AI pożera prąd – energia i sieci przesyłowe mogą być wąskim gardłem.',
+          'Lekcja: w gorączce złota najpewniej zarabia sprzedawca łopat. A wyceny zawsze w końcu mają znaczenie — pamiętaj o roku 2000.'
         ]
       };
 
@@ -1656,6 +1666,7 @@
             <h3 class="panel-title">${s.title}</h3>
             <div class="scenario-graphic">${renderGraphic(currentChapterKey)}</div>
             <p class="scenario-text">${s.description}</p>
+            ${(currentScenario === 0 && PRICE_ANCHORS[currentChapterKey]) ? '<div class="anchor-tip">📊 <strong>Wskazówka:</strong> wyniki Twoich decyzji zależą od prawdziwych ruchów cen — analizuj panel „Ceny na rynku" przed każdym wyborem!</div>' : ''}
             <div class="choices">
               ${s.choices.map((c,i)=>`<button class="choice-btn" data-idx="${i}">${c.text}</button>`).join('')}
             </div>
@@ -2419,6 +2430,7 @@
             <h3 class="panel-title">🏆 Koniec rozdziału</h3>
             <p>Łączna liczba decyzji: <strong>${decisions}</strong></p>
             <p>Końcowy kapitał: <strong class="${capital >= startCap ? 'profit' : 'loss'}">$${capital.toLocaleString()}</strong></p>
+            ${(() => { let lekcja = (hints[currentChapterKey] || []).slice(-1)[0] || ''; lekcja = lekcja.replace(/^Lekcja:\s*/, ''); return lekcja ? `<div class="end-lesson">🎓 <strong>Lekcja epoki:</strong> ${lekcja}</div>` : ''; })()}
 
             <h4 style="margin-top:24px;color:var(--accent-2);">📈 Wykres Kapitału</h4>
             ${renderCapitalChart()}

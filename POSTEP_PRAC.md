@@ -62,10 +62,22 @@ mogła świecić na zielono).
 - 🔤 Font **Inter** realnie wczytany (wcześniej tylko deklarowany)
 - 🧹 Usunięty wstrzyknięty śmieciowy skrypt AdGuard
 
-### 7. Dane rynkowe — audyt 🔍
+### 7. Dane rynkowe — audyt i poprawki 🔍
 Tablice `stockPrices` zweryfikowane: wiarygodne jako stylizowane przybliżenia.
-Drobne znane nieścisłości: GE 1932 (zaniżony krach), Tesla COVID (miks cen
-przed/po splicie 5:1).
+Poprawione: GE 1932 (dno 9$, realne −98%) i Tesla COVID (spójna seria po splicie 5:1).
+
+### 8. Wdrożenie i integracja 🌐
+- Gra na własnym VPS (Mikrus) pod `/gra/` + nadal na GitHub Pages
+- Strona „Przegląd Świata": film intro w nagłówku + neonowy baner gry pod menu
+- Zasoby gry ładowane względnie (bez zależności od GitHub raw)
+- **Globalny ranking graczy**: `server/leaderboard.js` (Node bez zależności,
+  systemd `gra-ranking`, nginx proxy `/gra-api/`); gra wysyła wyniki i pokazuje
+  TOP 10 wszystkich graczy, z cichym fallbackiem do localStorage
+- Meta tagi SEO/OG — ładna karta przy udostępnianiu linku
+
+### 9. Edukacja w grze 🎓
+- „Lekcja epoki" na ekranie końca rozdziału (z systemu podpowiedzi)
+- Jednorazowa wskazówka na starcie epoki: wyniki zależą od realnych cen z panelu
 
 ---
 
@@ -86,7 +98,10 @@ Hosting: `streamlit_app.py` wczytuje `index.html` (wszystkie zasoby z CDN/raw UR
 
 ## ❌ DO ZROBIENIA / POMYSŁY
 - [ ] Pełny test trybu kampanii (9 epok) po zmianach balansu
-- [ ] Integracja ze stroną „Przegląd Świata"
+- [x] Integracja ze stroną „Przegląd Świata" ✅
+- [x] Globalny ranking graczy ✅
+- [ ] Klucz SSH na serwer (deploy bez hasła)
+- [ ] Własna domena (wtedy aktualizacja og:url w meta tagach)
 - [ ] Kotwice cenowe dla 1930s (ostrożnie — epoka działa dobrze)
 - [ ] Animacje w kolejce: `cel`, `dolarskacze`, `liczydlo`, `lotchmury`,
       `oszczedzanie` (2,6 MB — tylko przez raw URL, nie inline)
