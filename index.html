@@ -727,6 +727,10 @@
       }
 
       // --------- LEADERBOARD SYSTEM ---------
+      // Globalny ranking: dziala, gdy gra stoi na wlasnym serwerze (/gra/ + /gra-api/).
+      // Gdzie indziej (GitHub Pages, plik lokalny) cichy fallback do localStorage.
+      const GAME_API = '/gra-api';
+
       function loadLeaderboard(){
         const campaignScores = localStorage.getItem('leaderboard_campaign');
         const singleScores = localStorage.getItem('leaderboard_single');
@@ -746,13 +750,34 @@
 
         localStorage.setItem(`leaderboard_${type}`, JSON.stringify(leaderboard[type]));
         console.log(`💾 Score saved to ${type} leaderboard:`, scoreData);
+
+        // Wyslij takze do globalnego rankingu wszystkich graczy (jesli API dostepne)
+        try {
+          fetch(GAME_API + '/score', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ type, ...scoreData })
+          }).catch(() => {});
+        } catch (e) {}
       }
 
       function openLeaderboardModal(){
+        // Najpierw pokaz lokalne wyniki (natychmiast)...
         const leaderboard = loadLeaderboard();
         renderLeaderboard('campaign', leaderboard.campaign);
         renderLeaderboard('single', leaderboard.single);
         leaderboardModal.classList.remove('hidden');
+        // ...a potem podmien na globalny ranking wszystkich graczy (jesli API dziala)
+        try {
+          fetch(GAME_API + '/top')
+            .then(r => r.ok ? r.json() : null)
+            .then(g => {
+              if (!g) return;
+              renderLeaderboard('campaign', (g.campaign || []).slice(0, 10));
+              renderLeaderboard('single', (g.single || []).slice(0, 10));
+            })
+            .catch(() => {});
+        } catch (e) {}
       }
 
       function closeLeaderboardModal(){
@@ -767,6 +792,7 @@
           return;
         }
 
+        const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
         tbody.innerHTML = scores.map((score, index) => {
           const profitPercent = type === 'campaign'
             ? ((score.capital / 1000 - 1) * 100).toFixed(1)
@@ -776,8 +802,8 @@
           return `
             <tr>
               <td class="leaderboard-rank">${index + 1}</td>
-              <td>${score.name || 'Gracz'}</td>
-              ${type === 'single' ? `<td>${score.epoch || '?'}</td>` : ''}
+              <td>${esc(score.name || 'Gracz')}</td>
+              ${type === 'single' ? `<td>${esc(score.epoch || '?')}</td>` : ''}
               <td>$${score.capital.toLocaleString('en-US')}</td>
               ${type === 'campaign' ? `<td class="${profitClass}">${profitPercent > 0 ? '+' : ''}${profitPercent}%</td>` : ''}
               <td>${new Date(score.date).toLocaleDateString('pl-PL')}</td>
