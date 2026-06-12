@@ -1693,6 +1693,135 @@
           hodl_ai:             { assets:['Nvidia (NVDA)','Microsoft (MSFT)','Google (GOOGL)','Meta (META)','AMD','ARM Holdings'], dir:1, weight:0.9 },
           rotate_infra:        { assets:['ARM Holdings'], dir:1, weight:0.7 },
           short_ai_bubble:     { assets:['Nvidia (NVDA)','Microsoft (MSFT)','Google (GOOGL)','Meta (META)'], dir:-1, weight:0.7 }
+        },
+        '1970s': {
+          buy_gold_71:         { assets:['Złoto'], dir:1, weight:0.7 },
+          buy_commodities_71:  { assets:['Złoto','Exxon Mobil'], dir:1, weight:0.6 },
+          stay_stocks_71:      { assets:['IBM','Ford'], dir:1, weight:0.8 },
+          buy_oil:             { assets:['Exxon Mobil','Texaco'], dir:1, weight:0.7 },
+          short_transport:     { assets:['Ford'], dir:-1, weight:0.6 },
+          buy_commodities_70s: { assets:['Złoto'], dir:1, weight:0.6 },
+          buy_energy_infrastructure: { assets:['Exxon Mobil','Texaco'], dir:1, weight:0.6 },
+          buy_staples_70s:     { assets:["McDonald's"], dir:1, weight:0.6 },
+          buy_precious_metals: { assets:['Złoto'], dir:1, weight:0.7 },
+          buy_quality_70s:     { assets:['IBM',"McDonald's"], dir:1, weight:0.7 },
+          buy_efficiency_tech: { assets:['IBM'], dir:1, weight:0.6 },
+          buy_tech_70s:        { assets:['IBM'], dir:1, weight:0.7 },
+          stay_commodities:    { assets:['Złoto'], dir:1, weight:0.6 },
+          gold_silver_77:      { assets:['Złoto'], dir:1, weight:0.7 },
+          energy_77:           { assets:['Exxon Mobil','Texaco'], dir:1, weight:0.6 },
+          buy_oil_again:       { assets:['Exxon Mobil','Texaco'], dir:1, weight:0.7 },
+          buy_inflation_assets:{ assets:['Złoto'], dir:1, weight:0.6 }
+        },
+        '1990s': {
+          buy_def_90:          { assets:['General Electric'], dir:1, weight:0.6 },
+          buy_bonds_90:        { assets:['US 10Y Treasury'], dir:1, weight:0.7 },
+          buy_pc_90:           { assets:['Microsoft','Intel'], dir:1, weight:0.7 },
+          buy_cyclicals_91:    { assets:['General Electric'], dir:1, weight:0.7 },
+          buy_tech_91:         { assets:['Microsoft','Intel','Cisco'], dir:1, weight:0.7 },
+          rotate_value_94:     { assets:['General Electric'], dir:1, weight:0.6 },
+          hold_tech_94:        { assets:['Microsoft','Intel','Cisco'], dir:1, weight:0.7 },
+          buy_index_95:        { assets:['S&P 500'], dir:1, weight:0.7 },
+          allin_tech_96:       { assets:['Microsoft','Cisco','Intel','AOL'], dir:1, weight:1.0 },
+          balanced_96:         { assets:['S&P 500','US 10Y Treasury'], dir:1, weight:0.7 },
+          buy_dip_97:          { assets:['S&P 500'], dir:1, weight:0.7 },
+          bonds_97:            { assets:['US 10Y Treasury'], dir:1, weight:0.6 },
+          gold_97:             { assets:['Gold'], dir:1, weight:0.6 },
+          buy_after_fed_98:    { assets:['S&P 500'], dir:1, weight:0.7 },
+          buy_momo_98:         { assets:['Yahoo','AOL','Amazon'], dir:1, weight:0.8 },
+          join_mania_99:       { assets:['Yahoo','AOL','Amazon'], dir:1, weight:1.0 },
+          quality_tech_99:     { assets:['Microsoft','Cisco','Intel'], dir:1, weight:0.7 }
+        },
+        'DotCom': {
+          allin_dotcom_98:     { assets:['Yahoo','Amazon'], dir:1, weight:1.0 },
+          buy_bluechip_tech_98:{ assets:['Microsoft','Intel','Cisco'], dir:1, weight:0.8 },
+          bonds_caution_98:    { assets:['US 10Y Treasury'], dir:1, weight:0.6 },
+          quality_growth_99:   { assets:['Amazon'], dir:1, weight:0.7 },
+          buy_ipos_00:         { assets:['Pets.com','eToys'], dir:1, weight:1.0 },
+          rot_quality_00:      { assets:['Microsoft'], dir:1, weight:0.7 },
+          short_extreme_00:    { assets:['Pets.com','eToys','Yahoo'], dir:-1, weight:0.7 },
+          buy_dip_dotcom_00:   { assets:['NASDAQ'], dir:1, weight:0.8 },
+          rotate_defensive_00: { assets:['US 10Y Treasury'], dir:1, weight:0.6 },
+          short_nasdaq_00:     { assets:['NASDAQ'], dir:-1, weight:0.7 },
+          hold_bag_00:         { assets:['Yahoo','Amazon','Cisco'], dir:1, weight:0.9 },
+          buy_prof_00:         { assets:['Microsoft'], dir:1, weight:0.6 },
+          tech_bounce_01:      { assets:['NASDAQ'], dir:1, weight:0.7 },
+          telecom_value_01:    { assets:['WorldCom'], dir:1, weight:0.7 },
+          safe_haven_01:       { assets:['US 10Y Treasury'], dir:1, weight:0.6 },
+          buy_quality_01:      { assets:['Microsoft'], dir:1, weight:0.6 },
+          bluechips_only_02:   { assets:['Microsoft','Intel'], dir:1, weight:0.7 },
+          bonds_only_02:       { assets:['US 10Y Treasury'], dir:1, weight:0.6 }
+        },
+        'BlackMonday': {
+          hedge_dollar_87:     { assets:['Złoto'], dir:1, weight:0.6 },
+          bonds_caution_87:    { assets:['Bonds'], dir:1, weight:0.6 },
+          rotate_bonds_87:     { assets:['Bonds'], dir:1, weight:0.6 },
+          stay_bull_87:        { assets:['IBM','Microsoft','GE'], dir:1, weight:0.9 },
+          buy_dip_sept_87:     { assets:['IBM','Microsoft','GE'], dir:1, weight:0.8 },
+          buy_dip_87:          { assets:['IBM','Microsoft','GE'], dir:1, weight:0.8 },
+          hold_87:             { assets:['IBM','Microsoft','GE'], dir:1, weight:0.9 },
+          buy_crash_87:        { assets:['IBM','Microsoft','GE'], dir:1, weight:0.8 },
+          buy_fed_put_87:      { assets:['IBM','Microsoft','GE'], dir:1, weight:0.8 },
+          buy_quality_87:      { assets:['IBM','Microsoft','GE'], dir:1, weight:0.7 },
+          buy_tech_87:         { assets:['Microsoft'], dir:1, weight:0.7 }
+        },
+        'GFC2008': {
+          short_mbs_07:        { assets:['Goldman Sachs (GS)','Citigroup (C)'], dir:-1, weight:0.7 },
+          move_quality_07:     { assets:['S&P 500 (SPY)'], dir:1, weight:0.6 },
+          ignore_07:           { assets:['S&P 500 (SPY)'], dir:1, weight:1.0 },
+          gold_07:             { assets:['Gold'], dir:1, weight:0.6 },
+          buy_dip_recession:   { assets:['S&P 500 (SPY)'], dir:1, weight:0.8 },
+          rotate_defensive_08: { assets:['US 10Y Treasury','Gold'], dir:1, weight:0.6 },
+          def_08:              { assets:['Home Depot (HD)'], dir:1, weight:0.6 },
+          short_regional_banks:{ assets:['Citigroup (C)'], dir:-1, weight:0.7 },
+          treasuries_08:       { assets:['US 10Y Treasury'], dir:1, weight:0.7 },
+          safe_haven_08:       { assets:['Gold','US 10Y Treasury'], dir:1, weight:0.6 },
+          short_cyc_08:        { assets:['Caterpillar (CAT)','Ford (F)'], dir:-1, weight:0.7 },
+          buy_index_oct08:     { assets:['S&P 500 (SPY)'], dir:1, weight:0.8 },
+          gold_commodities_08: { assets:['Gold'], dir:1, weight:0.6 },
+          buy_fear_dec08:      { assets:['S&P 500 (SPY)'], dir:1, weight:0.8 },
+          quality_dividend_08: { assets:['JPMorgan (JPM)','Home Depot (HD)'], dir:1, weight:0.6 },
+          bonds_deflation_08:  { assets:['US 10Y Treasury'], dir:1, weight:0.7 }
+        },
+        'COVID2020': {
+          ignore_wuhan:        { assets:['S&P 500 (SPY)'], dir:1, weight:0.9 },
+          short_cruises_early: { assets:['Carnival Cruise'], dir:-1, weight:0.6 },
+          rotate_tech_jan:     { assets:['Zoom','Tesla'], dir:1, weight:0.7 },
+          ignore_covid:        { assets:['S&P 500 (SPY)'], dir:1, weight:0.9 },
+          short_travel_covid:  { assets:['Boeing','Carnival Cruise'], dir:-1, weight:0.7 },
+          buy_tech_covid:      { assets:['Zoom'], dir:1, weight:0.7 },
+          rotate_def_covid:    { assets:['Gold'], dir:1, weight:0.6 },
+          buy_dip_covid:       { assets:['S&P 500 (SPY)'], dir:1, weight:0.8 },
+          buy_safe_haven_covid:{ assets:['Gold','Bitcoin'], dir:1, weight:0.6 },
+          allin_tech_covid:    { assets:['Zoom','Tesla','Peloton'], dir:1, weight:1.0 },
+          buy_index_fed_put:   { assets:['S&P 500 (SPY)'], dir:1, weight:0.8 },
+          buy_distressed_covid:{ assets:['AMC'], dir:1, weight:0.6 },
+          buy_commodities_covid:{ assets:['Gold'], dir:1, weight:0.6 },
+          join_meme_party:     { assets:['AMC','Peloton'], dir:1, weight:0.8 },
+          fade_rally_may:      { assets:['S&P 500 (SPY)'], dir:-1, weight:0.6 },
+          quality_tech_may:    { assets:['Zoom','Tesla'], dir:1, weight:0.7 },
+          gold_inflation_hedge:{ assets:['Gold'], dir:1, weight:0.6 },
+          double_tech_wfh:     { assets:['Zoom','Peloton'], dir:1, weight:0.8 },
+          rotate_value_july:   { assets:['S&P 500 (SPY)'], dir:1, weight:0.6 },
+          equal_weight_balance:{ assets:['S&P 500 (SPY)'], dir:1, weight:0.7 },
+          buy_tech_dip_sept:   { assets:['Zoom','Tesla'], dir:1, weight:0.7 },
+          rotate_cyclicals_sept:{ assets:['Boeing','Carnival Cruise'], dir:1, weight:0.7 },
+          stay_tech_nov:       { assets:['Zoom'], dir:1, weight:0.7 }
+        },
+        'FTX2022': {
+          buy_dip_early_2022:  { assets:['Bitcoin','Ethereum'], dir:1, weight:0.8 },
+          hold_majors_luna:    { assets:['Bitcoin','Ethereum'], dir:1, weight:0.8 },
+          short_cel_token:     { assets:['Celsius (CEL)'], dir:-1, weight:0.6 },
+          hardware_wallet_move:{ assets:['Bitcoin'], dir:1, weight:0.6 },
+          short_cex_tokens:    { assets:['FTT (FTX Token)','Celsius (CEL)'], dir:-1, weight:0.6 },
+          buy_btc_crash:       { assets:['Bitcoin'], dir:1, weight:0.7 },
+          allin_eth_merge:     { assets:['Ethereum'], dir:1, weight:1.0 },
+          buy_miners_merge:    { assets:['Marathon Digital (MARA)'], dir:1, weight:0.7 },
+          accumulate_sept:     { assets:['Bitcoin','Ethereum'], dir:1, weight:0.7 },
+          short_setup_sept:    { assets:['Bitcoin'], dir:-1, weight:0.7 },
+          self_custody:        { assets:['Bitcoin'], dir:1, weight:0.7 },
+          short_all_cex:       { assets:['FTT (FTX Token)','Coinbase (COIN)'], dir:-1, weight:0.6 },
+          buy_btc_fundamentals:{ assets:['Bitcoin'], dir:1, weight:0.7 }
         }
       };
 
@@ -1709,7 +1838,9 @@
           rets.push(arr[currentScenario+1] / arr[currentScenario] - 1);
         }
         if(!rets.length) return null;
-        const ret = (rets.reduce((x,y)=>x+y,0) / rets.length) * (a.dir || 1);
+        let ret = (rets.reduce((x,y)=>x+y,0) / rets.length) * (a.dir || 1);
+        // wieloletnie skoki cen przyciete do +-50% na decyzje (czesciowe wejscia, podatki, realizacja)
+        ret = Math.max(-0.5, Math.min(0.5, ret));
         const engaged = capital * (a.weight || 0.6);
         const gross = engaged * ret;
         // szum: +-25% wielkosci ruchu + drobne wahniecie pozycji; prowizja 1.5%
